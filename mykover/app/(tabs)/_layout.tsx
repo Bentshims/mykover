@@ -4,19 +4,16 @@ import { Platform, View } from 'react-native';
 import { FontAwesome6 } from '@expo/vector-icons';
 
 import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { ProtectedRoute } from '../../components/ProtectedRoute';
+import ProtectedRoute from '../../components/ProtectedRoute';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
 
   return (
     <ProtectedRoute>
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: '#8A4DFF', // Changement de couleur lors du focus
-          tabBarInactiveTintColor: Colors[colorScheme ?? 'light'].tabIconDefault,
+          tabBarInactiveTintColor: '#8A4DFF',
           headerShown: false,
           tabBarBackground: TabBarBackground,
           tabBarStyle: Platform.select({

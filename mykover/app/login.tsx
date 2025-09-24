@@ -2,30 +2,26 @@ import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
   Alert
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { useAuth } from '../contexts/AuthContext';
-import { RootStackParamList, LoginData, ValidationError } from '../types';
-import Input from '../components/Input';
-import PrimaryButton from '../components/PrimaryButton';
-import { validateLoginData } from '../utils/validation';
-import { sanitizeLoginData } from '../utils/sanitizer';
-
-type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
+import { useRouter } from 'expo-router';
+import { useAuth } from '../src/contexts/AuthContext';
+import { LoginData } from '../src/types';
+import Input from '../src/components/Input';
+import PrimaryButton from '../src/components/PrimaryButton';
+import { validateLoginData } from '../src/utils/validation';
+import { sanitizeLoginData } from '../src/utils/sanitizer';
 
 /**
  * Écran de connexion avec design purple et validation
  * Correspond exactement au design fourni avec header purple et courbe
  */
 const LoginScreen: React.FC = () => {
-  const navigation = useNavigation<LoginScreenNavigationProp>();
+  const router = useRouter();
   const { login } = useAuth();
   
   // État du formulaire
@@ -95,28 +91,39 @@ const LoginScreen: React.FC = () => {
 
   // Navigation vers l'inscription
   const handleSignup = useCallback(() => {
-    navigation.navigate('SignupStep1');
-  }, [navigation]);
+    router.push('/SignupStep1Screen');
+  }, [router]);
 
   return (
     <KeyboardAvoidingView 
-      style={styles.container}
+      className="flex-1 bg-white"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
+        <View className="flex-1 bg-white">
           {/* Header purple avec courbe selon le design exact */}
-          <View style={styles.header}>
-            <Text style={styles.headerTitle}>Connexion</Text>
+          <View 
+            className="bg-purple-600 pt-16 pb-10 px-5 rounded-bl-[60px]"
+            style={{
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.1,
+              shadowRadius: 3.84,
+              elevation: 5,
+            }}
+          >
+            <Text className="text-3xl font-bold tracking-wide text-center text-white">
+              Connexion
+            </Text>
           </View>
           
           {/* Contenu principal */}
-          <View style={styles.content}>
+          <View className="flex-1 px-6 pt-12">
             {/* Champ numéro de téléphone */}
             <Input
               label="Numero de telephone"
               value={formData.phone}
-              onChangeText={(text) => updateFormData('phone', text)}
+              onChangeText={(text: string) => updateFormData('phone', text)}
               placeholder="+243 80 0000000"
               keyboardType="phone-pad"
               error={errors.phone}
@@ -128,7 +135,7 @@ const LoginScreen: React.FC = () => {
             <Input
               label="Mot de passe"
               value={formData.password}
-              onChangeText={(text) => updateFormData('password', text)}
+              onChangeText={(text: string) => updateFormData('password', text)}
               placeholder="mon mot de passe"
               secureTextEntry={true}
               error={errors.password}
@@ -137,7 +144,7 @@ const LoginScreen: React.FC = () => {
             />
             
             {/* Bouton de connexion */}
-            <View style={styles.buttonContainer}>
+            <View className="mt-8 mb-10">
               <PrimaryButton
                 title="Se connecter"
                 onPress={handleSubmit}
@@ -147,11 +154,11 @@ const LoginScreen: React.FC = () => {
             </View>
             
             {/* Lien vers l'inscription */}
-            <View style={styles.signupContainer}>
-              <Text style={styles.signupText}>
+            <View className="items-center mt-5">
+              <Text className="text-base text-gray-500">
                 Pas encore de compte ?{' '}
                 <Text 
-                  style={styles.signupLink}
+                  className="font-semibold text-purple-600"
                   onPress={handleSignup}
                 >
                   S'inscrire
@@ -164,58 +171,5 @@ const LoginScreen: React.FC = () => {
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  header: {
-    backgroundColor: '#7c3aed',
-    paddingTop: 60, // Plus d'espace pour la status bar
-    paddingBottom: 40,
-    paddingHorizontal: 20,
-    // Courbe plus prononcée selon le design
-    borderBottomLeftRadius: 60,
-    borderBottomRightRadius: 0,
-    // Ombre subtile pour la profondeur
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  headerTitle: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    textAlign: 'center',
-    letterSpacing: 0.5,
-  },
-  content: {
-    flex: 1,
-    paddingHorizontal: 24,
-    paddingTop: 50, // Plus d'espace depuis le header
-  },
-  buttonContainer: {
-    marginTop: 30,
-    marginBottom: 40,
-  },
-  signupContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  signupText: {
-    fontSize: 16,
-    color: '#6B7280',
-  },
-  signupLink: {
-    color: '#7c3aed',
-    fontWeight: '600',
-  },
-});
 
 export default LoginScreen;

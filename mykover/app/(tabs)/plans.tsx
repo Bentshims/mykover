@@ -13,7 +13,7 @@ import { router } from 'expo-router'
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view'
 import TopNavBarCustom from '../../components/TopNavBarCustom'
 import * as WebBrowser from 'expo-web-browser'
-import api from '@/services/api'
+import api from '../../services/api'
 import { Alert } from 'react-native'
 import { paymentService } from '../../services/paymentService'
 
@@ -117,7 +117,7 @@ export default function SubscriptionPlansScreen() {
               const verification = await paymentService.verifyPayment(response.data?.transaction_id || '')
               if (verification.success && verification.data?.status === 'COMPLETED') {
                 router.push({
-                  pathname: '/payment-success',
+                  pathname: '/payment-history',
                   params: {
                     transactionId: response.data?.transaction_id || '',
                     planName: plan.name,

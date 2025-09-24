@@ -5,7 +5,7 @@ import 'react-native-reanimated';
 import { View, ActivityIndicator } from 'react-native';
 import "../global.css";
 import { AuthProvider, useAuth } from '../src/contexts/AuthContext';
-import { useEffect, useState } from 'react';
+import { JSX, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useRouter } from 'expo-router';
 
@@ -54,14 +54,14 @@ function NavigationWrapper({ children }: { children: React.ReactNode }) {
 
 // This is the root layout component
 export default function RootLayout(): JSX.Element | null {
-  const [fontsLoaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+  // const [fontsLoaded] = useFonts({
+  //   SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+  // });
 
   // Don't render anything until fonts are loaded
-  if (!fontsLoaded) {
-    return null;
-  }
+  // if (!fontsLoaded) {
+  //   return null;
+  // }
 
   return (
     <AuthProvider>
@@ -70,7 +70,8 @@ export default function RootLayout(): JSX.Element | null {
           {/* Onboarding and Auth screens */}
           <Stack.Screen name="onboarding" />
           <Stack.Screen name="login" />
-          <Stack.Screen name="signup" />
+          <Stack.Screen name="SignupStep1Screen" />
+          <Stack.Screen name="SignupStep2Screen" />
           <Stack.Screen name="forgot-password" />
           
           {/* Main app screens */}
@@ -82,6 +83,7 @@ export default function RootLayout(): JSX.Element | null {
           <Stack.Screen name="payment" />
           <Stack.Screen name="payment-history" />
           <Stack.Screen name="payment-result" />
+          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
           <Stack.Screen name="+not-found" />
         </Stack>
         <StatusBar style="auto" />

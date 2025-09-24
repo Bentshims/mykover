@@ -87,7 +87,7 @@ export default function PaymentScreen() {
         if (verification.success && verification.data?.status === 'COMPLETED') {
           // Payment successful
           router.replace({
-            pathname: '/payment-success',
+            pathname: '/payment-history',
             params: {
               transactionId,
               planName,
@@ -171,12 +171,12 @@ export default function PaymentScreen() {
       <SafeAreaView className="flex-1 bg-white">
         <StatusBar barStyle="dark-content" backgroundColor="white" />
         
-        <View className="flex-1 items-center justify-center px-6">
+        <View className="items-center justify-center flex-1 px-6">
           <ActivityIndicator size="large" color="#8A4DFF" />
-          <Text className="mt-4 text-lg font-medium text-gray-700 text-center">
+          <Text className="mt-4 text-lg font-medium text-center text-gray-700">
             Vérification du paiement en cours...
           </Text>
-          <Text className="mt-2 text-sm text-gray-500 text-center">
+          <Text className="mt-2 text-sm text-center text-gray-500">
             Veuillez patienter pendant que nous confirmons votre paiement.
           </Text>
         </View>
@@ -199,10 +199,10 @@ export default function PaymentScreen() {
         </TouchableOpacity>
         
         <View className="flex-1 mx-4">
-          <Text className="text-lg font-semibold text-gray-900 text-center">
+          <Text className="text-lg font-semibold text-center text-gray-900">
             Paiement CinetPay
           </Text>
-          <Text className="text-sm text-gray-500 text-center">
+          <Text className="text-sm text-center text-gray-500">
             {planName} - {amount}$
           </Text>
         </View>
@@ -218,8 +218,8 @@ export default function PaymentScreen() {
 
       {/* Loading indicator */}
       {(loading || loadTimeout) && (
-        <View className="absolute top-20 left-0 right-0 z-10 items-center">
-          <View className="bg-white px-4 py-2 rounded-full shadow-md flex-row items-center">
+        <View className="absolute left-0 right-0 z-10 items-center top-20">
+          <View className="flex-row items-center px-4 py-2 bg-white rounded-full shadow-md">
             {loading && <ActivityIndicator size="small" color="#8A4DFF" />}
             <Text className="ml-2 text-sm text-gray-600">
               {loadTimeout ? 'Chargement lent...' : 'Chargement...'}
@@ -261,12 +261,12 @@ export default function PaymentScreen() {
           );
         }}
         renderError={(errorName) => (
-          <View className="flex-1 items-center justify-center px-6">
+          <View className="items-center justify-center flex-1 px-6">
             <Ionicons name="warning-outline" size={64} color="#EF4444" />
-            <Text className="mt-4 text-lg font-medium text-gray-700 text-center">
+            <Text className="mt-4 text-lg font-medium text-center text-gray-700">
               Erreur de chargement
             </Text>
-            <Text className="mt-2 text-sm text-gray-500 text-center">
+            <Text className="mt-2 text-sm text-center text-gray-500">
               {errorName || 'Une erreur est survenue lors du chargement de la page de paiement.'}
             </Text>
             <TouchableOpacity
@@ -274,7 +274,7 @@ export default function PaymentScreen() {
               className="mt-6 bg-[#8A4DFF] px-6 py-3 rounded-full"
               activeOpacity={0.8}
             >
-              <Text className="text-white font-medium">
+              <Text className="font-medium text-white">
                 Réessayer
               </Text>
             </TouchableOpacity>

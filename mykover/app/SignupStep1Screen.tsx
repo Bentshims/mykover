@@ -2,29 +2,25 @@ import React, { useState, useCallback, useMemo } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
   Alert
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList, SignupStep1Data, ValidationError } from '../types';
-import Input from '../components/Input';
-import PrimaryButton from '../components/PrimaryButton';
-import { validateSignupStep1Data } from '../utils/validation';
-import { sanitizeSignupData } from '../utils/sanitizer';
-
-type SignupStep1NavigationProp = StackNavigationProp<RootStackParamList, 'SignupStep1'>;
+import { useRouter } from 'expo-router';
+import { SignupStep1Data } from '../src/types';
+import Input from '../src/components/Input';
+import PrimaryButton from '../src/components/PrimaryButton';
+import { validateSignupStep1Data } from '../src/utils/validation';
+import { sanitizeSignupData } from '../src/utils/sanitizer';
 
 /**
  * Écran d'inscription étape 1 - Nom complet et numéro de téléphone
  * Design purple avec header courbe selon les spécifications exactes
  */
 const SignupStep1Screen: React.FC = () => {
-  const navigation = useNavigation<SignupStep1NavigationProp>();
+  const router = useRouter();
   
   // État du formulaire
   const [formData, setFormData] = useState<SignupStep1Data>({
@@ -76,11 +72,14 @@ const SignupStep1Screen: React.FC = () => {
       // Simuler un délai d'API
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Navigation vers l'étape 2 avec les données préservées
-      navigation.navigate('SignupStep2', { 
-        step1Data: {
-          fullName: sanitizedData.fullName,
-          phone: sanitizedData.phone
+      // Navigation vers l'étape 2 avec les données préservées  
+      router.push({
+        pathname: '/SignupStep2Screen',
+        params: {
+          step1Data: JSON.stringify({
+            fullName: sanitizedData.fullName,
+            phone: sanitizedData.phone
+          })
         }
       });
     } catch (error) {
@@ -88,32 +87,43 @@ const SignupStep1Screen: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [formData, navigation]);
+  }, [formData, router]);
 
   // Retour à la connexion
   const handleBack = useCallback(() => {
-    navigation.goBack();
-  }, [navigation]);
+    router.back();
+  }, [router]);
 
   return (
     <KeyboardAvoidingView 
-      style={styles.container}
+      className="flex-1 bg-white"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
+        <View className="flex-1 bg-white">
           {/* Header purple avec courbe selon le design exact */}
-          <View style={styles.header}>
-            <Text style={styles.headerTitle}>Inscription</Text>
+          <View 
+            className="bg-purple-600 pt-16 pb-10 px-5 rounded-bl-[60px]"
+            style={{
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.1,
+              shadowRadius: 3.84,
+              elevation: 5,
+            }}
+          >
+            <Text className="text-3xl font-bold tracking-wide text-center text-white">
+              Inscription
+            </Text>
           </View>
           
           {/* Contenu principal */}
-          <View style={styles.content}>
+          <View className="flex-1 px-6 pt-12">
             {/* Champ nom complet */}
             <Input
               label="Nom et Prenom"
               value={formData.fullName}
-              onChangeText={(text) => updateFormData('fullName', text)}
+              onChangeText={(text: string) => updateFormData('fullName', text)}
               placeholder="mon nom"
               keyboardType="default"
               error={errors.fullName}
@@ -125,7 +135,7 @@ const SignupStep1Screen: React.FC = () => {
             <Input
               label="Numero de telephone"
               value={formData.phone}
-              onChangeText={(text) => updateFormData('phone', text)}
+              onChangeText={(text: string) => updateFormData('phone', text)}
               placeholder="+243 80 0000000"
               keyboardType="phone-pad"
               error={errors.phone}
@@ -134,7 +144,7 @@ const SignupStep1Screen: React.FC = () => {
             />
             
             {/* Bouton suivant */}
-            <View style={styles.buttonContainer}>
+            <View className="mt-8 mb-10">
               <PrimaryButton
                 title="S'inscrire"
                 onPress={handleNext}
@@ -144,9 +154,9 @@ const SignupStep1Screen: React.FC = () => {
             </View>
             
             {/* Lien de retour */}
-            <View style={styles.backContainer}>
+            <View className="items-center mt-5">
               <Text 
-                style={styles.backLink}
+                className="text-base font-semibold text-purple-600"
                 onPress={handleBack}
               >
                 ← Retour à la connexion
@@ -158,55 +168,5 @@ const SignupStep1Screen: React.FC = () => {
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  header: {
-    backgroundColor: '#7c3aed',
-    paddingTop: 60, // Plus d'espace pour la status bar
-    paddingBottom: 40,
-    paddingHorizontal: 20,
-    // Courbe plus prononcée selon le design
-    borderBottomLeftRadius: 60,
-    borderBottomRightRadius: 0,
-    // Ombre subtile pour la profondeur
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  headerTitle: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    textAlign: 'center',
-    letterSpacing: 0.5,
-  },
-  content: {
-    flex: 1,
-    paddingHorizontal: 24,
-    paddingTop: 50, // Plus d'espace depuis le header
-  },
-  buttonContainer: {
-    marginTop: 30,
-    marginBottom: 40,
-  },
-  backContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  backLink: {
-    fontSize: 16,
-    color: '#7c3aed',
-    fontWeight: '600',
-  },
-});
 
 export default SignupStep1Screen;

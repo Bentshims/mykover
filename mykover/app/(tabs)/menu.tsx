@@ -11,8 +11,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useAuth } from '../../contexts/AuthContext';
-import api from '@/services/api';
+import { useAuth } from '../../src/contexts/AuthContext';
+import api from '../../services/api';
 
 interface UserProfile {
   id: number;
@@ -85,7 +85,7 @@ export default function MenuScreen() {
       id: 'hospitals',
       title: 'Partner Hospitals',
       icon: 'hospital',
-      onPress: () => router.push('/facility-details'),
+      onPress: () => router.push('/map'),
     },
     {
       id: 'support',

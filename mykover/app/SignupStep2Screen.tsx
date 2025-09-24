@@ -2,37 +2,32 @@ import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   KeyboardAvoidingView,
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
   Alert
 } from 'react-native';
-import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { useAuth } from '../contexts/AuthContext';
-import { RootStackParamList, SignupStep1Data, SignupStep2Data, ValidationError } from '../types';
-import Input from '../components/Input';
-import PrimaryButton from '../components/PrimaryButton';
-import { validateSignupStep2Data } from '../utils/validation';
-import { sanitizeSignupData } from '../utils/sanitizer';
-
-type SignupStep2NavigationProp = StackNavigationProp<RootStackParamList, 'SignupStep2'>;
-type SignupStep2RouteProp = RouteProp<RootStackParamList, 'SignupStep2'>;
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useAuth } from '../src/contexts/AuthContext';
+import { SignupStep1Data, SignupStep2Data } from '../src/types';
+import Input from '../src/components/Input';
+import PrimaryButton from '../src/components/PrimaryButton';
+import { validateSignupStep2Data } from '../src/utils/validation';
+import { sanitizeSignupData } from '../src/utils/sanitizer';
 
 /**
  * Écran d'inscription étape 2 - Email, date de naissance et mot de passe
  * Design purple avec header courbe selon les spécifications exactes
  */
 const SignupStep2Screen: React.FC = () => {
-  const navigation = useNavigation<SignupStep2NavigationProp>();
-  const route = useRoute<SignupStep2RouteProp>();
+  const router = useRouter();
+  const params = useLocalSearchParams();
   const { signup } = useAuth();
-  const { step1Data } = route.params;
+  const step1Data: SignupStep1Data = params.step1Data ? JSON.parse(params.step1Data as string) : { fullName: '', phone: '' };
   
-  // État du formulaire
-  const [formData, setFormData] = useState<SignupStep2Data>({
+  // État du formulaire  
+  const [formData, setFormData] = useState({
     email: '',
     dateOfBirth: '',
     password: ''
@@ -62,8 +57,7 @@ const SignupStep2Screen: React.FC = () => {
     // Validation des données de l'étape 2
     const validationErrors = validateSignupStep2Data({
       email: sanitizedData.email,
-      dateOfBirth: sanitizedData.dateOfBirth,
-      password: sanitizedData.password
+      dateOfBirth: sanitizedData.dateOfBirth
     });
     
     if (validationErrors.length > 0) {
@@ -113,29 +107,42 @@ const SignupStep2Screen: React.FC = () => {
 
   // Retour à l'étape précédente
   const handleBack = useCallback(() => {
-    navigation.goBack();
-  }, [navigation]);
+    router.back();
+  }, [router]);
 
   return (
     <KeyboardAvoidingView 
-      style={styles.container}
+      className="flex-1 bg-white"
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
+        <View className="flex-1 bg-white">
           {/* Header purple avec courbe selon le design exact */}
-          <View style={styles.header}>
-            <Text style={styles.headerTitle}>Inscription</Text>
-            <Text style={styles.headerSubtitle}>Étape 2 sur 2</Text>
+          <View 
+            className="bg-purple-600 pt-16 pb-10 px-5 rounded-bl-[60px]"
+            style={{
+              shadowColor: '#000',
+              shadowOffset: { width: 0, height: 2 },
+              shadowOpacity: 0.1,
+              shadowRadius: 3.84,
+              elevation: 5,
+            }}
+          >
+            <Text className="text-3xl font-bold tracking-wide text-center text-white">
+              Inscription
+            </Text>
+            <Text className="mt-2 text-base text-center text-white opacity-90">
+              Étape 2 sur 2
+            </Text>
           </View>
           
           {/* Contenu principal */}
-          <View style={styles.content}>
+          <View className="flex-1 px-6 pt-12">
             {/* Champ email */}
             <Input
               label="Email"
               value={formData.email}
-              onChangeText={(text) => updateFormData('email', text)}
+              onChangeText={(text: string) => updateFormData('email', text)}
               placeholder="email@gmail.com"
               keyboardType="email-address"
               error={errors.email}
@@ -147,7 +154,7 @@ const SignupStep2Screen: React.FC = () => {
             <Input
               label="Date de naissance"
               value={formData.dateOfBirth}
-              onChangeText={(text) => updateFormData('dateOfBirth', text)}
+              onChangeText={(text: string) => updateFormData('dateOfBirth', text)}
               placeholder="DD/MM/YYYY"
               keyboardType="default"
               error={errors.dateOfBirth}
@@ -159,7 +166,7 @@ const SignupStep2Screen: React.FC = () => {
             <Input
               label="Mot de passe"
               value={formData.password}
-              onChangeText={(text) => updateFormData('password', text)}
+              onChangeText={(text: string) => updateFormData('password', text)}
               placeholder="mon mot de passe"
               secureTextEntry={true}
               error={errors.password}
@@ -168,7 +175,7 @@ const SignupStep2Screen: React.FC = () => {
             />
             
             {/* Bouton de finalisation */}
-            <View style={styles.buttonContainer}>
+            <View className="mt-8 mb-10">
               <PrimaryButton
                 title="S'inscrire"
                 onPress={handleSubmit}
@@ -178,9 +185,9 @@ const SignupStep2Screen: React.FC = () => {
             </View>
             
             {/* Lien de retour */}
-            <View style={styles.backContainer}>
+            <View className="items-center mt-5">
               <Text 
-                style={styles.backLink}
+                className="text-base font-semibold text-purple-600"
                 onPress={handleBack}
               >
                 ← Retour à l'étape précédente
@@ -192,62 +199,5 @@ const SignupStep2Screen: React.FC = () => {
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  header: {
-    backgroundColor: '#7c3aed',
-    paddingTop: 60, // Plus d'espace pour la status bar
-    paddingBottom: 40,
-    paddingHorizontal: 20,
-    // Courbe plus prononcée selon le design
-    borderBottomLeftRadius: 60,
-    borderBottomRightRadius: 0,
-    // Ombre subtile pour la profondeur
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  headerTitle: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#ffffff',
-    textAlign: 'center',
-    letterSpacing: 0.5,
-  },
-  headerSubtitle: {
-    fontSize: 16,
-    color: '#ffffff',
-    textAlign: 'center',
-    marginTop: 4,
-    opacity: 0.9,
-  },
-  content: {
-    flex: 1,
-    paddingHorizontal: 24,
-    paddingTop: 50, // Plus d'espace depuis le header
-  },
-  buttonContainer: {
-    marginTop: 30,
-    marginBottom: 40,
-  },
-  backContainer: {
-    alignItems: 'center',
-    marginTop: 20,
-  },
-  backLink: {
-    fontSize: 16,
-    color: '#7c3aed',
-    fontWeight: '600',
-  },
-});
 
 export default SignupStep2Screen;

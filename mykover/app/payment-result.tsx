@@ -66,7 +66,7 @@ export default function PaymentResultScreen() {
           title: 'Erreur de paiement',
           description: 'Une erreur est survenue lors du traitement de votre paiement. Veuillez contacter le support.',
           buttonText: 'Contacter le support',
-          buttonAction: () => router.push('/support')
+          buttonAction: () => router.push('/menu')
         };
     }
   };
@@ -85,7 +85,7 @@ export default function PaymentResultScreen() {
     <SafeAreaView className="flex-1 bg-white">
       <StatusBar barStyle="dark-content" backgroundColor="white" />
       
-      <View className="flex-1 items-center justify-center px-6">
+      <View className="items-center justify-center flex-1 px-6">
         {/* Status Animation */}
         <Animated.View
           style={{
@@ -97,39 +97,39 @@ export default function PaymentResultScreen() {
         </Animated.View>
 
         {/* Status Message */}
-        <Text className="text-2xl font-bold text-gray-900 text-center mb-4">
+        <Text className="mb-4 text-2xl font-bold text-center text-gray-900">
           {config.title}
         </Text>
         
-        <Text className="text-base text-gray-600 text-center mb-8 leading-6">
+        <Text className="mb-8 text-base leading-6 text-center text-gray-600">
           {message || config.description}
         </Text>
 
         {/* Payment Details */}
-        <View className="w-full bg-gray-50 rounded-2xl p-6 mb-8">
-          <Text className="text-lg font-semibold text-gray-900 mb-4 text-center">
+        <View className="w-full p-6 mb-8 bg-gray-50 rounded-2xl">
+          <Text className="mb-4 text-lg font-semibold text-center text-gray-900">
             Détails de la transaction
           </Text>
           
           <View className="space-y-3">
-            <View className="flex-row justify-between items-center">
+            <View className="flex-row items-center justify-between">
               <Text className="text-gray-600">Plan</Text>
               <Text className="font-medium text-gray-900">{planName}</Text>
             </View>
             
-            <View className="flex-row justify-between items-center">
+            <View className="flex-row items-center justify-between">
               <Text className="text-gray-600">Montant</Text>
               <Text className="font-medium text-gray-900">{amount}$ USD</Text>
             </View>
             
-            <View className="flex-row justify-between items-center">
+            <View className="flex-row items-center justify-between">
               <Text className="text-gray-600">Transaction ID</Text>
-              <Text className="font-medium text-gray-900 text-xs">
+              <Text className="text-xs font-medium text-gray-900">
                 {transactionId}
               </Text>
             </View>
             
-            <View className="flex-row justify-between items-center">
+            <View className="flex-row items-center justify-between">
               <Text className="text-gray-600">Statut</Text>
               <View className="flex-row items-center">
                 <View className={`w-2 h-2 rounded-full mr-2 ${
@@ -158,17 +158,17 @@ export default function PaymentResultScreen() {
             className="w-full bg-[#8A4DFF] rounded-full py-4"
             activeOpacity={0.8}
           >
-            <Text className="text-white text-lg font-semibold text-center">
+            <Text className="text-lg font-semibold text-center text-white">
               {config.buttonText}
             </Text>
           </TouchableOpacity>
           
           <TouchableOpacity
             onPress={handleViewHistory}
-            className="w-full border border-gray-300 rounded-full py-4"
+            className="w-full py-4 border border-gray-300 rounded-full"
             activeOpacity={0.7}
           >
-            <Text className="text-gray-700 text-lg font-medium text-center">
+            <Text className="text-lg font-medium text-center text-gray-700">
               Voir l'historique
             </Text>
           </TouchableOpacity>
@@ -178,7 +178,7 @@ export default function PaymentResultScreen() {
             className="w-full"
             activeOpacity={0.7}
           >
-            <Text className="text-gray-500 text-base font-medium text-center">
+            <Text className="text-base font-medium text-center text-gray-500">
               Retour aux plans
             </Text>
           </TouchableOpacity>
@@ -186,10 +186,10 @@ export default function PaymentResultScreen() {
 
         {/* Additional Info */}
         {status === 'pending' && (
-          <View className="mt-8 p-4 bg-blue-50 rounded-xl">
+          <View className="p-4 mt-8 bg-blue-50 rounded-xl">
             <View className="flex-row items-start">
               <Ionicons name="information-circle" size={20} color="#3B82F6" className="mr-2 mt-0.5" />
-              <Text className="flex-1 text-sm text-blue-800 leading-5">
+              <Text className="flex-1 text-sm leading-5 text-blue-800">
                 Les paiements peuvent prendre quelques minutes à être traités. 
                 Vous recevrez une notification une fois le paiement confirmé.
               </Text>

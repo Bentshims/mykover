@@ -1,5 +1,5 @@
 import React, { memo, useCallback } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import { InputProps } from '../types';
 
 /**
@@ -24,18 +24,15 @@ const Input: React.FC<InputProps> = memo(({
   }, [onChangeText]);
 
   return (
-    <View style={styles.container}>
+    <View className="mb-5">
       {/* Label avec style selon le design */}
-      <Text style={styles.label}>
+      <Text className="text-base font-medium text-gray-700 mb-2">
         {label}
       </Text>
       
       {/* Input avec style purple et arrondi selon le design exact */}
       <TextInput
-        style={[
-          styles.input,
-          error && styles.inputError
-        ]}
+        className={`border ${error ? 'border-red-500 bg-red-50' : 'border-purple-500'} rounded-full px-4 py-3 text-base bg-white min-h-[48px]`}
         value={value}
         onChangeText={handleTextChange}
         placeholder={placeholder}
@@ -53,44 +50,12 @@ const Input: React.FC<InputProps> = memo(({
       
       {/* Message d'erreur avec style rouge */}
       {error && (
-        <Text style={styles.errorText}>
+        <Text className="text-red-500 text-sm mt-1 ml-1">
           {error}
         </Text>
       )}
     </View>
   );
-});
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 20,
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#374151',
-    marginBottom: 8,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#7c3aed',
-    borderRadius: 25,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    fontSize: 16,
-    backgroundColor: '#ffffff',
-    minHeight: 48,
-  },
-  inputError: {
-    borderColor: '#EF4444',
-    backgroundColor: '#FEF2F2',
-  },
-  errorText: {
-    color: '#EF4444',
-    fontSize: 14,
-    marginTop: 4,
-    marginLeft: 4,
-  },
 });
 
 Input.displayName = 'Input';

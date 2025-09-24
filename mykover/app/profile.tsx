@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, ScrollView, Alert, ActivityIndicator, Ref
 import { router } from 'expo-router';
 import { FontAwesome6, MaterialIcons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import api from '@/services/api';
+import api from '../services/api';
 
 interface UserProfile {
   id: number;
@@ -70,9 +70,9 @@ export default function ProfileScreen() {
   if (loading) {
     return (
       <SafeAreaView className="flex-1 bg-gray-50">
-        <View className="flex-1 justify-center items-center">
+        <View className="items-center justify-center flex-1">
           <ActivityIndicator size="large" color="#007AFF" />
-          <Text className="text-gray-600 mt-4">Chargement du profil...</Text>
+          <Text className="mt-4 text-gray-600">Chargement du profil...</Text>
         </View>
       </SafeAreaView>
     );
@@ -81,7 +81,7 @@ export default function ProfileScreen() {
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
       {/* Header */}
-      <View className="bg-white px-4 py-4 border-b border-gray-100 flex-row items-center">
+      <View className="flex-row items-center px-4 py-4 bg-white border-b border-gray-100">
         <TouchableOpacity onPress={() => router.back()} className="mr-4">
           <FontAwesome6 name="arrow-left" size={20} color="#374151" />
         </TouchableOpacity>
@@ -96,9 +96,9 @@ export default function ProfileScreen() {
         }
       >
         {/* Profile Header */}
-        <View className="bg-white mx-4 mt-4 rounded-xl p-6 border border-gray-100">
+        <View className="p-6 mx-4 mt-4 bg-white border border-gray-100 rounded-xl">
           <View className="items-center mb-6">
-            <View className="w-20 h-20 bg-blue-100 rounded-full items-center justify-center mb-4">
+            <View className="items-center justify-center w-20 h-20 mb-4 bg-blue-100 rounded-full">
               <FontAwesome6 name="user" size={32} color="#007AFF" />
             </View>
             <Text className="text-2xl font-bold text-gray-900">{profile?.fullName}</Text>
@@ -116,65 +116,65 @@ export default function ProfileScreen() {
         </View>
 
         {/* Personal Information */}
-        <View className="bg-white mx-4 mt-4 rounded-xl border border-gray-100">
+        <View className="mx-4 mt-4 bg-white border border-gray-100 rounded-xl">
           <View className="p-4 border-b border-gray-100">
             <Text className="text-lg font-bold text-gray-900">Informations Personnelles</Text>
           </View>
           
           <View className="p-4 space-y-4">
-            <View className="flex-row justify-between items-center py-2">
+            <View className="flex-row items-center justify-between py-2">
               <Text className="text-gray-600">Nom complet</Text>
               <Text className="font-medium text-gray-900">{profile?.fullName}</Text>
             </View>
             
-            <View className="flex-row justify-between items-center py-2">
+            <View className="flex-row items-center justify-between py-2">
               <Text className="text-gray-600">Email</Text>
               <Text className="font-medium text-gray-900">{profile?.email}</Text>
             </View>
             
-            <View className="flex-row justify-between items-center py-2">
+            <View className="flex-row items-center justify-between py-2">
               <Text className="text-gray-600">Téléphone</Text>
               <Text className="font-medium text-gray-900">{profile?.phoneNumber}</Text>
             </View>
             
-            <View className="flex-row justify-between items-center py-2">
+            <View className="flex-row items-center justify-between py-2">
               <Text className="text-gray-600">UID Utilisateur</Text>
-              <Text className="font-medium text-gray-900 text-xs">{profile?.userUid}</Text>
+              <Text className="text-xs font-medium text-gray-900">{profile?.userUid}</Text>
             </View>
           </View>
         </View>
 
         {/* Insurance Information */}
-        <View className="bg-white mx-4 mt-4 rounded-xl border border-gray-100">
+        <View className="mx-4 mt-4 bg-white border border-gray-100 rounded-xl">
           <View className="p-4 border-b border-gray-100">
             <Text className="text-lg font-bold text-gray-900">Informations d'Assurance</Text>
           </View>
           
           <View className="p-4 space-y-4">
-            <View className="flex-row justify-between items-center py-2">
+            <View className="flex-row items-center justify-between py-2">
               <Text className="text-gray-600">Statut</Text>
               <View className={`px-3 py-1 rounded-full ${profile?.isActive ? 'bg-green-500' : 'bg-red-500'}`}>
-                <Text className="text-white text-xs font-bold">
+                <Text className="text-xs font-bold text-white">
                   {profile?.insuranceStatus}
                 </Text>
               </View>
             </View>
             
             {profile?.policyNumber && (
-              <View className="flex-row justify-between items-center py-2">
+              <View className="flex-row items-center justify-between py-2">
                 <Text className="text-gray-600">Numéro de Police</Text>
-                <Text className="font-medium text-gray-900 text-xs">{profile.policyNumber}</Text>
+                <Text className="text-xs font-medium text-gray-900">{profile.policyNumber}</Text>
               </View>
             )}
             
             {profile?.activeUntil && (
-              <View className="flex-row justify-between items-center py-2">
+              <View className="flex-row items-center justify-between py-2">
                 <Text className="text-gray-600">Active jusqu'au</Text>
                 <Text className="font-medium text-gray-900">{formatDate(profile.activeUntil)}</Text>
               </View>
             )}
             
-            <View className="flex-row justify-between items-center py-2">
+            <View className="flex-row items-center justify-between py-2">
               <Text className="text-gray-600">Membre depuis</Text>
               <Text className="font-medium text-gray-900">{formatDate(profile?.createdAt || '')}</Text>
             </View>
@@ -184,7 +184,7 @@ export default function ProfileScreen() {
         {/* Action Buttons */}
         <View className="mx-4 mt-6 space-y-3">
           <TouchableOpacity 
-            className="bg-white rounded-xl p-4 border border-gray-100 flex-row items-center justify-between"
+            className="flex-row items-center justify-between p-4 bg-white border border-gray-100 rounded-xl"
             onPress={() => router.push('/settings')}
           >
             <View className="flex-row items-center">
@@ -195,7 +195,7 @@ export default function ProfileScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity 
-            className="bg-white rounded-xl p-4 border border-gray-100 flex-row items-center justify-between"
+            className="flex-row items-center justify-between p-4 bg-white border border-gray-100 rounded-xl"
             onPress={() => router.push('/payment-history')}
           >
             <View className="flex-row items-center">
@@ -206,7 +206,7 @@ export default function ProfileScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity 
-            className="bg-white rounded-xl p-4 border border-gray-100 flex-row items-center justify-between"
+            className="flex-row items-center justify-between p-4 bg-white border border-gray-100 rounded-xl"
             onPress={() => Alert.alert('Info', 'Fonctionnalité en développement')}
           >
             <View className="flex-row items-center">
@@ -217,7 +217,7 @@ export default function ProfileScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity 
-            className="bg-white rounded-xl p-4 border border-gray-100 flex-row items-center justify-between"
+            className="flex-row items-center justify-between p-4 bg-white border border-gray-100 rounded-xl"
             onPress={() => Alert.alert('Info', 'Fonctionnalité en développement')}
           >
             <View className="flex-row items-center">
