@@ -1,5 +1,11 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Types for authentication
 export interface User {
@@ -24,10 +30,11 @@ export interface AuthContextType extends AuthState {
 }
 
 export interface SignupData {
-  fullName: string;
+  fullname: string; // Correspond au backend: fullname
   email: string;
-  phoneNumber: string;
+  phone: string; // Correspond au backend: phone
   password: string;
+  birth_date: string; // Correspond au backend: birth_date (YYYY-MM-DD)
 }
 
 // Create the context
@@ -48,9 +55,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const checkAuthStatus = async () => {
     try {
-      const token = await AsyncStorage.getItem('auth_token');
-      const userData = await AsyncStorage.getItem('user_data');
-      
+      const token = await AsyncStorage.getItem("auth_token");
+      const userData = await AsyncStorage.getItem("user_data");
+
       if (token && userData) {
         setAuthState({
           isAuthenticated: true,
@@ -65,7 +72,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         });
       }
     } catch (error) {
-      console.error('Error checking auth status:', error);
+      console.error("Error checking auth status:", error);
       setAuthState({
         isAuthenticated: false,
         user: null,
@@ -79,19 +86,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // TODO: Replace with actual API call
       // For now, simulate successful login
       const mockUser: User = {
-        id: '1',
-        fullName: 'John Doe',
+        id: "1",
+        fullName: "John Doe",
         email: email,
-        phoneNumber: '+243000000000',
+        phoneNumber: "+243000000000",
         isActive: true,
       };
 
-      const mockToken = 'mock_token_' + Date.now();
-      
+      const mockToken = "mock_token_" + Date.now();
+
       // Save to AsyncStorage
-      await AsyncStorage.setItem('auth_token', mockToken);
-      await AsyncStorage.setItem('user_data', JSON.stringify(mockUser));
-      
+      await AsyncStorage.setItem("auth_token", mockToken);
+      await AsyncStorage.setItem("user_data", JSON.stringify(mockUser));
+
       setAuthState({
         isAuthenticated: true,
         user: mockUser,
@@ -100,7 +107,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       return true;
     } catch (error) {
-      console.error('Login error:', error);
+      console.error("Login error:", error);
       return false;
     }
   };
@@ -110,19 +117,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // TODO: Replace with actual API call
       // For now, simulate successful signup
       const mockUser: User = {
-        id: '1',
-        fullName: userData.fullName,
+        id: "1",
+        fullName: userData.fullname,
         email: userData.email,
-        phoneNumber: userData.phoneNumber,
+        phoneNumber: userData.phone,
         isActive: true,
       };
 
-      const mockToken = 'mock_token_' + Date.now();
-      
+      const mockToken = "mock_token_" + Date.now();
+
       // Save to AsyncStorage
-      await AsyncStorage.setItem('auth_token', mockToken);
-      await AsyncStorage.setItem('user_data', JSON.stringify(mockUser));
-      
+      await AsyncStorage.setItem("auth_token", mockToken);
+      await AsyncStorage.setItem("user_data", JSON.stringify(mockUser));
+
       setAuthState({
         isAuthenticated: true,
         user: mockUser,
@@ -131,23 +138,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       return true;
     } catch (error) {
-      console.error('Signup error:', error);
+      console.error("Signup error:", error);
       return false;
     }
   };
 
   const logout = async () => {
     try {
-      await AsyncStorage.removeItem('auth_token');
-      await AsyncStorage.removeItem('user_data');
-      
+      await AsyncStorage.removeItem("auth_token");
+      await AsyncStorage.removeItem("user_data");
+
       setAuthState({
         isAuthenticated: false,
         user: null,
         isLoading: false,
       });
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error("Logout error:", error);
     }
   };
 
@@ -159,18 +166,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     checkAuthStatus,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 // Custom hook to use auth context
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
-} 
+}
