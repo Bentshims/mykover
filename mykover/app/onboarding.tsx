@@ -1,4 +1,3 @@
-
 import {
   View,
   Text,
@@ -6,13 +5,13 @@ import {
   Dimensions,
   TouchableOpacity,
   Animated,
-} from 'react-native';
-import { useState, useRef } from 'react';
-import { useRouter } from 'expo-router';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { onboardingScreens } from '../lib/onboardingData';
+} from "react-native";
+import { useState, useRef } from "react";
+import { useRouter } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { onboardingScreens } from "../lib/onboardingData";
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 export default function Onboarding() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -26,15 +25,15 @@ export default function Onboarding() {
       setCurrentIndex((prev) => prev + 1);
     } else {
       // Mark onboarding as seen and go directly to home
-      await AsyncStorage.setItem('hasSeenOnboarding', 'true');
-      router.replace('/(tabs)/home');
+      await AsyncStorage.setItem("hasSeenOnboarding", "true");
+      router.replace("/SignupStep1Screen");
     }
   };
 
   const handleSkip = async () => {
     // Mark onboarding as seen and go directly to home
-    await AsyncStorage.setItem('hasSeenOnboarding', 'true');
-    router.replace('/(tabs)/home');
+    await AsyncStorage.setItem("hasSeenOnboarding", "true");
+    router.replace("/SignupStep1Screen");
   };
 
   return (
@@ -62,7 +61,10 @@ export default function Onboarding() {
         )}
         scrollEventThrottle={16}
         renderItem={({ item, index }) => (
-          <View className="items-center justify-center flex-1 px-8" style={{ width }}>
+          <View
+            className="items-center justify-center flex-1 px-8"
+            style={{ width }}
+          >
             <Animated.View
               style={{
                 opacity: scrollX.interpolate({
@@ -72,7 +74,7 @@ export default function Onboarding() {
                     (index + 1) * width,
                   ],
                   outputRange: [0, 1, 0],
-                  extrapolate: 'clamp',
+                  extrapolate: "clamp",
                 }),
                 transform: [
                   {
@@ -83,7 +85,7 @@ export default function Onboarding() {
                         (index + 1) * width,
                       ],
                       outputRange: [0.9, 1, 0.9],
-                      extrapolate: 'clamp',
+                      extrapolate: "clamp",
                     }),
                   },
                 ],
@@ -111,7 +113,7 @@ export default function Onboarding() {
                         (index + 1) * width,
                       ],
                       outputRange: [0, 1, 0],
-                      extrapolate: 'clamp',
+                      extrapolate: "clamp",
                     }),
                     transform: [
                       {
@@ -122,7 +124,7 @@ export default function Onboarding() {
                             (index + 1) * width,
                           ],
                           outputRange: [0.9, 1, 0.9],
-                          extrapolate: 'clamp',
+                          extrapolate: "clamp",
                         }),
                       },
                     ],
@@ -152,13 +154,13 @@ export default function Onboarding() {
           const dotWidth = scrollX.interpolate({
             inputRange,
             outputRange: [8, 24, 8],
-            extrapolate: 'clamp',
+            extrapolate: "clamp",
           });
 
           const backgroundColor = scrollX.interpolate({
             inputRange,
-            outputRange: ['#E5E7EB', '#8B5CF6', '#E5E7EB'],
-            extrapolate: 'clamp',
+            outputRange: ["#E5E7EB", "#8B5CF6", "#E5E7EB"],
+            extrapolate: "clamp",
           });
 
           return (
@@ -186,11 +188,10 @@ export default function Onboarding() {
           <Text className="text-lg font-bold text-center text-white">
             {currentIndex === onboardingScreens.length - 1
               ? "Commencer"
-              : 'Suivant'}
+              : "Suivant"}
           </Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 }
-    

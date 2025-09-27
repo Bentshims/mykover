@@ -1,19 +1,21 @@
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-import { View, ActivityIndicator } from 'react-native';
+import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import "react-native-reanimated";
+import { View, ActivityIndicator } from "react-native";
 import "../global.css";
-import { AuthProvider, useAuth } from '../src/contexts/AuthContext';
-import { JSX, useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useRouter } from 'expo-router';
+import { AuthProvider, useAuth } from "../src/contexts/AuthContext";
+import { JSX, useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRouter } from "expo-router";
 
 // Navigation wrapper component
 function NavigationWrapper({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
-  const [hasSeenOnboarding, setHasSeenOnboarding] = useState<boolean | null>(null);
+  const [hasSeenOnboarding, setHasSeenOnboarding] = useState<boolean | null>(
+    null
+  );
 
   useEffect(() => {
     checkOnboardingStatus();
@@ -23,20 +25,23 @@ function NavigationWrapper({ children }: { children: React.ReactNode }) {
     if (hasSeenOnboarding !== null && !isLoading) {
       if (!hasSeenOnboarding) {
         // First time user - show onboarding
-        router.replace('/onboarding');
+        router.replace("/onboarding");
+      } else if (isAuthenticated) {
+        // Authenticated user - go to home
+        router.replace("/(tabs)/home");
       } else {
-        // Returning user - go directly to home (no auth required for now)
-        router.replace('/(tabs)/home');
+        // User has seen onboarding but not authenticated - go to login
+        router.replace("/login");
       }
     }
-  }, [hasSeenOnboarding, isLoading, router]);
+  }, [hasSeenOnboarding, isLoading, isAuthenticated, router]);
 
   const checkOnboardingStatus = async () => {
     try {
-      const hasSeen = await AsyncStorage.getItem('hasSeenOnboarding');
-      setHasSeenOnboarding(hasSeen === 'true');
+      const hasSeen = await AsyncStorage.getItem("hasSeenOnboarding");
+      setHasSeenOnboarding(hasSeen === "true");
     } catch (error) {
-      console.error('Error checking onboarding status:', error);
+      console.error("Error checking onboarding status:", error);
       setHasSeenOnboarding(false);
     }
   };
@@ -73,17 +78,17 @@ export default function RootLayout(): JSX.Element | null {
           <Stack.Screen name="SignupStep1Screen" />
           <Stack.Screen name="SignupStep2Screen" />
           <Stack.Screen name="forgot-password" />
-          
+
           {/* Main app screens */}
           <Stack.Screen name="(tabs)" />
-          
+
           {/* Other screens */}
           <Stack.Screen name="profile" />
           <Stack.Screen name="settings" />
           <Stack.Screen name="payment" />
           <Stack.Screen name="payment-history" />
           <Stack.Screen name="payment-result" />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
           <Stack.Screen name="+not-found" />
         </Stack>
         <StatusBar style="auto" />

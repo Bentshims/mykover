@@ -1,52 +1,52 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   StatusBar,
   ScrollView,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
-import { router } from 'expo-router';
-import { useAuth } from '../../src/contexts/AuthContext';
-import TopNavBarCustom from '../../components/TopNavBarCustom';
+} from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import { useAuth } from "../../src/contexts/AuthContext";
+import TopNavBarCustom from "../../components/TopNavBarCustom";
 
 // Mock data for stats and recent activity
 const mockStats = {
-  activePlan: 'Premium Plus',
-  coverage: '85%',
-  nextPayment: '15 Jan 2024',
-  remainingBudget: '$450',
+  activePlan: "Premium Plus",
+  coverage: "85%",
+  nextPayment: "15 Jan 2024",
+  remainingBudget: "$450",
 };
 
 const mockRecentActivity = [
   {
-    id: '1',
-    type: 'consultation',
-    title: 'Consultation générale',
-    location: 'Clinique Ngaliema',
-    date: '2024-01-10',
-    amount: '$25',
-    status: 'completed',
+    id: "1",
+    type: "consultation",
+    title: "Consultation générale",
+    location: "Clinique Ngaliema",
+    date: "2024-01-10",
+    amount: "$25",
+    status: "completed",
   },
   {
-    id: '2',
-    type: 'payment',
-    title: 'Paiement plan Premium',
-    location: 'MyKover',
-    date: '2024-01-08',
-    amount: '$50',
-    status: 'completed',
+    id: "2",
+    type: "payment",
+    title: "Paiement plan Premium",
+    location: "MyKover",
+    date: "2024-01-08",
+    amount: "$50",
+    status: "completed",
   },
   {
-    id: '3',
-    type: 'pharmacy',
-    title: 'Médicaments prescrits',
-    location: 'Pharmacie du Peuple',
-    date: '2024-01-05',
-    amount: '$15',
-    status: 'pending',
+    id: "3",
+    type: "pharmacy",
+    title: "Médicaments prescrits",
+    location: "Pharmacie du Peuple",
+    date: "2024-01-05",
+    amount: "$15",
+    status: "pending",
   },
 ];
 
@@ -55,19 +55,19 @@ export default function HomeScreen() {
 
   // Navigation handlers
   const handleInsuranceNavigation = () => {
-    router.push('/(tabs)/plans');
+    router.push("/(tabs)/plans");
   };
 
   const handleMapNavigation = () => {
-    router.push('/(tabs)/map');
+    router.push("/(tabs)/map");
   };
 
   const handlePaymentNavigation = () => {
-    router.push('/payment');
+    router.push("/payment");
   };
 
   const handleHistoryNavigation = () => {
-    router.push('/payment-history');
+    router.push("/payment-history");
   };
 
   const handleNotificationPress = () => {
@@ -76,34 +76,42 @@ export default function HomeScreen() {
 
   const handleAvatarPress = () => {
     if (isAuthenticated) {
-      router.push('/(tabs)/menu');
+      router.push("/(tabs)/menu");
     } else {
-      router.push('/login');
+      router.push("/login");
     }
   };
 
   const getActivityIcon = (type: string) => {
     switch (type) {
-      case 'consultation': return 'medical';
-      case 'payment': return 'card';
-      case 'pharmacy': return 'medical';
-      default: return 'receipt';
+      case "consultation":
+        return "medical";
+      case "payment":
+        return "card";
+      case "pharmacy":
+        return "medical";
+      default:
+        return "receipt";
     }
   };
 
   const getActivityColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'text-green-600';
-      case 'pending': return 'text-orange-600';
-      case 'failed': return 'text-red-600';
-      default: return 'text-gray-600';
+      case "completed":
+        return "text-green-600";
+      case "pending":
+        return "text-orange-600";
+      case "failed":
+        return "text-red-600";
+      default:
+        return "text-gray-600";
     }
   };
 
   return (
     <SafeAreaView className="flex-1 bg-white">
       <StatusBar barStyle="light-content" backgroundColor="#7c3aed" />
-      
+
       {/* Custom Top Navigation */}
       <TopNavBarCustom
         onAvatarPress={handleAvatarPress}
@@ -117,13 +125,12 @@ export default function HomeScreen() {
           {/* Welcome Section */}
           <View className="mb-8">
             <Text className="mb-2 text-3xl font-bold text-gray-900">
-              Bonjour{user ? `, ${user.fullName.split(' ')[0]}` : ''} ! 👋
+              Bonjour{user ? `, ${user.fullName.split(" ")[0]}` : ""} ! 👋
             </Text>
             <Text className="text-base leading-6 text-gray-600">
-              {isAuthenticated 
-                ? 'Gérez votre assurance santé en toute simplicité'
-                : 'Découvrez MyKover, votre assurance santé digitale'
-              }
+              {isAuthenticated
+                ? "Gérez votre assurance santé en toute simplicité"
+                : "Découvrez MyKover, votre assurance santé digitale"}
             </Text>
           </View>
 
@@ -138,7 +145,9 @@ export default function HomeScreen() {
                   <Ionicons name="shield-checkmark" size={24} color="white" />
                   <Text className="text-xs text-purple-100">ACTIF</Text>
                 </View>
-                <Text className="text-lg font-bold text-white">{mockStats.activePlan}</Text>
+                <Text className="text-lg font-bold text-white">
+                  {mockStats.activePlan}
+                </Text>
                 <Text className="text-sm text-purple-100">Plan actuel</Text>
               </View>
 
@@ -147,7 +156,9 @@ export default function HomeScreen() {
                   <Ionicons name="pie-chart" size={24} color="white" />
                   <Text className="text-xs text-blue-100">COUVERTURE</Text>
                 </View>
-                <Text className="text-lg font-bold text-white">{mockStats.coverage}</Text>
+                <Text className="text-lg font-bold text-white">
+                  {mockStats.coverage}
+                </Text>
                 <Text className="text-sm text-blue-100">Utilisé ce mois</Text>
               </View>
 
@@ -156,7 +167,9 @@ export default function HomeScreen() {
                   <Ionicons name="wallet" size={24} color="white" />
                   <Text className="text-xs text-green-100">BUDGET</Text>
                 </View>
-                <Text className="text-lg font-bold text-white">{mockStats.remainingBudget}</Text>
+                <Text className="text-lg font-bold text-white">
+                  {mockStats.remainingBudget}
+                </Text>
                 <Text className="text-sm text-green-100">Restant</Text>
               </View>
 
@@ -165,7 +178,9 @@ export default function HomeScreen() {
                   <Ionicons name="calendar" size={24} color="white" />
                   <Text className="text-xs text-orange-100">PROCHAIN</Text>
                 </View>
-                <Text className="text-lg font-bold text-white">{mockStats.nextPayment}</Text>
+                <Text className="text-lg font-bold text-white">
+                  {mockStats.nextPayment}
+                </Text>
                 <Text className="text-sm text-orange-100">Paiement</Text>
               </View>
             </View>
@@ -183,7 +198,11 @@ export default function HomeScreen() {
               >
                 <View className="items-center">
                   <View className="items-center justify-center w-12 h-12 mb-3 bg-purple-100 rounded-full">
-                    <Ionicons name="shield-checkmark" size={24} color="#7c3aed" />
+                    <Ionicons
+                      name="shield-checkmark"
+                      size={24}
+                      color="#7c3aed"
+                    />
                   </View>
                   <Text className="text-sm font-semibold text-center text-purple-900">
                     Mes Plans
@@ -251,14 +270,16 @@ export default function HomeScreen() {
                 <TouchableOpacity
                   key={activity.id}
                   className="p-4 bg-white border border-gray-200 rounded-xl"
-                  onPress={() => {/* Navigate to activity detail */}}
+                  onPress={() => {
+                    /* Navigate to activity detail */
+                  }}
                 >
                   <View className="flex-row items-center">
                     <View className="items-center justify-center w-10 h-10 mr-3 bg-gray-100 rounded-full">
-                      <Ionicons 
-                        name={getActivityIcon(activity.type) as any} 
-                        size={20} 
-                        color="#6b7280" 
+                      <Ionicons
+                        name={getActivityIcon(activity.type) as any}
+                        size={20}
+                        color="#6b7280"
                       />
                     </View>
                     <View className="flex-1">
@@ -273,9 +294,16 @@ export default function HomeScreen() {
                       <Text className="font-bold text-gray-900">
                         {activity.amount}
                       </Text>
-                      <Text className={`text-xs font-medium ${getActivityColor(activity.status)}`}>
-                        {activity.status === 'completed' ? 'Terminé' : 
-                         activity.status === 'pending' ? 'En cours' : 'Échoué'}
+                      <Text
+                        className={`text-xs font-medium ${getActivityColor(
+                          activity.status
+                        )}`}
+                      >
+                        {activity.status === "completed"
+                          ? "Terminé"
+                          : activity.status === "pending"
+                          ? "En cours"
+                          : "Échoué"}
                       </Text>
                     </View>
                   </View>
@@ -293,11 +321,12 @@ export default function HomeScreen() {
                   Connectez-vous pour plus de fonctionnalités
                 </Text>
                 <Text className="mt-2 text-sm text-center text-purple-700">
-                  Accédez à votre profil, gérez vos abonnements et suivez vos paiements
+                  Accédez à votre profil, gérez vos abonnements et suivez vos
+                  paiements
                 </Text>
                 <TouchableOpacity
                   className="px-6 py-3 mt-4 bg-purple-600 rounded-full"
-                  onPress={() => router.push('/login')}
+                  onPress={() => router.push("/login")}
                 >
                   <Text className="font-semibold text-white">Se connecter</Text>
                 </TouchableOpacity>
