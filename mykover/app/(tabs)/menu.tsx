@@ -173,15 +173,6 @@ export default function MenuScreen() {
         {menuItems.map((item) => (
           <MenuItem key={item.id} item={item} />
         ))}
-
-        {/* Logout Button */}
-        <TouchableOpacity
-          className="flex-row items-center justify-center p-4 mt-4 mb-8 border border-red-100 shadow-sm bg-red-50 rounded-xl"
-          onPress={handleLogout}
-        >
-          <FontAwesome6 name="right-from-bracket" size={18} color="#EF4444" className="mr-3" />
-          <Text className="ml-3 text-base font-semibold text-red-600">Déconnexion</Text>
-        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
