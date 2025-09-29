@@ -26,14 +26,14 @@ export default function Onboarding() {
     } else {
       // Mark onboarding as seen and go directly to home
       await AsyncStorage.setItem("hasSeenOnboarding", "true");
-      router.replace("/SignupStep1Screen");
+      router.replace("/signup");
     }
   };
 
   const handleSkip = async () => {
     // Mark onboarding as seen and go directly to home
     await AsyncStorage.setItem("hasSeenOnboarding", "true");
-    router.replace("/SignupStep1Screen");
+    router.replace("/signup");
   };
 
   return (

@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Create axios instance
 const api = axios.create({
-  baseURL: 'https://api.mykover.cd', // Replace with your actual API URL
+  baseURL: 'http://localhost:3333', // URL du backend AdonisJS
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',

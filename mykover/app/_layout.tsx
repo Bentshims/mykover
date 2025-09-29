@@ -75,8 +75,7 @@ export default function RootLayout(): JSX.Element | null {
           {/* Onboarding and Auth screens */}
           <Stack.Screen name="onboarding" />
           <Stack.Screen name="login" />
-          <Stack.Screen name="SignupStep1Screen" />
-          <Stack.Screen name="SignupStep2Screen" />
+          <Stack.Screen name="signup" />
           <Stack.Screen name="forgot-password" />
 
           {/* Main app screens */}

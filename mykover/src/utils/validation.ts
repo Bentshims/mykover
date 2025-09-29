@@ -52,7 +52,7 @@ export const validateFullName = (fullName: string): boolean => {
 };
 
 /**
- * Valide un numéro de téléphone - doit commencer par +243, numérique seulement, 9-12 chiffres
+ * Valide un numéro de téléphone RDC - doit être +243[89]XXXXXXXX (exactement 13 caractères)
  * @param phone - Le numéro de téléphone à valider
  * @returns true si valide, false sinon
  */
@@ -64,20 +64,9 @@ export const validatePhone = (phone: string): boolean => {
   // Nettoyer le numéro (supprimer les espaces)
   const cleanPhone = phone.replace(/\s/g, '');
   
-  // Vérifier qu'il commence par +243
-  if (!cleanPhone.startsWith('+243')) {
-    return false;
-  }
-  
-  // Vérifier que le reste est numérique
-  const numericPart = cleanPhone.substring(4);
-  if (!/^\d+$/.test(numericPart)) {
-    return false;
-  }
-  
-  // Vérifier la longueur totale (9-12 chiffres après +243)
-  const totalDigits = cleanPhone.length - 1; // -1 pour le +
-  return totalDigits >= 9 && totalDigits <= 12;
+  // Validation avec regex: +243 suivi de 8 ou 9, puis exactement 8 chiffres
+  const phoneRegex = /^\+243[89]\d{8}$/;
+  return phoneRegex.test(cleanPhone);
 };
 
 /**
@@ -150,7 +139,7 @@ export const validateLoginData = (data: LoginData): ValidationError[] => {
   if (!validatePhone(data.phone)) {
     errors.push({
       field: 'phone',
-      message: 'Le numéro de téléphone doit commencer par +243 et contenir 9-12 chiffres'
+      message: 'Le numéro doit être +243 suivi de 8 ou 9, puis 8 chiffres (ex: +2438123456789)'
     });
   }
   
@@ -182,7 +171,7 @@ export const validateSignupStep1Data = (data: SignupStep1Data): ValidationError[
   if (!validatePhone(data.phone)) {
     errors.push({
       field: 'phone',
-      message: 'Le numéro de téléphone doit commencer par +243 et contenir 9-12 chiffres'
+      message: 'Le numéro doit être +243 suivi de 8 ou 9, puis 8 chiffres (ex: +2438123456789)'
     });
   }
   
