@@ -1,12 +1,7 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StatusBar,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
+import React from "react";
+import { View, Text, TouchableOpacity, StatusBar } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
 
 interface TopNavBarCustomProps {
   onAvatarPress: () => void;
@@ -32,9 +27,7 @@ export default function TopNavBarCustom({
         </TouchableOpacity>
 
         {/* Title */}
-        <Text className="text-lg font-semibold text-gray-900">
-          MyKover
-        </Text>
+        <Text className="text-lg font-semibold text-gray-900">Acceuil</Text>
 
         {/* Right side buttons */}
         <View className="flex-row items-center space-x-3">
@@ -47,7 +40,7 @@ export default function TopNavBarCustom({
             {notificationCount > 0 && (
               <View className="absolute items-center justify-center w-5 h-5 bg-red-500 rounded-full -top-1 -right-1">
                 <Text className="text-xs font-bold text-white">
-                  {notificationCount > 9 ? '9+' : notificationCount}
+                  {notificationCount > 9 ? "9+" : notificationCount}
                 </Text>
               </View>
             )}
@@ -56,4 +49,4 @@ export default function TopNavBarCustom({
       </View>
     </SafeAreaView>
   );
-} 
+}
