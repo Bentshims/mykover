@@ -11,167 +11,101 @@ import { router } from 'expo-router';
 
 export default function TermsConditionsScreen() {
   const sections = [
-    {
-      id: '1',
-      title: '1. Acceptation des conditions',
-      content: `En utilisant l'application MyKover, vous acceptez d'être lié par ces conditions d'utilisation. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser notre service.
+    `Le service MyKover vous est fourni dans les Termes et Conditions suivants. En utilisant ce Service, vous marquez votre adhésion aux Termes et Conditions présents.`,
+    
+    `Sous réserve de l'article 6, l'accès de base à MyKover est fourni sans frais. Cependant, pour bénéficier des avantages liés à l'assurance santé, vous êtes chargés de souscrire à un plan d'assurance et de payer les primes correspondantes. Ces frais comprennent :
 
-Ces conditions peuvent être mises à jour périodiquement. Il est de votre responsabilité de consulter régulièrement cette page pour prendre connaissance des modifications.`
-    },
-    {
-      id: '2',
-      title: '2. Description du service',
-      content: `MyKover est une plateforme d'assurance santé numérique qui permet aux utilisateurs de :
-• Souscrire à des plans d'assurance santé
-• Gérer leur couverture médicale
-• Localiser les établissements de santé partenaires
-• Effectuer des réclamations en ligne
-• Accéder à leur historique médical
+Frais de souscription pour les offres en prépayé
 
-Le service est disponible principalement à Kinshasa, République Démocratique du Congo.`
-    },
-    {
-      id: '3',
-      title: '3. Inscription et compte utilisateur',
-      content: `Pour utiliser MyKover, vous devez :
-• Être âgé d'au moins 18 ans ou avoir l'autorisation parentale
-• Fournir des informations exactes et complètes lors de l'inscription
-• Maintenir la confidentialité de vos identifiants de connexion
-• Nous notifier immédiatement de toute utilisation non autorisée de votre compte
+Redevance mensuelle pour les offres en postpayé
 
-Vous êtes responsable de toutes les activités effectuées sous votre compte.`
-    },
-    {
-      id: '4',
-      title: '4. Paiements et remboursements',
-      content: `Les paiements sont traités via CinetPay et d'autres prestataires de paiement sécurisés. Les méthodes acceptées incluent :
-• Mobile Money (Orange Money, Airtel Money, M-Pesa)
-• Cartes bancaires
-• Virements bancaires
+Facturation à la carte (Pay As You Go) pour les services additionnels`,
+    
+    `Dans le cas où MyKover constate que vous abusez de quelque façon que ce soit du service, notamment la fraude à l'assurance, la fourniture de fausses informations médicales, ou toute autre activité illicite, MyKover se réserve le droit de modérer votre consommation et dans les cas extrêmes, elle peut limiter l'accès aux services, suspendre votre couverture ou même résilier votre contrat.`,
+    
+    `Pour accéder au service, vous devez fournir certaines informations dans le cadre de votre inscription et fournir, à cet effet, des informations vraies, exactes, actuelles et complètes sur vous tel que requis dans tout formulaire d'inscription, et informer MyKover de tout éventuel changement, particulièrement concernant votre état de santé et vos informations personnelles.`,
+    
+    `En tant qu'utilisateur du service, vous acceptez que MyKover ou ses agents puissent vous contacter par email, SMS ou téléphone afin de vous tenir informer du service et toutes questions connexes y afférentes qui pourront affecter son utilisation, y compris les rappels de renouvellement, les mises à jour de couverture, et les communications relatives à votre santé.`,
+    
+    `Vous acceptez que toutes les informations fournies et toutes les réclamations soumises respectent les lois et règlements en vigueur et que vous soyez seul responsable du contenu de tous les messages envoyés et reçus par l'intermédiaire du Service.
 
-Les remboursements sont soumis à nos politiques spécifiques et peuvent prendre 5-10 jours ouvrables pour être traités.`
-    },
-    {
-      id: '5',
-      title: '5. Couverture d\'assurance',
-      content: `La couverture d'assurance est fournie selon les termes de votre plan choisi. Les détails incluent :
-• Les services couverts et exclusions
-• Les limites de couverture annuelle
-• Les franchises applicables
-• Les établissements de santé partenaires
+Vous ne devez pas :
 
-Consultez votre police d'assurance pour les détails complets de votre couverture.`
-    },
-    {
-      id: '6',
-      title: '6. Utilisation acceptable',
-      content: `Vous vous engagez à ne pas :
-• Utiliser le service à des fins illégales ou non autorisées
-• Tenter d'accéder aux comptes d'autres utilisateurs
-• Transmettre des virus ou codes malveillants
-• Faire de fausses déclarations pour obtenir une couverture
-• Utiliser le service pour frauder ou tromper
+encourager, permettre, ou vous engager dans toute activité illégale ou illicite, y compris, la fraude à l'assurance, la transmission de fausses informations médicales, la falsification de documents médicaux, violation de droit d'auteur ou la publication d'informations diffamatoires
 
-Toute violation peut entraîner la suspension ou la résiliation de votre compte.`
-    },
-    {
-      id: '7',
-      title: '7. Protection des données',
-      content: `Nous nous engageons à protéger vos données personnelles conformément à notre politique de confidentialité. Vos informations médicales sont traitées avec la plus stricte confidentialité.
+Violer le système ou la sécurité du réseau de MyKover en essayant d'obtenir un accès non autorisé pour l'utilisation des données, systèmes ou réseaux, y compris toute tentative de sonder, scanner ou tester la vulnérabilité du système ou réseau ou d'enfreindre la sécurité ou les mesures d'authentification sans l'autorisation expresse du propriétaire du système ou du réseau
 
-Nous ne partageons vos données qu'avec :
-• Les établissements de santé partenaires (pour les soins)
-• Les prestataires de paiement (pour les transactions)
-• Les autorités compétentes (si requis par la loi)`
-    },
-    {
-      id: '8',
-      title: '8. Limitation de responsabilité',
-      content: `MyKover ne peut être tenu responsable de :
-• L'interruption temporaire du service
-• Les erreurs dans les informations fournies par les tiers
-• Les dommages indirects ou consécutifs
-• La qualité des soins médicaux fournis par les partenaires
+Interférer dans le service auprès de tout utilisateur, hôte ou réseau, y compris, sans limitation, mail bombing, inondation, déni de service (DOS) attaques, des tentatives délibérées de surcharger un système, d'autres actions avec l'intention de nuire, ou
 
-Notre responsabilité est limitée au montant payé pour votre assurance.`
-    },
-    {
-      id: '9',
-      title: '9. Résiliation',
-      content: `Vous pouvez résilier votre compte à tout moment en nous contactant. Nous pouvons également résilier votre compte en cas de :
-• Violation de ces conditions d'utilisation
-• Activité frauduleuse
-• Non-paiement des primes d'assurance
-• Utilisation abusive du service
+envoyer des courriels non sollicités ("spamming" et / ou "Spam"), envoyer du spam sur les forums de discussion, en violation des règlements relatifs aux groupes de discussion ou par toute autre manière, violer les coutumes et les pratiques d'utilisation de l'Internet.Vous acceptez que MyKover puisse résilier avec ou sans préavis le présent contrat en cas de violation de l'une des dispositions`,
+    
+    `Vous êtes responsables de la sécurité de votre mot de passe et ne devez le divulguer à des tiers. Vous êtes également responsable de la confidentialité de vos informations médicales et de l'accès à votre compte.`,
+    
+    `Vous acceptez d'indemniser MyKover (et sa société mère, filiales, sociétés affiliées, dirigeants et employés) pour tous les coûts, dommages, responsabilités et pertes (y compris les frais juridiques) subis ou engagés par MyKover à la suite de toute réclamation faite par une tierce partie découlant de votre utilisation, connexion au Service ou toute violation de vos obligations en vertu des présents Termes et Conditions.`,
+    
+    `MyKover pourra résilier le Service, à tout moment, et suspendre l'utilisation du Service pour n'importe quelle raison, dans les cas suivants mais non limitatif :
 
-La résiliation n'affecte pas les obligations déjà contractées.`
-    },
-    {
-      id: '10',
-      title: '10. Droit applicable',
-      content: `Ces conditions sont régies par les lois de la République Démocratique du Congo. Tout litige sera soumis à la juridiction des tribunaux de Kinshasa.
+si MyKover estime que l'utilisateur n'a pas respecté les termes du présent contrat
 
-En cas de conflit entre la version française et toute traduction, la version française prévaudra.`
-    }
+si MyKover est dans l'impossibilité de continuer à fournir le service pour des raisons contractuelles, économiques ou opérationnelles.`,
+    
+    `En cas de résiliation pour les raisons cités à l'article 9, MyKover enverra un préavis minimum de 30 Jours envoyé par tout moyen écrit avec accusé de réception.MyKover peut également mettre immédiatement fin sans préavis à votre accès au Service, si vous ne parvenez pas à l'utiliser au moins une fois pendant une période de 90 jours. De même, vous pouvez résilier cet Accord et demander l'arrêt du Service à tout moment en s'abstenant de l'utiliser pendant une période de 90 jours sans préavis.MyKover peut immédiatement après la résiliation, supprimer tous les fichiers électroniques stockés par celle-ci.Si, pendant la durée de cet accord, le service vous est facturé, la demande de résiliation du Service par vous ne sera effective qu'à la fin du cycle de facturation normal auquel vous avez payé ledit service. Dans le cas où MyKover résilie le présent accord, vous serez remboursé des sommes versées à l'avance de la date de résiliation, au prorata de la date de résiliation.`,
+    
+    `Vous reconnaissez et acceptez que les droits de propriété intellectuelle dans le cadre de ce service restent la propriété de MyKover ou de ses concédants. Vous êtes autorisés à utiliser le Service matériel et les informations fournies à travers le service suivant ce qui est expressément autorisé en vertu des présents Termes et Conditions. Vous ne pouvez pas utiliser le contenu du matériel ou cette information ou de toute partie du Service, sans l'autorisation écrite expresse de MyKover.`,
+    
+    `Le Service est fourni "tel quel" et "suivant sa disponibilité".MyKover exclut par les présentes toutes les conditions, garanties, représentations ou d'autres conditions relatives à la disponibilité ou la performance du service, que ce soit, expresse ou implicite, y compris les conditions, garanties, représentations ou d'autres conditions, de qualité de satisfaction, adéquation à un usage particulier et de non-contrefaçon.En particulier, MyKover ne donne aucune garantie que le service répondra à vos exigences, qu'il n'y aura aucune interruption ou qu'il sera exempt d'erreurs, délais ou sécurisé; quant aux résultats qui peuvent être obtenus à partir de l'utilisation du Service; quant à l'exactitude ou la fiabilité de toute information obtenue via le Service; ou concernant des biens ou services achetés ou obtenus par l'intermédiaire ou auprès du Service ou de toute transaction conclue par l'intermédiaire de service.MyKover décline toute responsabilité pour les coûts ou dommages résultant de toute interruption, suspension ou interruption du Service.`,
+    
+    `Les présents Termes et Conditions constituent l'accord intégral entre l'utilisateur et MyKover et remplacent toutes les précédentes conventions, arrangements ou des représentations faites par l'autre partie concernant le Service.Les présentes Conditions Générales sont régies par les lois de la République Démocratique du Congo et les deux parties se soumettent à la compétence exclusive des tribunaux de la République Démocratique du Congo en cas de litige.`
   ];
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
       {/* Header */}
-      <View className="bg-white px-4 py-4 border-b border-gray-100 flex-row items-center">
-        <TouchableOpacity onPress={() => router.back()} className="mr-4">
-          <FontAwesome6 name="arrow-left" size={20} color="#374151" />
+      <View style={{ flexDirection: 'row', alignItems: 'center', padding: 16, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
+        <TouchableOpacity onPress={() => router.back()} style={{ marginRight: 12 }}>
+          <FontAwesome6 name="arrow-left" size={20} color="#000" />
         </TouchableOpacity>
-        <Text className="text-xl font-bold text-gray-900">Conditions d'utilisation</Text>
+        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>Conditions générales</Text>
       </View>
 
-      <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 30 }}>
-        {/* Introduction */}
-        <View className="px-4 pt-6 mb-6">
-          <View className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
-            <View className="flex-row items-center mb-2">
-              <FontAwesome6 name="info-circle" size={20} color="#3B82F6" />
-              <Text className="font-bold text-blue-800 ml-2">Information importante</Text>
-            </View>
-            <Text className="text-blue-700">
-              Veuillez lire attentivement ces conditions d'utilisation avant d'utiliser MyKover. 
-              En utilisant notre service, vous acceptez ces termes.
-            </Text>
-          </View>
-
-          <Text className="text-sm text-gray-600 mb-4">
-            Dernière mise à jour : 29 septembre 2025
+      <ScrollView contentContainerStyle={{ padding: 16 }}>
+        {/* Main Title */}
+        <View style={{ marginBottom: 16 }}>
+          <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 8 }}>Conditions générales de service - Assurance Santé MyKover</Text>
+          <Text style={{ fontSize: 14, color: '#333', lineHeight: 20 }}>
+            Veuillez lire attentivement ces conditions générales qui régissent l'utilisation des services d'assurance santé MyKover.
           </Text>
         </View>
 
         {/* Terms Sections */}
-        <View className="px-4">
-          {sections.map((section) => (
-            <View key={section.id} className="bg-white rounded-xl p-4 mb-4 border border-gray-100 shadow-sm">
-              <Text className="text-lg font-bold text-gray-900 mb-3">
-                {section.title}
-              </Text>
-              <Text className="text-gray-700 leading-6">
-                {section.content}
-              </Text>
-            </View>
-          ))}
-        </View>
-
-        {/* Contact Information */}
-        <View className="px-4 mt-6">
-          <View className="bg-gray-100 rounded-xl p-4">
-            <Text className="font-bold text-gray-900 mb-2">Contact</Text>
-            <Text className="text-gray-700 mb-1">
-              Pour toute question concernant ces conditions d'utilisation :
-            </Text>
-            <Text className="text-blue-600 font-medium">support@mykover.cd</Text>
-            <Text className="text-gray-600 text-sm mt-2">
-              MyKover - Assurance Santé Numérique{'\n'}
-              Kinshasa, République Démocratique du Congo
-            </Text>
+        {sections.map((content, index) => (
+          <View key={index} style={{ marginBottom: 16 }}>
+            <Text style={{ fontSize: 14, color: '#333', lineHeight: 20 }}>{content}</Text>
           </View>
-        </View>
+        ))}
+        {/* Simple Footer */}
+                <View style={{ 
+                  paddingTop: 20, 
+                  borderTopWidth: 1, 
+                  borderTopColor: '#e5e5e5',
+                  alignItems: 'center'
+                }}>
+                  <Text style={{ 
+                    fontSize: 14, 
+                    color: '#666', 
+                    textAlign: 'center',
+                    marginBottom: 8
+                  }}>
+                    MyKover © 2025
+                  </Text>
+                  <Text style={{ 
+                    fontSize: 12, 
+                    color: '#999', 
+                    textAlign: 'center'
+                  }}>
+                    Assurance santé numérique pour tous
+                  </Text>
+                </View>
       </ScrollView>
     </SafeAreaView>
   );
