@@ -92,25 +92,29 @@ export default function MenuScreen() {
       id: 'support',
       title: 'Help & Support',
       icon: 'headset',
-      onPress: () => Alert.alert('Support', 'Contactez-nous à support@mykover.cd'),
+      // onPress: () => Alert.alert('Support', 'Contactez-nous à support@mykover.cd'),
+      onPress: () => router.push('/help-support'),
     },
     {
       id: 'terms',
       title: 'Terms & Conditions',
       icon: 'file-contract',
-      onPress: () => Alert.alert('Info', 'Conditions d\'utilisation'),
+      // onPress: () => Alert.alert('Info', 'Conditions d\'utilisation'),
+      onPress: () => router.push('/terms-conditions'),
     },
     {
       id: 'about',
       title: 'About Us',
       icon: 'info-circle',
-      onPress: () => Alert.alert('MyKover', 'Votre assurance santé numérique à Kinshasa'),
+      // onPress: () => Alert.alert('MyKover', 'Votre assurance santé numérique à Kinshasa'),
+      onPress: () => router.push('/about-us'),
     },
     {
       id: 'rate',
       title: 'Rate Us',
       icon: 'star',
-      onPress: () => Alert.alert('Merci!', 'Évaluez-nous sur l\'App Store'),
+      // onPress: () => Alert.alert('Merci!', 'Évaluez-nous sur l\'App Store'),
+      onPress: () => router.push('/rate-us'),
     },
   ];
 
