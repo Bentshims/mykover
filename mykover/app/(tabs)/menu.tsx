@@ -73,7 +73,8 @@ export default function MenuScreen() {
       title: 'Notification Inbox',
       icon: 'bell',
       badge: 5,
-      onPress: () => Alert.alert('Info', 'Fonctionnalité en développement'),
+      // onPress: () => Alert.alert('Info', 'Fonctionnalité en développement'),
+      onPress: () => router.push('/notifications'),
     },
     {
       id: 'settings',
@@ -81,12 +82,12 @@ export default function MenuScreen() {
       icon: 'gear',
       onPress: () => router.push('/settings'),
     },
-    {
-      id: 'hospitals',
-      title: 'Partner Hospitals',
-      icon: 'hospital',
-      onPress: () => router.push('/map'),
-    },
+    // {
+    //   id: 'hospitals',
+    //   title: 'Partner Hospitals',
+    //   icon: 'hospital',
+    //   onPress: () => router.push('/map'),
+    // },
     {
       id: 'support',
       title: 'Help & Support',

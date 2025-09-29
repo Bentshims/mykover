@@ -8,54 +8,54 @@ import {
   Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome6 } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useAuth } from '../src/contexts/AuthContext';
-import TopNavBarCustom from '../components/TopNavBarCustom';
+// import TopNavBarCustom from '../components/TopNavBarCustom';
 
-// Mock notification data
-const mockNotifications = [
-  {
-    id: '1',
-    title: 'Rappel de rendez-vous',
-    description: 'Votre consultation avec Dr. Mukendi est prévue demain à 14h30',
-    timestamp: 'il y a 2h',
-    type: 'appointment',
-    isRead: false,
-  },
-  {
-    id: '2',
-    title: 'Résultats d\'analyse disponibles',
-    description: 'Vos résultats de laboratoire sont maintenant disponibles dans votre dossier médical',
-    timestamp: 'il y a 5h',
-    type: 'results',
-    isRead: false,
-  },
-  {
-    id: '3',
-    title: 'Nouveau message du médecin',
-    description: 'Dr. Kalala a envoyé un message concernant votre traitement',
-    timestamp: 'il y a 1j',
-    type: 'message',
-    isRead: true,
-  },
-  {
-    id: '4',
-    title: 'Rappel de prise de médicament',
-    description: 'N\'oubliez pas de prendre votre médicament Paracétamol 500mg',
-    timestamp: 'il y a 2j',
-    type: 'medication',
-    isRead: true,
-  },
-  {
-    id: '5',
-    title: 'Mise à jour de votre assurance',
-    description: 'Votre couverture d\'assurance santé a été renouvelée avec succès',
-    timestamp: 'il y a 3j',
-    type: 'insurance',
-    isRead: true,
-  },
-];
+// TODO: Remove mock data when backend API is ready
+// const mockNotifications = [
+//   {
+//     id: '1',
+//     title: 'Rappel de rendez-vous',
+//     description: 'Votre consultation avec Dr. Mukendi est prévue demain à 14h30',
+//     timestamp: 'il y a 2h',
+//     type: 'appointment',
+//     isRead: false,
+//   },
+//   {
+//     id: '2',
+//     title: 'Résultats d\'analyse disponibles',
+//     description: 'Vos résultats de laboratoire sont maintenant disponibles dans votre dossier médical',
+//     timestamp: 'il y a 5h',
+//     type: 'results',
+//     isRead: false,
+//   },
+//   {
+//     id: '3',
+//     title: 'Nouveau message du médecin',
+//     description: 'Dr. Kalala a envoyé un message concernant votre traitement',
+//     timestamp: 'il y a 1j',
+//     type: 'message',
+//     isRead: true,
+//   },
+//   {
+//     id: '4',
+//     title: 'Rappel de prise de médicament',
+//     description: 'N\'oubliez pas de prendre votre médicament Paracétamol 500mg',
+//     timestamp: 'il y a 2j',
+//     type: 'medication',
+//     isRead: true,
+//   },
+//   {
+//     id: '5',
+//     title: 'Mise à jour de votre assurance',
+//     description: 'Votre couverture d\'assurance santé a été renouvelée avec succès',
+//     timestamp: 'il y a 3j',
+//     type: 'insurance',
+//     isRead: true,
+//   },
+// ];
 
 interface Notification {
   id: string;
@@ -83,19 +83,24 @@ export default function NotificationScreen() {
     // Already on notifications screen
   };
 
-  // Simulate API call to fetch notifications
+  // TODO: Implement API call to fetch notifications from backend
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
         setIsLoading(true);
-        // TODO: Replace with actual API call
-        // const response = await fetch('/api/notifications');
+        // TODO: Replace with actual API endpoint
+        // const response = await fetch(`${API_BASE_URL}/notifications`, {
+        //   method: 'GET',
+        //   headers: {
+        //     'Authorization': `Bearer ${userToken}`,
+        //     'Content-Type': 'application/json',
+        //   },
+        // });
         // const data = await response.json();
+        // setNotifications(data.notifications || []);
         
-        // Simulate network delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        setNotifications(mockNotifications);
+        // For now, set empty array until backend is ready
+        setNotifications([]);
       } catch (error) {
         console.error('Error fetching notifications:', error);
         Alert.alert('Erreur', 'Impossible de charger les notifications.');
@@ -130,8 +135,24 @@ export default function NotificationScreen() {
   };
 
   const handleNotificationTap = (notification: Notification) => {
+    // TODO: Implement API call to mark notification as read
+    // const markAsRead = async () => {
+    //   try {
+    //     await fetch(`${API_BASE_URL}/notifications/${notification.id}/mark-read`, {
+    //       method: 'PATCH',
+    //       headers: {
+    //         'Authorization': `Bearer ${userToken}`,
+    //         'Content-Type': 'application/json',
+    //       },
+    //     });
+    //   } catch (error) {
+    //     console.error('Error marking notification as read:', error);
+    //   }
+    // };
+    
     // Mark as read if not already read
     if (!notification.isRead) {
+      // markAsRead(); // Uncomment when backend is ready
       setNotifications(prev => 
         prev.map(n => 
           n.id === notification.id ? { ...n, isRead: true } : n
@@ -161,9 +182,67 @@ export default function NotificationScreen() {
     }
   };
 
+  const clearNotification = (notificationId: string) => {
+    // TODO: Implement API call to delete notification from backend
+    // const deleteNotification = async () => {
+    //   try {
+    //     await fetch(`${API_BASE_URL}/notifications/${notificationId}`, {
+    //       method: 'DELETE',
+    //       headers: {
+    //         'Authorization': `Bearer ${userToken}`,
+    //         'Content-Type': 'application/json',
+    //       },
+    //     });
+    //   } catch (error) {
+    //     console.error('Error deleting notification:', error);
+    //   }
+    // };
+    // deleteNotification();
+    
+    // For now, only update frontend state
+    setNotifications(prev => prev.filter(n => n.id !== notificationId));
+  };
+
+  const clearAllNotifications = () => {
+    Alert.alert(
+      'Effacer toutes les notifications',
+      'Êtes-vous sûr de vouloir effacer toutes les notifications ?',
+      [
+        {
+          text: 'Annuler',
+          style: 'cancel',
+        },
+        {
+          text: 'Effacer tout',
+          style: 'destructive',
+          onPress: () => {
+            // TODO: Implement API call to clear all notifications from backend
+            // const clearAllNotificationsAPI = async () => {
+            //   try {
+            //     await fetch(`${API_BASE_URL}/notifications/clear-all`, {
+            //       method: 'DELETE',
+            //       headers: {
+            //         'Authorization': `Bearer ${userToken}`,
+            //         'Content-Type': 'application/json',
+            //       },
+            //     });
+            //   } catch (error) {
+            //     console.error('Error clearing all notifications:', error);
+            //   }
+            // };
+            // clearAllNotificationsAPI();
+            
+            // For now, only update frontend state
+            setNotifications([]);
+          },
+        },
+      ]
+    );
+  };
+
   const renderNotificationItem = ({ item }: { item: Notification }) => (
     <TouchableOpacity
-      className={`mx-6 mb-3 p-4 bg-white border rounded-xl ${
+      className={`mx-6 mb-3 p-4 bg-white border rounded-xl shadow-sm ${
         item.isRead ? 'border-gray-200' : 'border-purple-200 bg-purple-50'
       }`}
       onPress={() => handleNotificationTap(item)}
@@ -184,12 +263,21 @@ export default function NotificationScreen() {
             }`}>
               {item.title}
             </Text>
-            {!item.isRead && (
-              <View className="w-2 h-2 bg-purple-600 rounded-full" />
-            )}
+            <View className="flex-row items-center">
+              {!item.isRead && (
+                <View className="w-2 h-2 mr-2 bg-purple-600 rounded-full" />
+              )}
+              <TouchableOpacity
+                onPress={() => clearNotification(item.id)}
+                className="p-1"
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              >
+                <Ionicons name="trash-outline" size={16} color="#6b7280" />
+              </TouchableOpacity>
+            </View>
           </View>
           
-          <Text className="mb-2 text-sm text-gray-600 leading-5">
+          <Text className="mb-2 text-sm leading-5 text-gray-600">
             {item.description}
           </Text>
           
@@ -202,20 +290,19 @@ export default function NotificationScreen() {
   );
 
   const renderEmptyState = () => (
-    <View className="flex-1 items-center justify-center px-6">
+    <View className="items-center justify-center flex-1 px-6">
       <Ionicons name="notifications-outline" size={64} color="#d1d5db" />
       <Text className="mt-4 text-xl font-semibold text-gray-900">
         Aucune notification
       </Text>
       <Text className="mt-2 text-center text-gray-600">
-        Aucune notification pour le moment.{'\n'}
-        Nous vous tiendrons informé des mises à jour importantes.
+        Aucune notification pour le moment.
       </Text>
     </View>
   );
 
   const renderLoadingState = () => (
-    <View className="flex-1 items-center justify-center">
+    <View className="items-center justify-center flex-1">
       <Text className="text-gray-600">Chargement des notifications...</Text>
     </View>
   );
@@ -225,23 +312,42 @@ export default function NotificationScreen() {
       <StatusBar barStyle="light-content" backgroundColor="#7c3aed" />
       
       {/* Custom Top Navigation */}
-      <TopNavBarCustom 
+      {/* <TopNavBarCustom 
         onAvatarPress={handleAvatarPress}
         onNotificationPress={handleNotificationPress}
         notificationCount={notifications.filter(n => !n.isRead).length}
         title="Notifications"
-      />
+      /> */}
 
       {/* Header */}
       <View className="px-6 pt-6 pb-4 bg-white">
-        <Text className="text-2xl font-bold text-gray-900">
-          Notifications
-        </Text>
-        {notifications.length > 0 && (
-          <Text className="mt-1 text-sm text-gray-600">
-            {notifications.filter(n => !n.isRead).length} non lues sur {notifications.length}
-          </Text>
-        )}
+        <View className="flex-row items-center justify-between">
+          <View className="flex-row items-center flex-1">
+            <TouchableOpacity onPress={() => router.back()} className="mr-4">
+              <FontAwesome6 name="arrow-left" size={20} color="#374151" />
+            </TouchableOpacity>
+            <View className="flex-1">
+              <Text className="text-2xl font-bold text-gray-900">
+                Notifications
+              </Text>
+              {notifications.length > 0 && (
+                <Text className="mt-1 text-sm text-gray-600">
+                  {notifications.filter(n => !n.isRead).length} non lues sur {notifications.length}
+                </Text>
+              )}
+            </View>
+          </View>
+          {notifications.length > 0 && (
+            <TouchableOpacity
+              onPress={clearAllNotifications}
+              className="px-3 py-2 border border-red-200 rounded-lg bg-red-50"
+            >
+              <Text className="text-sm font-medium text-red-600">
+                Tout effacer
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
       </View>
 
       {/* Notifications List */}

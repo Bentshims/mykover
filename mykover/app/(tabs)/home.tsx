@@ -24,8 +24,7 @@ export default function HomeScreen() {
 
   // Fonction pour gérer les notifications
   const handleNotificationPress = () => {
-    console.log('Navigation vers notifications');
-    // TODO: Implémenter la navigation vers les notifications
+    router.push('/notifications');
   };
 
   // Fonction pour gérer le clic sur l'avatar

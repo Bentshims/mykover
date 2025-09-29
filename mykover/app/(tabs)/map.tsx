@@ -14,7 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import * as Location from 'expo-location';
 import { useAuth } from '../../src/contexts/AuthContext';
-import TopNavBarCustom from '../../components/TopNavBarCustom';
+// import TopNavBarCustom from '../../components/TopNavBarCustom';
 
 // Mock data for healthcare facilities with coordinates
 const mockFacilities = [
@@ -245,11 +245,11 @@ export default function MapScreen() {
       <StatusBar barStyle="light-content" backgroundColor="#7c3aed" />
       
       {/* Custom Top Navigation */}
-      <TopNavBarCustom 
+      {/* <TopNavBarCustom 
         onAvatarPress={handleAvatarPress}
         onNotificationPress={handleNotificationPress}
         notificationCount={3}
-      />
+      /> */}
 
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Main Content */}
@@ -336,7 +336,7 @@ export default function MapScreen() {
               {filteredFacilities.map((facility) => (
                 <TouchableOpacity
                   key={facility.id}
-                  className="p-4 bg-white border border-gray-200 rounded-xl"
+                  className="p-4 mb-4 bg-white border border-gray-200 rounded-xl"
                   onPress={() => {/* Navigate to facility detail */}}
                 >
                   <View className="flex-row items-start">
