@@ -1,3 +1,11 @@
+import React from 'react';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  Image,
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 interface TopNavBarCustomProps {
   avatarSource?: string;
