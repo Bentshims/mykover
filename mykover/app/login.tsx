@@ -12,6 +12,7 @@ import { useRouter } from "expo-router";
 import { useAuth } from "../src/contexts/AuthContext";
 import { LoginData } from "../src/types";
 import Input from "../src/components/Input";
+import PhoneInput from "../src/components/PhoneInput";
 import PrimaryButton from "../src/components/PrimaryButton";
 import { validateLoginData } from "../src/utils/validation";
 import { sanitizeLoginData } from "../src/utils/sanitizer";
@@ -123,15 +124,12 @@ const LoginScreen: React.FC = () => {
           {/* Contenu principal */}
           <View className="flex-1 px-6 pt-24 mt-8 bg-white rounded-tl-[60px] flex flex-col gap-y-7">
             {/* Champ numéro de téléphone */}
-            <Input
-              label="Numero de telephone"
+            <PhoneInput
+              label="Numéro de téléphone"
               value={formData.phone}
               onChangeText={(text: string) => updateFormData("phone", text)}
-              placeholder="+243 80 0000000"
-              keyboardType="phone-pad"
+              placeholder="0000000000"
               error={errors.phone}
-              autoComplete="tel"
-              textContentType="telephoneNumber"
             />
 
             {/* Champ mot de passe */}

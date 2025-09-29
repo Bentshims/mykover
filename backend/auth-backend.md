@@ -289,3 +289,15 @@ npm start
 ---
 
 *Développé avec AdonisJS et TypeScript pour une authentification sécurisée.*
+
+<!-- 
+Ce que tu dois faire dans GitHub
+Va dans ton dépôt GitHub → Settings → Secrets and variables → Actions → New repository secret.
+Crée ces secrets avec les valeurs de ta base Supabase:
+SUPABASE_DB_HOST: https://fptezogebviejlcbilkm.supabase.co
+SUPABASE_DB_PORT: 5432
+SUPABASE_DB_USER: postgres
+SUPABASE_DB_PASSWORD: *T-dev-senior*
+SUPABASE_DB_DATABASE: Mykover-app
+APP_KEY: 0ph96qNbAagKeXXNg9TRIy__st83zfXW
+JWT_SECRET: P2iIverXQ+q6YOV0BTrhg7nINnlZuOj1bKD73YCBurH8AAQhUFGOQUqgqUx7lc1WK28cWVmiAzY+Zy3PtKAZHA== -->

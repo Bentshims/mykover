@@ -16,6 +16,7 @@ import {
 import { useRouter } from "expo-router";
 import { useAuth } from "../src/contexts/AuthContext";
 import Input from "../src/components/Input";
+import PhoneInput from "../src/components/PhoneInput";
 import PrimaryButton from "../src/components/PrimaryButton";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -316,15 +317,12 @@ const SignupScreen: React.FC = () => {
                   </View>
 
                   <View className="mb-6">
-                    <Input
+                    <PhoneInput
                       label="Numéro de téléphone *"
                       value={formData.phone}
                       onChangeText={handlePhoneChange}
-                      placeholder="+2438XXXXXXXX"
-                      keyboardType="phone-pad"
+                      placeholder="0000000000"
                       error={errors.phone}
-                      autoComplete="tel"
-                      textContentType="telephoneNumber"
                     />
                     <Text className="text-gray-500 text-xs mt-1 ml-1">
                       Format: +243 suivi de 8 ou 9, puis 8 chiffres

@@ -35,7 +35,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: "#8A4DFF", // Changement de couleur lors du focus
-        tabBarInactiveTintColor: "#8A4DFF",
+        tabBarInactiveTintColor: "#71717A", // Zinc-500 color for inactive tabs
         headerShown: false,
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
@@ -56,6 +56,7 @@ export default function TabLayout() {
         tabBarIconStyle: {
           marginTop: 4,
         },
+        tabBarShowLabel: false, // Disable tab titles
       }}
     >
       <Tabs.Screen
@@ -63,12 +64,7 @@ export default function TabLayout() {
         options={{
           tabBarIcon: ({ color, focused }) => (
             <View className="flex items-center justify-center w-8 h-8">
-              <FontAwesome6
-                size={focused ? 26 : 24}
-                name="house"
-                color={color}
-                solid={focused}
-              />
+              <FontAwesome6 size={24} name="house" color={color} />
             </View>
           ),
         }}
@@ -79,12 +75,7 @@ export default function TabLayout() {
         options={{
           tabBarIcon: ({ color, focused }) => (
             <View className="flex items-center justify-center w-8 h-8">
-              <FontAwesome6
-                size={focused ? 26 : 24}
-                name="credit-card"
-                color={color}
-                solid={focused}
-              />
+              <FontAwesome6 size={24} name="credit-card" color={color} />
             </View>
           ),
         }}
@@ -95,12 +86,7 @@ export default function TabLayout() {
         options={{
           tabBarIcon: ({ color, focused }) => (
             <View className="flex items-center justify-center w-8 h-8">
-              <FontAwesome6
-                size={focused ? 26 : 24}
-                name="location-dot"
-                color={color}
-                solid={focused}
-              />
+              <FontAwesome6 size={24} name="location-dot" color={color} />
             </View>
           ),
         }}
@@ -111,12 +97,7 @@ export default function TabLayout() {
         options={{
           tabBarIcon: ({ color, focused }) => (
             <View className="flex items-center justify-center w-8 h-8">
-              <FontAwesome6
-                size={focused ? 26 : 24}
-                name="gear"
-                color={color}
-                solid={focused}
-              />
+              <FontAwesome6 size={24} name="gear" color={color} />
             </View>
           ),
         }}

@@ -1,6 +1,8 @@
+"use client";
 import React, { memo, useCallback } from "react";
 import { View, Text, TextInput } from "react-native";
 import { InputProps } from "../types";
+// import "../../globals.css";
 
 /**
  * Composant Input réutilisable avec validation et sécurité
@@ -37,8 +39,10 @@ const Input: React.FC<InputProps> = memo(
         {/* Input avec style purple et arrondi selon le design exact */}
         <TextInput
           className={`border ${
-            error ? "border-red-500 bg-red-50" : "border-purple-300"
-          } rounded-full px-4 py-3 text-base bg-white min-h-[48px]`}
+            error
+              ? "border-red-500 bg-red-50"
+              : "border-purple-400 outline-none"
+          } rounded-full px-4 py-4 text-base bg-white min-h-[48px]`}
           value={value}
           onChangeText={handleTextChange}
           placeholder={placeholder}
