@@ -12,6 +12,7 @@ interface TopNavBarCustomProps {
   onAvatarPress?: () => void;
   onNotificationPress?: () => void;
   notificationCount?: number;
+  title?: string;
 }
 
 export default function TopNavBarCustom({
@@ -19,6 +20,7 @@ export default function TopNavBarCustom({
   onAvatarPress,
   onNotificationPress,
   notificationCount = 0,
+  title,
 }: TopNavBarCustomProps) {
   
   return (
@@ -43,6 +45,13 @@ export default function TopNavBarCustom({
           )}
         </View>
       </TouchableOpacity>
+
+      {/* Title au centre */}
+      {title && (
+        <Text className="text-lg font-semibold text-gray-800 flex-1 text-center">
+          {title}
+        </Text>
+      )}
 
       {/* Icône Notification avec badge */}
       <View className="flex-row items-center">
