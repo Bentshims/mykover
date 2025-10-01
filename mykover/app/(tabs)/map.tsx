@@ -1,25 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StatusBar,
   ScrollView,
+  Alert,
+  Linking,
+  Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import * as Location from 'expo-location';
 import { useAuth } from '../../src/contexts/AuthContext';
-import TopNavBarCustom from '../../components/TopNavBarCustom';
+// import TopNavBarCustom from '../../components/TopNavBarCustom';
 
-// Mock data for healthcare facilities
+// Mock data for healthcare facilities with coordinates
 const mockFacilities = [
   {
     id: '1',
     name: 'Hôpital Général de Kinshasa',
     type: 'hospital',
     address: 'Avenue de la Justice, Kinshasa',
-    distance: '2.3 km',
+    latitude: -4.3276,
+    longitude: 15.3136,
     rating: 4.5,
     isOpen: true,
     services: ['Urgences', 'Chirurgie', 'Cardiologie'],
@@ -29,7 +34,8 @@ const mockFacilities = [
     name: 'Clinique Ngaliema',
     type: 'clinic',
     address: 'Commune de Ngaliema, Kinshasa',
-    distance: '1.8 km',
+    latitude: -4.3017,
+    longitude: 15.2694,
     rating: 4.2,
     isOpen: true,
     services: ['Consultation', 'Laboratoire', 'Radiologie'],
@@ -39,7 +45,8 @@ const mockFacilities = [
     name: 'Pharmacie du Peuple',
     type: 'pharmacy',
     address: 'Avenue Kasa-Vubu, Kinshasa',
-    distance: '0.9 km',
+    latitude: -4.3317,
+    longitude: 15.3047,
     rating: 4.0,
     isOpen: false,
     services: ['Médicaments', 'Parapharmacie'],
@@ -49,7 +56,8 @@ const mockFacilities = [
     name: 'Centre Médical de Kinshasa',
     type: 'hospital',
     address: 'Boulevard du 30 Juin, Kinshasa',
-    distance: '3.1 km',
+    latitude: -4.3197,
+    longitude: 15.3078,
     rating: 4.3,
     isOpen: true,
     services: ['Urgences', 'Maternité', 'Pédiatrie'],
@@ -59,16 +67,48 @@ const mockFacilities = [
     name: 'Clinique Saint-Joseph',
     type: 'clinic',
     address: 'Commune de Limete, Kinshasa',
-    distance: '4.2 km',
+    latitude: -4.3456,
+    longitude: 15.2889,
     rating: 4.1,
     isOpen: true,
     services: ['Consultation', 'Dentaire', 'Ophtalmologie'],
   },
 ];
 
+// Haversine formula to calculate distance between two coordinates
+const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+  const R = 6371; // Radius of the Earth in kilometers
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  const distance = R * c;
+  return Math.round(distance * 10) / 10; // Round to 1 decimal place
+};
+
+interface Facility {
+  id: string;
+  name: string;
+  type: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  rating: number;
+  isOpen: boolean;
+  services: string[];
+  distance?: string;
+}
+
 export default function MapScreen() {
   const { user, isAuthenticated } = useAuth();
   const [selectedFilter, setSelectedFilter] = useState('all');
+  const [userLocation, setUserLocation] = useState<Location.LocationObject | null>(null);
+  const [locationPermission, setLocationPermission] = useState<boolean>(false);
+  const [facilitiesWithDistance, setFacilitiesWithDistance] = useState<Facility[]>(mockFacilities);
+  const [isLoadingLocation, setIsLoadingLocation] = useState(true);
 
   const handleAvatarPress = () => {
     if (isAuthenticated) {
@@ -79,14 +119,103 @@ export default function MapScreen() {
   };
 
   const handleNotificationPress = () => {
-    // TODO: Implement notification navigation
+    router.push('/notifications');
+  };
+
+  // Request location permission and get user location
+  useEffect(() => {
+    (async () => {
+      try {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          setLocationPermission(false);
+          setIsLoadingLocation(false);
+          Alert.alert(
+            'Permission refusée',
+            'L\'accès à la localisation est nécessaire pour calculer les distances et obtenir des itinéraires.'
+          );
+          return;
+        }
+
+        setLocationPermission(true);
+        let location = await Location.getCurrentPositionAsync({});
+        setUserLocation(location);
+        
+        // Calculate distances for all facilities
+        const facilitiesWithDist = mockFacilities.map(facility => ({
+          ...facility,
+          distance: `${calculateDistance(
+            location.coords.latitude,
+            location.coords.longitude,
+            facility.latitude,
+            facility.longitude
+          )} km`
+        }));
+        
+        setFacilitiesWithDistance(facilitiesWithDist);
+      } catch (error) {
+        console.error('Error getting location:', error);
+        Alert.alert('Erreur', 'Impossible d\'obtenir votre position actuelle.');
+      } finally {
+        setIsLoadingLocation(false);
+      }
+    })();
+  }, []);
+
+  // Open directions in Google Maps
+  const openDirections = async (facility: Facility) => {
+    if (!userLocation) {
+      Alert.alert('Erreur', 'Position actuelle non disponible.');
+      return;
+    }
+
+    try {
+      const { latitude: destLat, longitude: destLng } = facility;
+      const { latitude: originLat, longitude: originLng } = userLocation.coords;
+      
+      // Google Maps URLs for directions
+      const googleMapsUrl = `https://www.google.com/maps/dir/${originLat},${originLng}/${destLat},${destLng}`;
+      const googleMapsAppUrl = `comgooglemaps://?saddr=${originLat},${originLng}&daddr=${destLat},${destLng}&directionsmode=driving`;
+      
+      // Try to open Google Maps app first
+      const canOpenGoogleMaps = await Linking.canOpenURL(googleMapsAppUrl);
+      if (canOpenGoogleMaps) {
+        await Linking.openURL(googleMapsAppUrl);
+        return;
+      }
+      
+      // Fallback to web version of Google Maps
+      const canOpenWebMaps = await Linking.canOpenURL(googleMapsUrl);
+      if (canOpenWebMaps) {
+        await Linking.openURL(googleMapsUrl);
+        return;
+      }
+      
+      // Final fallback to device's default maps app
+      let fallbackUrl = '';
+      if (Platform.OS === 'ios') {
+        fallbackUrl = `maps://?saddr=${originLat},${originLng}&daddr=${destLat},${destLng}`;
+      } else {
+        fallbackUrl = `geo:${destLat},${destLng}?q=${encodeURIComponent(facility.name)}`;
+      }
+      
+      const canOpenFallback = await Linking.canOpenURL(fallbackUrl);
+      if (canOpenFallback) {
+        await Linking.openURL(fallbackUrl);
+      } else {
+        Alert.alert('Erreur', 'Aucune application de cartes disponible.');
+      }
+    } catch (error) {
+      console.error('Error opening directions:', error);
+      Alert.alert('Erreur', 'Impossible d\'ouvrir les directions.');
+    }
   };
 
   const getFacilityIcon = (type: string) => {
     switch (type) {
       case 'hospital': return 'medical';
       case 'clinic': return 'business';
-      case 'pharmacy': return 'medical-bag';
+      case 'pharmacy': return 'medical-outline';
       default: return 'location';
     }
   };
@@ -101,14 +230,14 @@ export default function MapScreen() {
   };
 
   const filteredFacilities = selectedFilter === 'all' 
-    ? mockFacilities 
-    : mockFacilities.filter(facility => facility.type === selectedFilter);
+    ? facilitiesWithDistance 
+    : facilitiesWithDistance.filter(facility => facility.type === selectedFilter);
 
   const filterOptions = [
     { key: 'all', label: 'Tous', icon: 'grid' },
     { key: 'hospital', label: 'Hôpitaux', icon: 'medical' },
     { key: 'clinic', label: 'Cliniques', icon: 'business' },
-    { key: 'pharmacy', label: 'Pharmacies', icon: 'medical-bag' },
+    { key: 'pharmacy', label: 'Pharmacies', icon: 'medical-outline' },
   ];
 
   return (
@@ -116,11 +245,11 @@ export default function MapScreen() {
       <StatusBar barStyle="light-content" backgroundColor="#7c3aed" />
       
       {/* Custom Top Navigation */}
-      <TopNavBarCustom 
+      {/* <TopNavBarCustom 
         onAvatarPress={handleAvatarPress}
         onNotificationPress={handleNotificationPress}
         notificationCount={3}
-      />
+      /> */}
 
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
         {/* Main Content */}
@@ -172,7 +301,7 @@ export default function MapScreen() {
           </View>
 
           {/* Quick Actions */}
-          <View className="mb-6">
+          {/* <View className="mb-6">
             <Text className="mb-4 text-lg font-semibold text-gray-900">
               Actions rapides
             </Text>
@@ -195,7 +324,7 @@ export default function MapScreen() {
                 </View>
               </TouchableOpacity>
             </View>
-          </View>
+          </View> */}
 
           {/* Facilities List */}
           <View className="mb-8">
@@ -207,7 +336,7 @@ export default function MapScreen() {
               {filteredFacilities.map((facility) => (
                 <TouchableOpacity
                   key={facility.id}
-                  className="p-4 bg-white border border-gray-200 rounded-xl"
+                  className="p-4 mb-4 bg-white border border-gray-200 rounded-xl"
                   onPress={() => {/* Navigate to facility detail */}}
                 >
                   <View className="flex-row items-start">
@@ -240,7 +369,7 @@ export default function MapScreen() {
                         <View className="flex-row items-center">
                           <Ionicons name="location" size={14} color="#6b7280" />
                           <Text className="ml-1 text-sm text-gray-600">
-                            {facility.distance}
+                            {isLoadingLocation ? 'Calcul...' : (facility.distance || 'N/A')}
                           </Text>
                         </View>
                         
@@ -275,12 +404,28 @@ export default function MapScreen() {
                           </View>
                         )}
                       </View>
+                      
+                      {/* Directions Button */}
+                      {locationPermission && userLocation && (
+                        <TouchableOpacity
+                          className="px-4 py-2 mt-3 bg-purple-600 rounded-lg"
+                          onPress={() => openDirections(facility)}
+                        >
+                          <View className="flex-row items-center justify-center">
+                            <Ionicons name="navigate" size={16} color="white" />
+                            <Text className="ml-2 text-sm font-medium text-white">
+                              Itinéraire
+                            </Text>
+                          </View>
+                        </TouchableOpacity>
+                      )}
                     </View>
                   </View>
                 </TouchableOpacity>
               ))}
             </View>
           </View>
+          
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -106,14 +106,14 @@ export default function SettingsScreen() {
     onToggle?: () => void;
     showSwitch?: boolean;
   }) => (
-    <View className="bg-white rounded-xl p-4 mb-3 border border-gray-100">
+    <View className="p-4 mb-3 bg-white border border-gray-100 rounded-xl">
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center flex-1">
           <FontAwesome6 name={icon} size={20} color="#6B7280" />
-          <View className="ml-3 flex-1">
+          <View className="flex-1 ml-3">
             <Text className="font-medium text-gray-900">{title}</Text>
             {subtitle && (
-              <Text className="text-sm text-gray-600 mt-1">{subtitle}</Text>
+              <Text className="mt-1 text-sm text-gray-600">{subtitle}</Text>
             )}
           </View>
         </View>
@@ -132,7 +132,7 @@ export default function SettingsScreen() {
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
       {/* Header */}
-      <View className="bg-white px-4 py-4 border-b border-gray-100 flex-row items-center">
+      <View className="flex-row items-center px-4 py-4 bg-white border-b border-gray-100">
         <TouchableOpacity onPress={() => router.back()} className="mr-4">
           <FontAwesome6 name="arrow-left" size={20} color="#374151" />
         </TouchableOpacity>
@@ -142,7 +142,7 @@ export default function SettingsScreen() {
       <ScrollView className="flex-1 px-4 pt-4" contentContainerStyle={{ paddingBottom: 30 }}>
         {/* Notifications Section */}
         <View className="mb-6">
-          <Text className="text-lg font-bold text-gray-900 mb-4">Notifications</Text>
+          <Text className="mb-4 text-lg font-bold text-gray-900">Notifications</Text>
           
           <SettingItem
             icon="bell"
@@ -171,7 +171,7 @@ export default function SettingsScreen() {
 
         {/* Security Section */}
         <View className="mb-6">
-          <Text className="text-lg font-bold text-gray-900 mb-4">Sécurité</Text>
+          <Text className="mb-4 text-lg font-bold text-gray-900">Sécurité</Text>
           
           <SettingItem
             icon="fingerprint"
@@ -181,7 +181,7 @@ export default function SettingsScreen() {
             onToggle={() => toggleSetting('biometric')}
           />
 
-          <TouchableOpacity className="bg-white rounded-xl p-4 mb-3 border border-gray-100">
+          {/* <TouchableOpacity className="p-4 mb-3 bg-white border border-gray-100 rounded-xl">
             <View className="flex-row items-center justify-between">
               <View className="flex-row items-center">
                 <FontAwesome6 name="key" size={20} color="#6B7280" />
@@ -189,23 +189,23 @@ export default function SettingsScreen() {
               </View>
               <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         {/* Subscription Section */}
         <View className="mb-6">
-          <Text className="text-lg font-bold text-gray-900 mb-4">Abonnement</Text>
+          <Text className="mb-4 text-lg font-bold text-gray-900">Abonnement</Text>
           
-          <SettingItem
+          {/* <SettingItem
             icon="rotate"
             title="Renouvellement Automatique"
             subtitle="Renouveler automatiquement votre assurance"
             value={settings.autoRenewal}
             onToggle={() => toggleSetting('autoRenewal')}
-          />
+          /> */}
 
           <TouchableOpacity 
-            className="bg-white rounded-xl p-4 mb-3 border border-gray-100"
+            className="p-4 mb-3 bg-white border border-gray-100 rounded-xl"
             onPress={() => router.push('/plans')}
           >
             <View className="flex-row items-center justify-between">
@@ -220,10 +220,10 @@ export default function SettingsScreen() {
 
         {/* Support Section */}
         <View className="mb-6">
-          <Text className="text-lg font-bold text-gray-900 mb-4">Support</Text>
+          <Text className="mb-4 text-lg font-bold text-gray-900">Support</Text>
           
           <TouchableOpacity 
-            className="bg-white rounded-xl p-4 mb-3 border border-gray-100"
+            className="p-4 mb-3 bg-white border border-gray-100 rounded-xl"
             onPress={() => Alert.alert('Info', 'Fonctionnalité en développement')}
           >
             <View className="flex-row items-center justify-between">
@@ -236,7 +236,7 @@ export default function SettingsScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity 
-            className="bg-white rounded-xl p-4 mb-3 border border-gray-100"
+            className="p-4 mb-3 bg-white border border-gray-100 rounded-xl"
             onPress={() => Alert.alert('Info', 'Fonctionnalité en développement')}
           >
             <View className="flex-row items-center justify-between">
@@ -249,7 +249,7 @@ export default function SettingsScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity 
-            className="bg-white rounded-xl p-4 mb-3 border border-gray-100"
+            className="p-4 mb-3 bg-white border border-gray-100 rounded-xl"
             onPress={() => Alert.alert('Info', 'Fonctionnalité en développement')}
           >
             <View className="flex-row items-center justify-between">
@@ -262,7 +262,7 @@ export default function SettingsScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity 
-            className="bg-white rounded-xl p-4 mb-3 border border-gray-100"
+            className="p-4 mb-3 bg-white border border-gray-100 rounded-xl"
             onPress={() => Alert.alert('Info', 'Fonctionnalité en développement')}
           >
             <View className="flex-row items-center justify-between">
@@ -277,9 +277,9 @@ export default function SettingsScreen() {
 
         {/* App Info Section */}
         <View className="mb-6">
-          <Text className="text-lg font-bold text-gray-900 mb-4">Application</Text>
+          <Text className="mb-4 text-lg font-bold text-gray-900">Application</Text>
           
-          <View className="bg-white rounded-xl p-4 mb-3 border border-gray-100">
+          <View className="p-4 mb-3 bg-white border border-gray-100 rounded-xl">
             <View className="flex-row items-center justify-between">
               <View className="flex-row items-center">
                 <FontAwesome6 name="mobile-screen" size={20} color="#6B7280" />
@@ -292,10 +292,10 @@ export default function SettingsScreen() {
 
         {/* Danger Zone */}
         <View className="mb-6">
-          <Text className="text-lg font-bold text-red-600 mb-4">Zone de danger</Text>
+          <Text className="mb-4 text-lg font-bold text-red-600">Zone de danger</Text>
           
           <TouchableOpacity 
-            className="bg-white rounded-xl p-4 mb-3 border border-red-200"
+            className="p-4 mb-3 bg-white border border-red-200 rounded-xl"
             onPress={handleLogout}
           >
             <View className="flex-row items-center">
@@ -305,7 +305,7 @@ export default function SettingsScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity 
-            className="bg-white rounded-xl p-4 mb-3 border border-red-200"
+            className="p-4 mb-3 bg-white border border-red-200 rounded-xl"
             onPress={handleDeleteAccount}
           >
             <View className="flex-row items-center">

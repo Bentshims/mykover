@@ -73,7 +73,8 @@ export default function MenuScreen() {
       title: 'Notification Inbox',
       icon: 'bell',
       badge: 5,
-      onPress: () => Alert.alert('Info', 'Fonctionnalité en développement'),
+      // onPress: () => Alert.alert('Info', 'Fonctionnalité en développement'),
+      onPress: () => router.push('/notifications'),
     },
     {
       id: 'settings',
@@ -81,35 +82,39 @@ export default function MenuScreen() {
       icon: 'gear',
       onPress: () => router.push('/settings'),
     },
-    {
-      id: 'hospitals',
-      title: 'Partner Hospitals',
-      icon: 'hospital',
-      onPress: () => router.push('/map'),
-    },
+    // {
+    //   id: 'hospitals',
+    //   title: 'Partner Hospitals',
+    //   icon: 'hospital',
+    //   onPress: () => router.push('/map'),
+    // },
     {
       id: 'support',
       title: 'Help & Support',
       icon: 'headset',
-      onPress: () => Alert.alert('Support', 'Contactez-nous à support@mykover.cd'),
+      // onPress: () => Alert.alert('Support', 'Contactez-nous à support@mykover.cd'),
+      onPress: () => router.push('/help-support'),
     },
     {
       id: 'terms',
       title: 'Terms & Conditions',
       icon: 'file-contract',
-      onPress: () => Alert.alert('Info', 'Conditions d\'utilisation'),
+      // onPress: () => Alert.alert('Info', 'Conditions d\'utilisation'),
+      onPress: () => router.push('/terms-conditions'),
     },
     {
       id: 'about',
       title: 'About Us',
       icon: 'info-circle',
-      onPress: () => Alert.alert('MyKover', 'Votre assurance santé numérique à Kinshasa'),
+      // onPress: () => Alert.alert('MyKover', 'Votre assurance santé numérique à Kinshasa'),
+      onPress: () => router.push('/about-us'),
     },
     {
       id: 'rate',
       title: 'Rate Us',
       icon: 'star',
-      onPress: () => Alert.alert('Merci!', 'Évaluez-nous sur l\'App Store'),
+      // onPress: () => Alert.alert('Merci!', 'Évaluez-nous sur l\'App Store'),
+      onPress: () => router.push('/rate-us'),
     },
   ];
 
@@ -173,15 +178,6 @@ export default function MenuScreen() {
         {menuItems.map((item) => (
           <MenuItem key={item.id} item={item} />
         ))}
-
-        {/* Logout Button */}
-        <TouchableOpacity
-          className="flex-row items-center justify-center p-4 mt-4 mb-8 border border-red-100 shadow-sm bg-red-50 rounded-xl"
-          onPress={handleLogout}
-        >
-          <FontAwesome6 name="right-from-bracket" size={18} color="#EF4444" className="mr-3" />
-          <Text className="ml-3 text-base font-semibold text-red-600">Déconnexion</Text>
-        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );

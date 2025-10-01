@@ -11,7 +11,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-import TopNavBarCustom from "../../components/TopNavBarCustom";
+// import TopNavBarCustom from "../../components/TopNavBarCustom";
 import * as WebBrowser from "expo-web-browser";
 import api from "../../services/api";
 import { Alert } from "react-native";
@@ -296,11 +296,11 @@ export default function SubscriptionPlansScreen() {
       <StatusBar barStyle="dark-content" backgroundColor="#F3F4F6" />
 
       {/* Barre de navigation supérieure */}
-      <TopNavBarCustom
+      {/* <TopNavBarCustom
         onAvatarPress={handleAvatarPress}
         onNotificationPress={handleNotificationPress}
         notificationCount={3}
-      />
+      /> */}
 
       {/* Titre et description */}
       <View className="px-6 py-4">
