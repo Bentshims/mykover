@@ -11,7 +11,7 @@ export interface ValidationError {
 
 // Types pour les données de formulaire
 export interface LoginData {
-  phone: string;
+  identifier: string; // Peut être un email ou un numéro de téléphone
   password: string;
 }
 
@@ -136,17 +136,35 @@ export const validatePassword = (password: string): boolean => {
 export const validateLoginData = (data: LoginData): ValidationError[] => {
   const errors: ValidationError[] = [];
   
-  if (!validatePhone(data.phone)) {
+  // L'identifier peut être un email ou un téléphone
+  const isEmail = data.identifier.includes('@');
+  const isValidIdentifier = isEmail 
+    ? validateEmail(data.identifier) 
+    : validatePhone(data.identifier);
+  
+  if (!data.identifier || data.identifier.trim().length === 0) {
     errors.push({
-      field: 'phone',
-      message: 'Le numéro doit être +243 suivi de 8 ou 9, puis 8 chiffres (ex: +2438123456789)'
+      field: 'identifier',
+      message: 'L\'email ou le numéro de téléphone est requis'
     });
+  } else if (!isValidIdentifier) {
+    if (isEmail) {
+      errors.push({
+        field: 'identifier',
+        message: 'Veuillez entrer une adresse email valide'
+      });
+    } else {
+      errors.push({
+        field: 'identifier',
+        message: 'Le numéro doit être +243 suivi de 8 ou 9, puis 8 chiffres (ex: +243812345678)'
+      });
+    }
   }
   
   if (!validatePassword(data.password)) {
     errors.push({
       field: 'password',
-      message: 'Le mot de passe est requis'
+      message: 'Le mot de passe doit contenir au moins 6 caractères'
     });
   }
   

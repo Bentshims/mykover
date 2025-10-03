@@ -29,25 +29,30 @@ export default function ProfileScreen() {
 
   const fetchProfile = async () => {
     try {
-      const response = await api.get('/api/me');
+      const response = await api.get('/api/auth/me');
       if (response.data.success) {
         const userData = response.data.data.user;
         setProfile({
           id: userData.id,
-          fullName: userData.fullName,
+          fullName: userData.fullname, // Backend utilise "fullname" pas "fullName"
           email: userData.email,
-          phoneNumber: userData.phoneNumber,
-          userUid: userData.uuid,
+          phoneNumber: userData.phone, // Backend utilise "phone" pas "phoneNumber"
+          userUid: userData.id, // Utiliser l'ID comme UID
           policyNumber: null, // TODO: Add insurance endpoint
           insuranceStatus: 'INACTIVE', // TODO: Add insurance endpoint
           isActive: false, // TODO: Add insurance endpoint
           activeUntil: null, // TODO: Add insurance endpoint
-          createdAt: userData.createdAt,
+          createdAt: userData.createdAt || new Date().toISOString(),
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching profile:', error);
-      Alert.alert('Erreur', 'Impossible de charger le profil');
+      if (error.response?.status === 401) {
+        Alert.alert('Session expirée', 'Veuillez vous reconnecter');
+        router.replace('/login');
+      } else {
+        Alert.alert('Erreur', 'Impossible de charger le profil');
+      }
     } finally {
       setLoading(false);
       setRefreshing(false);

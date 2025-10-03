@@ -167,13 +167,31 @@ export const sanitizePassword = (password: string): string => {
 };
 
 /**
+ * Nettoie un identifiant (email ou téléphone)
+ * @param identifier - L'identifiant à nettoyer
+ * @returns L'identifiant nettoyé
+ */
+export const sanitizeIdentifier = (identifier: string): string => {
+  if (!identifier) return '';
+  
+  // Déterminer si c'est un email ou un téléphone
+  const isEmail = identifier.includes('@');
+  
+  if (isEmail) {
+    return sanitizeEmail(identifier);
+  } else {
+    return sanitizePhone(identifier);
+  }
+};
+
+/**
  * Nettoie toutes les données d'un formulaire de connexion
  * @param data - Les données à nettoyer
  * @returns Les données nettoyées
  */
-export const sanitizeLoginData = (data: { phone: string; password: string }) => {
+export const sanitizeLoginData = (data: { identifier: string; password: string }) => {
   return {
-    phone: sanitizePhone(data.phone),
+    identifier: sanitizeIdentifier(data.identifier),
     password: sanitizePassword(data.password),
   };
 };

@@ -29,7 +29,7 @@ const LoginScreen: React.FC = () => {
 
   // État du formulaire
   const [formData, setFormData] = useState<LoginData>({
-    phone: "",
+    identifier: "",
     password: "",
   });
 
@@ -73,7 +73,7 @@ const LoginScreen: React.FC = () => {
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       // Utiliser l'AuthContext pour la connexion
-      const success = await login(sanitizedData.phone, sanitizedData.password);
+      const success = await login(sanitizedData.identifier, sanitizedData.password);
 
       if (success) {
         Alert.alert("Succès", "Connexion réussie !", [
@@ -86,7 +86,7 @@ const LoginScreen: React.FC = () => {
           },
         ]);
       } else {
-        Alert.alert("Erreur", "Numéro de téléphone ou mot de passe incorrect");
+        Alert.alert("Erreur", "Email/Téléphone ou mot de passe incorrect");
       }
     } catch (error) {
       Alert.alert("Erreur", "Une erreur est survenue lors de la connexion");
@@ -141,13 +141,16 @@ const LoginScreen: React.FC = () => {
 
           {/* Contenu principal */}
           <View className="flex-1 px-6 pt-24 mt-8 bg-white rounded-tl-[60px] flex flex-col gap-y-7">
-            {/* Champ numéro de téléphone */}
-            <PhoneInput
-              label="Numéro de téléphone"
-              value={formData.phone}
-              onChangeText={(text: string) => updateFormData("phone", text)}
-              placeholder="0000000000"
-              error={errors.phone}
+            {/* Champ email ou téléphone */}
+            <Input
+              label="Email ou Numéro de téléphone"
+              value={formData.identifier}
+              onChangeText={(text: string) => updateFormData("identifier", text)}
+              placeholder="votre@email.com ou +243812345678"
+              keyboardType="email-address"
+              error={errors.identifier}
+              autoComplete="email"
+              textContentType="emailAddress"
             />
 
             {/* Champ mot de passe */}

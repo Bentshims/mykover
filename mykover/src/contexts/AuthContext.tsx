@@ -64,11 +64,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         try {
           const response = await authApi.me();
           if (response.success) {
-            setAuthState({
-              isAuthenticated: true,
-              user: JSON.parse(userData),
-              isLoading: false,
-            });
+        setAuthState({
+          isAuthenticated: true,
+          user: JSON.parse(userData),
+          isLoading: false,
+        });
             return;
           }
         } catch (error) {
@@ -78,11 +78,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      setAuthState({
-        isAuthenticated: false,
-        user: null,
-        isLoading: false,
-      });
+        setAuthState({
+          isAuthenticated: false,
+          user: null,
+          isLoading: false,
+        });
     } catch (error) {
       console.error("Error checking auth status:", error);
       setAuthState({
@@ -109,17 +109,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           isActive: user.email_verified,
         };
 
-        // Save to AsyncStorage
+      // Save to AsyncStorage
         await AsyncStorage.setItem("auth_token", token);
         await AsyncStorage.setItem("user_data", JSON.stringify(frontendUser));
 
-        setAuthState({
-          isAuthenticated: true,
+      setAuthState({
+        isAuthenticated: true,
           user: frontendUser,
-          isLoading: false,
-        });
+        isLoading: false,
+      });
 
-        return true;
+      return true;
       }
 
       return false;
@@ -145,17 +145,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           isActive: user.email_verified,
         };
 
-        // Save to AsyncStorage
+      // Save to AsyncStorage
         await AsyncStorage.setItem("auth_token", token);
         await AsyncStorage.setItem("user_data", JSON.stringify(frontendUser));
 
-        setAuthState({
-          isAuthenticated: true,
+      setAuthState({
+        isAuthenticated: true,
           user: frontendUser,
-          isLoading: false,
-        });
+        isLoading: false,
+      });
 
-        return true;
+      return true;
       }
 
       return false;

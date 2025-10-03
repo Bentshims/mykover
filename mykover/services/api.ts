@@ -1,9 +1,25 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Platform } from 'react-native';
+
+// Determine the correct base URL based on the platform
+const getBaseURL = () => {
+  // POUR EXPO GO SUR APPAREIL PHYSIQUE: Utilisez l'IP de votre ordinateur
+  return 'http://192.168.0.59:3333';
+  
+  // Pour émulateur/simulateur (décommentez si besoin):
+  // if (Platform.OS === 'android') {
+  //   return 'http://10.0.2.2:3333';
+  // } else if (Platform.OS === 'ios') {
+  //   return 'http://localhost:3333';
+  // } else {
+  //   return 'http://localhost:3333';
+  // }
+};
 
 // Create axios instance
 const api = axios.create({
-  baseURL: 'http://localhost:3333', // URL du backend AdonisJS
+  baseURL: getBaseURL(),
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
