@@ -22,6 +22,6 @@ export const registerValidator = vine.compile(
     birth_date: vine.date({
       formats: ['YYYY-MM-DD']
     }),
-    password: vine.string().minLength(8).maxLength(100)
+    password: vine.string().minLength(6).maxLength(100)
   })
 )

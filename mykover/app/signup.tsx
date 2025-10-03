@@ -241,9 +241,20 @@ const SignupScreen: React.FC = () => {
     }
   }, [formData, signup, router]);
 
-  // Google Auth (à implémenter)
-  const handleGoogleAuth = () => {
-    Alert.alert("Google Auth", "Fonctionnalité à venir");
+  // Google Auth
+  const handleGoogleAuth = async () => {
+    try {
+      const googleAuthUrl = `http://localhost:3333/api/auth/google`;
+      Alert.alert(
+        "Authentification Google",
+        "Pour configurer Google OAuth:\n\n1. Créez un projet sur Google Cloud Console\n2. Configurez les identifiants OAuth 2.0\n3. Ajoutez vos identifiants dans le fichier .env du backend\n\nURL d'authentification: " + googleAuthUrl,
+        [
+          { text: "OK" }
+        ]
+      );
+    } catch (error) {
+      Alert.alert("Erreur", "Impossible de se connecter avec Google");
+    }
   };
 
   // Navigation vers login

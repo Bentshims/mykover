@@ -73,15 +73,13 @@ export default class AuthService {
 
   static async login(identifier: string, password: string): Promise<{ user: User; token: string } | null> {
     // Trouver utilisateur par email ou phone
-    const user = await User.query()
-      .where((query) => {
-        if (identifier.includes('@')) {
-          query.where('email', identifier)
-        } else {
-          query.where('phone', identifier)
-        }
-      })
-      .first()
+    let user: User | null = null
+    
+    if (identifier.includes('@')) {
+      user = await User.query().where('email', identifier).first()
+    } else {
+      user = await User.query().where('phone', identifier).first()
+    }
 
     if (!user) {
       return null

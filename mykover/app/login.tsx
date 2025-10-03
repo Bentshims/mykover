@@ -7,6 +7,8 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
+  TouchableOpacity,
+  Image,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { useAuth } from "../src/contexts/AuthContext";
@@ -98,6 +100,22 @@ const LoginScreen: React.FC = () => {
     router.push("/signup");
   }, [router]);
 
+  // Google Auth
+  const handleGoogleAuth = async () => {
+    try {
+      const googleAuthUrl = `http://localhost:3333/api/auth/google`;
+      Alert.alert(
+        "Authentification Google",
+        "Pour configurer Google OAuth:\n\n1. Créez un projet sur Google Cloud Console\n2. Configurez les identifiants OAuth 2.0\n3. Ajoutez vos identifiants dans le fichier .env du backend\n\nURL d'authentification: " + googleAuthUrl,
+        [
+          { text: "OK" }
+        ]
+      );
+    } catch (error) {
+      Alert.alert("Erreur", "Impossible de se connecter avec Google");
+    }
+  };
+
   return (
     <KeyboardAvoidingView
       className="flex-1 bg-purple-600"
@@ -153,6 +171,30 @@ const LoginScreen: React.FC = () => {
                   loading={isLoading}
                   disabled={isLoading}
                 />
+              </View>
+
+              {/* Séparateur avec Google Auth */}
+              <View className="mb-6">
+                <View className="flex-row items-center mb-4">
+                  <View className="flex-1 h-px bg-gray-200" />
+                  <Text className="px-4 text-gray-500 text-sm">
+                    ou continuer avec
+                  </Text>
+                  <View className="flex-1 h-px bg-gray-200" />
+                </View>
+
+                <TouchableOpacity
+                  onPress={handleGoogleAuth}
+                  className="flex-row items-center justify-center bg-white rounded-full py-4 px-6 border border-zinc-200"
+                >
+                  <Image
+                    source={require("../assets/images/google.png")}
+                    className="w-6 h-6 rounded-full mr-3"
+                  />
+                  <Text className="text-gray-700 font-medium">
+                    Continuer avec Google
+                  </Text>
+                </TouchableOpacity>
               </View>
 
               {/* Lien vers l'inscription */}

@@ -91,13 +91,53 @@ export default function ForgotPasswordScreen() {
   const dismissKeyboard = () => Keyboard.dismiss();
 
   const handleSendOtp = async () => {
-    /* ... logique inchangée ... */
+    if (!validateCurrentStep()) return;
+    setIsLoading(true);
+    try {
+      const response = await authApi.forgotPassword(formData.phoneNumber);
+      if (response.success) {
+        setOtpSent(true);
+        setStep("otp");
+        Alert.alert("Succès", "Code OTP envoyé par SMS et email");
+      } else {
+        Alert.alert("Erreur", response.message || "Impossible d'envoyer le code");
+      }
+    } catch (error: any) {
+      Alert.alert("Erreur", error.response?.data?.message || "Erreur lors de l'envoi du code");
+    } finally {
+      setIsLoading(false);
+    }
   };
+
   const handleVerifyOtp = async () => {
-    /* ... logique inchangée ... */
+    if (!validateCurrentStep()) return;
+    setStep("password");
   };
+
   const handleResetPassword = async () => {
-    /* ... logique inchangée ... */
+    if (!validateCurrentStep()) return;
+    setIsLoading(true);
+    try {
+      const response = await authApi.resetPassword(
+        formData.phoneNumber,
+        formData.otp,
+        formData.newPassword
+      );
+      if (response.success) {
+        Alert.alert("Succès", "Mot de passe réinitialisé avec succès", [
+          {
+            text: "OK",
+            onPress: () => router.push("/login"),
+          },
+        ]);
+      } else {
+        Alert.alert("Erreur", response.message || "Code OTP invalide");
+      }
+    } catch (error: any) {
+      Alert.alert("Erreur", error.response?.data?.message || "Erreur lors de la réinitialisation");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const getStepTitle = () => {
