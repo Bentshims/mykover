@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 import { registerValidator, loginValidator, forgotPasswordValidator } from '#validators/auth'
 import { DateTime } from 'luxon'
+import GoogleService from '#services/google_service'
 
 export default class AuthController {
   /**
@@ -225,6 +226,100 @@ export default class AuthController {
         success: false,
         message: 'Erreur lors de la demande',
         errors: error.messages || error.message
+      })
+    }
+  }
+
+  /**
+   * GOOGLE AUTH - Rediriger vers Google OAuth
+   */
+  async googleAuth({ response }: HttpContext) {
+    console.log('[GOOGLE_AUTH] Début authentification Google')
+    
+    try {
+      const authUrl = GoogleService.getAuthUrl()
+      console.log('[GOOGLE_AUTH] URL générée:', authUrl)
+      
+      return response.redirect(authUrl)
+    } catch (error) {
+      console.error('[GOOGLE_AUTH] Erreur:', error)
+      return response.status(500).json({
+        success: false,
+        message: 'Erreur lors de la redirection vers Google'
+      })
+    }
+  }
+
+  /**
+   * GOOGLE CALLBACK - Traiter le retour de Google OAuth
+   */
+  async googleCallback({ request, response }: HttpContext) {
+    console.log('[GOOGLE_CALLBACK] Début callback Google')
+    
+    try {
+      const { code, error } = request.qs()
+      
+      if (error) {
+        console.error('[GOOGLE_CALLBACK] Erreur OAuth:', error)
+        return response.status(400).json({
+          success: false,
+          message: 'Authentification Google annulée ou échouée'
+        })
+      }
+
+      if (!code) {
+        console.error('[GOOGLE_CALLBACK] Code manquant')
+        return response.status(400).json({
+          success: false,
+          message: 'Code d\'autorisation manquant'
+        })
+      }
+
+      console.log('[GOOGLE_CALLBACK] Code reçu')
+
+      // 1. Échanger le code contre un access token
+      const accessToken = await GoogleService.exchangeCodeForToken(code)
+      if (!accessToken) {
+        console.error('[GOOGLE_CALLBACK] Échec échange token')
+        return response.status(400).json({
+          success: false,
+          message: 'Impossible d\'obtenir le token d\'accès'
+        })
+      }
+
+      // 2. Récupérer les infos utilisateur
+      const googleUser = await GoogleService.getUserInfo(accessToken)
+      if (!googleUser) {
+        console.error('[GOOGLE_CALLBACK] Échec récupération infos utilisateur')
+        return response.status(400).json({
+          success: false,
+          message: 'Impossible de récupérer les informations utilisateur'
+        })
+      }
+
+      console.log('[GOOGLE_CALLBACK] Infos utilisateur récupérées:', googleUser.email)
+
+      // 3. Trouver ou créer l'utilisateur
+      const user = await GoogleService.findOrCreateUser(googleUser)
+      console.log('[GOOGLE_CALLBACK] Utilisateur trouvé/créé:', user.id)
+
+      // 4. Créer un access token pour l'app
+      const token = await User.accessTokens.create(user)
+      console.log('[GOOGLE_CALLBACK] Access token créé')
+
+      // 5. Rediriger vers le frontend avec le token
+      // Use the same host as the request to ensure mobile compatibility
+      const host = request.header('host') || 'localhost:3333'
+      const protocol = request.header('x-forwarded-proto') || 'http'
+      const frontendUrl = `${protocol}://${host.replace('3333', '8081')}/auth/google/success?token=${token.value!.release()}`
+      return response.redirect(frontendUrl)
+      
+    } catch (error) {
+      console.error('[GOOGLE_CALLBACK] Erreur:', error)
+      return response.status(500).json({
+        success: false,
+        message: 'Erreur lors de l\'authentification Google',
+        errors: error.message
       })
     }
   }

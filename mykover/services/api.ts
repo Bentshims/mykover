@@ -5,7 +5,7 @@ import { Platform } from 'react-native';
 // Determine the correct base URL based on the platform
 const getBaseURL = () => {
   // POUR EXPO GO SUR APPAREIL PHYSIQUE: Utilisez l'IP de votre ordinateur
-  return 'http://192.168.0.59:3333';
+  return 'http://10.35.66.111:3333';
   
   // Pour émulateur/simulateur (décommentez si besoin):
   // if (Platform.OS === 'android') {

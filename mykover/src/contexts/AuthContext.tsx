@@ -28,6 +28,7 @@ export interface AuthContextType extends AuthState {
   signup: (userData: SignupData) => Promise<boolean>;
   logout: () => Promise<void>;
   checkAuthStatus: () => Promise<void>;
+  loginWithToken: (token: string) => Promise<boolean>;
 }
 
 export interface SignupData {
@@ -165,6 +166,48 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const loginWithToken = async (token: string): Promise<boolean> => {
+    try {
+      // Save token temporarily
+      await AsyncStorage.setItem("auth_token", token);
+      
+      // Get user info with the token
+      const response = await authApi.me();
+      
+      if (response.success && response.data) {
+        const { user } = response.data;
+        
+        // Transform backend user to frontend User type
+        const frontendUser: User = {
+          id: user.id,
+          fullName: user.fullname,
+          email: user.email,
+          phoneNumber: user.phone,
+          isActive: user.email_verified,
+        };
+
+        // Save user data
+        await AsyncStorage.setItem("user_data", JSON.stringify(frontendUser));
+
+        setAuthState({
+          isAuthenticated: true,
+          user: frontendUser,
+          isLoading: false,
+        });
+
+        return true;
+      }
+
+      // If failed, remove the token
+      await AsyncStorage.removeItem("auth_token");
+      return false;
+    } catch (error) {
+      console.error("Login with token error:", error);
+      await AsyncStorage.removeItem("auth_token");
+      return false;
+    }
+  };
+
   const logout = async () => {
     try {
       // Call backend logout endpoint
@@ -194,6 +237,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     signup,
     logout,
     checkAuthStatus,
+    loginWithToken,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
