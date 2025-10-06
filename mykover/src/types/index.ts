@@ -13,7 +13,7 @@ export type RootStackParamList = {
 
 // Types pour les données de formulaire
 export interface LoginData {
-  identifier: string; // Peut être un email ou un numéro de téléphone
+  phone: string; // Numéro de téléphone (format: +243[89]XXXXXXXX) ✅ CORRIGÉ
   password: string;
 }
 

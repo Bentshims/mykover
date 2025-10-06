@@ -24,7 +24,7 @@ export interface AuthState {
 }
 
 export interface AuthContextType extends AuthState {
-  login: (identifier: string, password: string) => Promise<boolean>;
+  login: (phone: string, password: string) => Promise<boolean>; // ✅ CORRIGÉ
   signup: (userData: SignupData) => Promise<boolean>;
   logout: () => Promise<void>;
   checkAuthStatus: () => Promise<void>;
@@ -35,7 +35,7 @@ export interface SignupData {
   email: string;
   phone: string; // Correspond au backend: phone
   password: string;
-  birth_date: string; // Correspond au backend: birth_date (YYYY-MM-DD)
+  birth_date: string; // Correspond au backend: birth_date (DD-MM-YYYY) ✅ CORRIGÉ
 }
 
 // Create the context
@@ -93,9 +93,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const login = async (identifier: string, password: string): Promise<boolean> => {
+  const login = async (phone: string, password: string): Promise<boolean> => { // ✅ CORRIGÉ
     try {
-      const response = await authApi.login(identifier, password);
+      const response = await authApi.login(phone, password); // ✅ CORRIGÉ
 
       if (response.success && response.data) {
         const { user, token } = response.data;
