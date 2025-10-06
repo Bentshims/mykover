@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import api from '../services/api';
 
 interface UserProfile {
-  id: number;
+  id: string; // ✅ CORRIGÉ - Le backend retourne un UUID (string)
   fullName: string;
   email: string;
   phoneNumber: string;
