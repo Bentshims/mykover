@@ -189,9 +189,9 @@ export const sanitizeIdentifier = (identifier: string): string => {
  * @param data - Les données à nettoyer
  * @returns Les données nettoyées
  */
-export const sanitizeLoginData = (data: { identifier: string; password: string }) => {
+export const sanitizeLoginData = (data: { phone: string; password: string }) => { // ✅ CORRIGÉ
   return {
-    identifier: sanitizeIdentifier(data.identifier),
+    phone: sanitizePhone(data.phone), // ✅ CORRIGÉ
     password: sanitizePassword(data.password),
   };
 };

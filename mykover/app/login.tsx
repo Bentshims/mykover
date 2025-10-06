@@ -29,7 +29,7 @@ const LoginScreen: React.FC = () => {
 
   // État du formulaire
   const [formData, setFormData] = useState<LoginData>({
-    identifier: "",
+    phone: "", // ✅ CORRIGÉ
     password: "",
   });
 
@@ -66,14 +66,11 @@ const LoginScreen: React.FC = () => {
       return;
     }
 
-    // Simulation de l'API de connexion
+    // Connexion via API
     setIsLoading(true);
     try {
-      // Simuler un délai d'API
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
       // Utiliser l'AuthContext pour la connexion
-      const success = await login(sanitizedData.identifier, sanitizedData.password);
+      const success = await login(sanitizedData.phone, sanitizedData.password); // ✅ CORRIGÉ
 
       if (success) {
         Alert.alert("Succès", "Connexion réussie !", [
@@ -141,16 +138,12 @@ const LoginScreen: React.FC = () => {
 
           {/* Contenu principal */}
           <View className="flex-1 px-6 pt-24 mt-8 bg-white rounded-tl-[60px] flex flex-col gap-y-7">
-            {/* Champ email ou téléphone */}
-            <Input
-              label="Email ou Numéro de téléphone"
-              value={formData.identifier}
-              onChangeText={(text: string) => updateFormData("identifier", text)}
-              placeholder="votre@email.com ou +243812345678"
-              keyboardType="email-address"
-              error={errors.identifier}
-              autoComplete="email"
-              textContentType="emailAddress"
+            {/* Champ téléphone uniquement ✅ CORRIGÉ */}
+            <PhoneInput
+              label="Numéro de téléphone"
+              value={formData.phone}
+              onChangeText={(text: string) => updateFormData("phone", text)}
+              error={errors.phone}
             />
 
             {/* Champ mot de passe */}

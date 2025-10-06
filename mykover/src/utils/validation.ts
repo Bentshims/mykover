@@ -11,7 +11,7 @@ export interface ValidationError {
 
 // Types pour les données de formulaire
 export interface LoginData {
-  identifier: string; // Peut être un email ou un numéro de téléphone
+  phone: string; // Numéro de téléphone (format: +243[89]XXXXXXXX) ✅ CORRIGÉ
   password: string;
 }
 
@@ -136,29 +136,17 @@ export const validatePassword = (password: string): boolean => {
 export const validateLoginData = (data: LoginData): ValidationError[] => {
   const errors: ValidationError[] = [];
   
-  // L'identifier peut être un email ou un téléphone
-  const isEmail = data.identifier.includes('@');
-  const isValidIdentifier = isEmail 
-    ? validateEmail(data.identifier) 
-    : validatePhone(data.identifier);
-  
-  if (!data.identifier || data.identifier.trim().length === 0) {
+  // Valider le téléphone uniquement ✅ CORRIGÉ
+  if (!data.phone || data.phone.trim().length === 0) {
     errors.push({
-      field: 'identifier',
-      message: 'L\'email ou le numéro de téléphone est requis'
+      field: 'phone',
+      message: 'Le numéro de téléphone est requis'
     });
-  } else if (!isValidIdentifier) {
-    if (isEmail) {
-      errors.push({
-        field: 'identifier',
-        message: 'Veuillez entrer une adresse email valide'
-      });
-    } else {
-      errors.push({
-        field: 'identifier',
-        message: 'Le numéro doit être +243 suivi de 8 ou 9, puis 8 chiffres (ex: +243812345678)'
-      });
-    }
+  } else if (!validatePhone(data.phone)) {
+    errors.push({
+      field: 'phone',
+      message: 'Le numéro doit être +243 suivi de 8 ou 9, puis 8 chiffres (ex: +243812345678)'
+    });
   }
   
   if (!validatePassword(data.password)) {

@@ -67,32 +67,22 @@ export const authApi = {
     password: string;
     birth_date: string;
   }) => {
-    const response = await api.post('/api/auth/register', data);
+    const response = await api.post('/api/auth/signup', data); // ✅ CORRIGÉ
     return response.data;
   },
 
-  // Login with phone or email
-  login: async (identifier: string, password: string) => {
+  // Login with phone and password
+  login: async (phone: string, password: string) => { // ✅ CORRIGÉ
     const response = await api.post('/api/auth/login', {
-      identifier,
+      phone, // ✅ CORRIGÉ
       password,
     });
     return response.data;
   },
 
-  // Forgot password - send OTP
-  forgotPassword: async (identifier: string) => {
-    const response = await api.post('/api/auth/forgot', { identifier });
-    return response.data;
-  },
-
-  // Reset password with OTP
-  resetPassword: async (identifier: string, otp: string, new_password: string) => {
-    const response = await api.post('/api/auth/reset', {
-      identifier,
-      otp,
-      new_password,
-    });
+  // Forgot password - send email with reset token
+  forgotPassword: async (email: string) => { // ✅ CORRIGÉ
+    const response = await api.post('/api/auth/forgot-password', { email }); // ✅ CORRIGÉ
     return response.data;
   },
 
