@@ -216,6 +216,14 @@ const SignupScreen: React.FC = () => {
         return;
       }
 
+      console.log('[SIGNUP DEBUG] Données envoyées:', {
+        fullname: formData.fullName,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password,
+        birth_date: dateValidation.isoDate!,
+      });
+
       const success = await signup({
         fullname: formData.fullName,
         email: formData.email,

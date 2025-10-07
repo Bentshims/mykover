@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { BaseModel, column, beforeSave } from '@adonisjs/lucid/orm'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
+import hash from '@adonisjs/core/services/hash'
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -34,5 +35,15 @@ export default class User extends BaseModel {
   declare updatedAt: DateTime
 
   static accessTokens = DbAccessTokensProvider.forModel(User)
+
+  /**
+   * Hook pour hasher le mot de passe avant de sauvegarder
+   */
+  @beforeSave()
+  static async hashPassword(user: User) {
+    if (user.$dirty.password) {
+      user.password = await hash.make(user.password)
+    }
+  }
 }
 

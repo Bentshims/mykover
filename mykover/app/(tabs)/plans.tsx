@@ -45,12 +45,12 @@ const plansData = {
       "Réductions sur imageries médicales (échographie, radiographie)",
     ],
   },
-  premium: {
-    name: "Premium",
+  libotaPlus: {
+    name: "Libota+",
     price: "50",
     currency: "$",
     description:
-      "Le Plan Premium, à seulement 50 $/mois, couvre toute la famille (jusqu'à 7 membres).",
+      "Le Plan Libota+, à seulement 50 $/mois, couvre toute la famille (jusqu'à 7 membres).",
     features: [
       "Consultations illimitées pour toute la famille (jusqu'à 7 membres : parents + enfants)",
       "Hospitalisation complète dans les cliniques partenaires",
@@ -66,7 +66,7 @@ export default function SubscriptionPlansScreen() {
   const [routes] = useState([
     { key: "basique", title: "Basique" },
     { key: "libota", title: "Libota" },
-    { key: "premium", title: "Premium" },
+    { key: "libota+", title: "Libota+" },
   ]);
 
   // Fonction pour gérer la souscription directe avec CinetPay
@@ -181,7 +181,7 @@ export default function SubscriptionPlansScreen() {
         return "1";
       case "libota":
         return "2";
-      case "premium":
+      case "libotaPlus":
         return "3";
       default:
         return "1";
@@ -224,7 +224,7 @@ export default function SubscriptionPlansScreen() {
           {/* Fonctionnalités */}
           <View className="mb-6">
             {plan.features.map((feature, index) => (
-              <View key={index} className="flex-row items-start mb-4">
+              <View key={index} className="flex-row items-start mb-8">
                 <View className="w-6 h-6 bg-[#8A4DFF] rounded-full items-center justify-center mr-3 mt-0.5">
                   <Ionicons name="checkmark" size={16} color="white" />
                 </View>
@@ -262,7 +262,7 @@ export default function SubscriptionPlansScreen() {
   const renderScene = SceneMap({
     basique: () => <PlanContent planKey="basique" />,
     libota: () => <PlanContent planKey="libota" />,
-    premium: () => <PlanContent planKey="premium" />,
+    "libota+": () => <PlanContent planKey="libotaPlus" />,
   });
 
   // Rendu de la barre d'onglets personnalisée
@@ -320,7 +320,7 @@ export default function SubscriptionPlansScreen() {
       <View className="flex-1">
         {index === 0 && <PlanContent planKey="basique" />}
         {index === 1 && <PlanContent planKey="libota" />}
-        {index === 2 && <PlanContent planKey="premium" />}
+        {index === 2 && <PlanContent planKey="libotaPlus" />}
       </View>
     </SafeAreaView>
   );
