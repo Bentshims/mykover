@@ -4,17 +4,18 @@ import { Platform } from 'react-native';
 
 // Determine the correct base URL based on the platform
 const getBaseURL = () => {
-  // POUR EXPO GO SUR APPAREIL PHYSIQUE: Utilisez l'IP de votre ordinateur
-  return 'http://192.168.0.59:3333';
+  // Pour EXPO GO sur appareil physique - IP actuelle de votre machine
+  if (Platform.OS === 'android' || Platform.OS === 'ios') {
+    return 'http://192.168.1.189:3333';
+  }
   
-  // Pour émulateur/simulateur (décommentez si besoin):
-  // if (Platform.OS === 'android') {
-  //   return 'http://10.0.2.2:3333';
-  // } else if (Platform.OS === 'ios') {
-  //   return 'http://localhost:3333';
-  // } else {
-  //   return 'http://localhost:3333';
-  // }
+  // Pour émulateurs/simulateurs
+  if (Platform.OS === 'android') {
+    return 'http://10.0.2.2:3333'; // Android emulator
+  }
+  
+  // Pour web ou iOS simulator
+  return 'http://localhost:3333';
 };
 
 // Create axios instance

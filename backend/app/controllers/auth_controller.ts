@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
 import { registerValidator, loginValidator, forgotPasswordValidator } from '#validators/auth'
 import { DateTime } from 'luxon'
+import hash from '@adonisjs/core/services/hash'
 
 export default class AuthController {
   /**
@@ -82,9 +83,10 @@ export default class AuthController {
         })
       }
 
-      // 3. Vérifier le mot de passe (comparaison directe - SANS HACHAGE)
+      // 3. Vérifier le mot de passe avec hash
       console.log('[LOGIN] Vérification du mot de passe...')
-      if (user.password !== password) {
+      const isPasswordValid = await hash.verify(user.password, password)
+      if (!isPasswordValid) {
         console.log('[LOGIN] Échec - mot de passe incorrect')
         return response.status(401).json({
           success: false,

@@ -131,7 +131,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signup = async (userData: SignupData): Promise<boolean> => {
     try {
+      console.log('[AuthContext] Données inscription:', userData);
       const response = await authApi.register(userData);
+      console.log('[AuthContext] Réponse:', response);
 
       if (response.success && response.data) {
         const { user, token } = response.data;
@@ -159,8 +161,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       return false;
-    } catch (error) {
+    } catch (error: any) {
       console.error("Signup error:", error);
+      console.error("Error details:", error.response?.data);
+      console.error("Error status:", error.response?.status);
       return false;
     }
   };
