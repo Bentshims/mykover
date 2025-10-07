@@ -6,322 +6,236 @@ import {
   StatusBar,
   Dimensions,
   ActivityIndicator,
+  Alert,
+  ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { TabView, SceneMap, TabBar } from "react-native-tab-view";
-// import TopNavBarCustom from "../../components/TopNavBarCustom";
-import * as WebBrowser from "expo-web-browser";
-import api from "../../services/api";
-import { Alert } from "react-native";
-import { paymentService } from "../../services/paymentService";
+import { TabView, TabBar } from "react-native-tab-view";
+import { useAuth } from "../../src/contexts/AuthContext";
+import MemberFormDrawer from "../../components/MemberFormDrawer";
+import { familyService, MemberData } from "../../services/familyService";
+import * as Linking from 'expo-linking';
 
-// Données des plans d'abonnement
-const plansData = {
-  basique: {
-    name: "Basique",
-    price: "15",
-    currency: "$",
-    description:
-      "Le Plan Basique, à seulement 15 $/mois, couvre toute la famille (jusqu'à 3 membres).",
-    features: [
-      "Consultations illimitées pour toute la famille (jusqu'à 3 membres : parents + enfants)",
-      "Hospitalisation de base dans les cliniques partenaires",
-      "Couverture partielle pour césariennes, accouchements et soins prénatals",
-      "Réductions sur imageries médicales (échographie, radiographie)",
-    ],
-  },
-  libota: {
-    name: "Libota",
-    price: "30",
-    currency: "$",
-    description:
-      "Le Plan Libota, à seulement 30 $/mois, couvre toute la famille (jusqu'à 5 membres).",
-    features: [
-      "Consultations illimitées pour toute la famille (jusqu'à 5 membres : parents + enfants)",
-      "Hospitalisation de base dans les cliniques partenaires",
-      "Couverture partielle pour césariennes, accouchements et soins prénatals",
-      "Réductions sur imageries médicales (échographie, radiographie)",
-    ],
-  },
-  libotaPlus: {
-    name: "Libota+",
-    price: "50",
-    currency: "$",
-    description:
-      "Le Plan Libota+, à seulement 50 $/mois, couvre toute la famille (jusqu'à 7 membres).",
-    features: [
-      "Consultations illimitées pour toute la famille (jusqu'à 7 membres : parents + enfants)",
-      "Hospitalisation complète dans les cliniques partenaires",
-      "Couverture complète pour césariennes, accouchements et soins prénatals",
-      "Imageries médicales incluses (échographie, radiographie, scanner)",
-    ],
-  },
+const PLAN_CONFIG = {
+  basique: { name: "Basique", price: 15, min: 1, max: 1, color: "#22C55E" },
+  libota: { name: "Libota", price: 30, min: 2, max: 3, color: "#8A4DFF" },
+  libota_plus: { name: "Libota+", price: 50, min: 2, max: 5, color: "#F59E0B" },
 };
 
+type PlanType = keyof typeof PLAN_CONFIG;
+
 export default function SubscriptionPlansScreen() {
-  const [index, setIndex] = useState(1); // Start with Libota (middle tab)
-  const [loadingPlan, setLoadingPlan] = useState<string | null>(null); // Track which plan is loading
+  const { user } = useAuth();
+  const [index, setIndex] = useState(1);
   const [routes] = useState([
     { key: "basique", title: "Basique" },
     { key: "libota", title: "Libota" },
-    { key: "libota+", title: "Libota+" },
+    { key: "libota_plus", title: "Libota+" },
   ]);
 
-  // Fonction pour gérer la souscription directe avec CinetPay
-  const handleSubscribe = async (planKey: string) => {
-    const plan = plansData[planKey as keyof typeof plansData];
-    const amount = parseFloat(plan.price);
+  const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(null);
+  const [members, setMembers] = useState<MemberData[]>([]);
+  const [showMemberDrawer, setShowMemberDrawer] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubscribe = (planKey: string) => {
+    const plan = planKey === "libota_plus" ? "libota_plus" : planKey as PlanType;
+    setSelectedPlan(plan);
+    setMembers([]);
+    setShowMemberDrawer(true);
+  };
+
+  const handleMemberSubmit = (member: MemberData) => {
+    setMembers((prev) => [...prev, member]);
+    setShowMemberDrawer(false);
+
+    if (!selectedPlan) return;
+
+    const config = PLAN_CONFIG[selectedPlan];
+
+    // Vérifier si on a atteint le max
+    if (members.length + 1 >= config.max) {
+      // Soumettre automatiquement
+      handleFinalSubmit([...members, member]);
+    } else {
+      // Demander s'il veut ajouter un autre membre
+      Alert.alert(
+        "Membre ajouté",
+        `${members.length + 1}/${config.max} membre(s) ajouté(s). Voulez-vous ajouter un autre membre ?`,
+        [
+          { text: "Terminer", onPress: () => handleFinalSubmit([...members, member]) },
+          { text: "Ajouter", onPress: () => setShowMemberDrawer(true) },
+        ]
+      );
+    }
+  };
+
+  const handleFinalSubmit = async (finalMembers: MemberData[]) => {
+    if (!selectedPlan) return;
+
+    const config = PLAN_CONFIG[selectedPlan];
+
+    // Validation
+    if (finalMembers.length < config.min || finalMembers.length > config.max) {
+      Alert.alert(
+        "Erreur",
+        `Le plan ${config.name} nécessite entre ${config.min} et ${config.max} membre(s)`
+      );
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
-      // Set loading state for this specific plan
-      setLoadingPlan(planKey);
-
-      // Initiate payment directly with CinetPay
-      const response = await paymentService.initiatePayment({
-        amount,
-        currency: "USD",
-        description: `Abonnement MyKover - Plan ${plan.name}`,
-        customer_name: "Utilisateur", // Will be replaced with actual user data
-        customer_surname: "MyKover", // Will be replaced with actual user data
-        customer_email: "user@mykover.cd", // Will be replaced with actual user data
-        customer_phone_number: "+243000000000", // Will be replaced with actual user data
-        customer_address: "Kinshasa",
-        customer_city: "Kinshasa",
-        customer_country: "CD",
-        customer_state: "CD",
-        customer_zip_code: "00000",
-        metadata: `plan_${planKey}`,
+      // 1. Créer la famille
+      const familyResponse = await familyService.createFamily({
+        planType: selectedPlan,
+        members: finalMembers,
       });
 
-      if (response.success && response.data?.payment_url) {
-        // Open CinetPay directly in the device's default browser
-        const result = await WebBrowser.openBrowserAsync(
-          response.data.payment_url,
-          {
-            presentationStyle:
-              WebBrowser.WebBrowserPresentationStyle.FULL_SCREEN,
-            controlsColor: "#8A4DFF",
-            toolbarColor: "#FFFFFF",
-            showTitle: true,
-            enableBarCollapsing: false,
-            showInRecents: true,
-          }
-        );
-
-        // Handle the browser result
-        if (result.type === "cancel") {
-          Alert.alert(
-            "Paiement annulé",
-            "Vous avez annulé le processus de paiement.",
-            [{ text: "OK" }]
-          );
-        } else if (result.type === "dismiss") {
-          // User closed the browser, check payment status
-          setTimeout(async () => {
-            try {
-              const verification = await paymentService.verifyPayment(
-                response.data?.transaction_id || ""
-              );
-              if (
-                verification.success &&
-                verification.data?.status === "COMPLETED"
-              ) {
-                router.push({
-                  pathname: "/payment-history",
-                  params: {
-                    transactionId: response.data?.transaction_id || "",
-                    planName: plan.name,
-                    amount: plan.price,
-                  },
-                });
-              } else {
-                router.push({
-                  pathname: "/payment-result",
-                  params: {
-                    status: verification.data?.status || "PENDING",
-                    transactionId: response.data?.transaction_id || "",
-                    planName: plan.name,
-                    amount: plan.price,
-                  },
-                });
-              }
-            } catch (error) {
-              Alert.alert(
-                "Vérification du paiement",
-                "Impossible de vérifier le statut du paiement. Veuillez vérifier votre historique de paiements.",
-                [{ text: "OK" }]
-              );
-            }
-          }, 2000); // Wait 2 seconds before checking
-        }
-      } else {
-        throw new Error(
-          response.message || "Échec de l'initialisation du paiement"
-        );
+      if (!familyResponse.success || !familyResponse.data) {
+        throw new Error(familyResponse.error || "Erreur création famille");
       }
+
+      const familyId = familyResponse.data.family.id;
+      const familyCode = familyResponse.data.family.code;
+
+      // 2. Initier le paiement
+      const paymentResponse = await familyService.initiatePayment(familyId);
+
+      if (!paymentResponse.success || !paymentResponse.data) {
+        throw new Error(paymentResponse.error || "Erreur initiation paiement");
+      }
+
+      const { paymentUrl, transactionId } = paymentResponse.data;
+
+      // 3. Rediriger vers CinetPay
+      await Linking.openURL(paymentUrl);
+
+      // 4. Naviguer vers écran de vérification
+      router.push({
+        pathname: "/payment-verification" as any,
+        params: {
+          transactionId,
+          familyCode,
+          planName: config.name,
+          amount: config.price.toString(),
+        },
+      });
+
+      // Reset
+      setSelectedPlan(null);
+      setMembers([]);
     } catch (error: any) {
-      Alert.alert(
-        "Erreur de paiement",
-        error.message ||
-          "Impossible d'initialiser le paiement. Veuillez réessayer.",
-        [{ text: "OK" }]
-      );
+      Alert.alert("Erreur", error.message || "Une erreur est survenue");
     } finally {
-      // Clear loading state
-      setLoadingPlan(null);
+      setIsSubmitting(false);
     }
   };
 
-  // Helper function to get plan ID
-  const getPlanId = (planKey: string): string => {
-    switch (planKey) {
-      case "basique":
-        return "1";
-      case "libota":
-        return "2";
-      case "libotaPlus":
-        return "3";
-      default:
-        return "1";
-    }
-  };
-
-  // Fonction pour gérer les notifications
-  const handleNotificationPress = () => {
-    // Navigation vers les notifications sera implémentée
-  };
-
-  // Fonction pour gérer le clic sur l'avatar
-  const handleAvatarPress = () => {
-    router.push("/profile");
-  };
-
-  // Composant pour chaque plan
-  const PlanContent = ({ planKey }: { planKey: string }) => {
-    const plan = plansData[planKey as keyof typeof plansData];
+  const renderPlanCard = (planKey: string) => {
+    const plan = planKey === "libota+" ? "libota_plus" : planKey as PlanType;
+    const config = PLAN_CONFIG[plan];
 
     return (
-      <View className="flex-1 px-6">
-        {/* Carte du plan */}
-        <View className="p-6 mb-6 bg-white shadow-sm rounded-2xl">
-          {/* Prix */}
+      <View className="flex-1 bg-white p-6">
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View className="items-center mb-6">
-            <Text className="text-4xl font-bold text-[#8A4DFF] mb-2">
-              {plan.price}
-              {plan.currency}/mois
+            <View
+              className="w-20 h-20 rounded-full items-center justify-center mb-4"
+              style={{ backgroundColor: `${config.color}20` }}
+            >
+              <Ionicons name="shield-checkmark" size={40} color={config.color} />
+            </View>
+            <Text className="text-3xl font-bold" style={{ color: config.color }}>
+              {config.price}$/mois
+            </Text>
+            <Text className="text-gray-500 mt-1">
+              {config.min === config.max
+                ? `${config.max} membre`
+                : `${config.min}-${config.max} membres`}
             </Text>
           </View>
 
-          {/* Description */}
           <View className="mb-6">
-            <Text className="leading-6 text-center text-gray-600">
-              {plan.description}
-            </Text>
+            <Text className="text-lg font-bold text-gray-900 mb-3">Avantages</Text>
+            <View className="space-y-2">
+              <FeatureItem text="Consultations illimitées" />
+              <FeatureItem text="Hospitalisation dans cliniques partenaires" />
+              {plan !== "basique" && <FeatureItem text="Couverture complète césariennes" />}
+              {plan === "libota_plus" && <FeatureItem text="Imageries médicales incluses" />}
+            </View>
           </View>
 
-          {/* Fonctionnalités */}
-          <View className="mb-6">
-            {plan.features.map((feature, index) => (
-              <View key={index} className="flex-row items-start mb-8">
-                <View className="w-6 h-6 bg-[#8A4DFF] rounded-full items-center justify-center mr-3 mt-0.5">
-                  <Ionicons name="checkmark" size={16} color="white" />
-                </View>
-                <Text className="flex-1 leading-6 text-gray-700">
-                  {feature}
-                </Text>
-              </View>
-            ))}
-          </View>
-        </View>
-
-        {/* Bouton Souscrire */}
-        <TouchableOpacity
-          className={`rounded-full py-4 shadow-lg mx-6 ${
-            loadingPlan === planKey ? "bg-gray-400" : "bg-[#8A4DFF]"
-          }`}
-          onPress={() => handleSubscribe(planKey)}
-          activeOpacity={0.8}
-          disabled={loadingPlan !== null}
-        >
-          <View className="flex-row items-center justify-center">
-            {loadingPlan === planKey && (
-              <ActivityIndicator size="small" color="white" className="mr-2" />
+          <TouchableOpacity
+            onPress={() => handleSubscribe(planKey)}
+            disabled={isSubmitting}
+            className="py-4 rounded-xl mt-4"
+            style={{ backgroundColor: config.color }}
+            activeOpacity={0.8}
+          >
+            {isSubmitting && selectedPlan === plan ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text className="text-white text-center font-bold text-lg">Souscrire</Text>
             )}
-            <Text className="text-lg font-semibold text-center text-white">
-              {loadingPlan === planKey ? "Initialisation..." : "Souscrire"}
-            </Text>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </ScrollView>
       </View>
     );
   };
 
-  // Rendu des scènes pour TabView
-  const renderScene = SceneMap({
-    basique: () => <PlanContent planKey="basique" />,
-    libota: () => <PlanContent planKey="libota" />,
-    "libota+": () => <PlanContent planKey="libotaPlus" />,
-  });
-
-  // Rendu de la barre d'onglets personnalisée
-  const renderTabBar = (props: any) => (
-    <View className="px-6 py-4">
-      <View className="flex-row p-1 bg-white rounded-full">
-        {routes.map((route, i) => (
-          <TouchableOpacity
-            key={route.key}
-            onPress={() => setIndex(i)}
-            className={`flex-1 py-3 rounded-full ${
-              i === index ? "bg-[#8A4DFF]" : "bg-transparent"
-            }`}
-            activeOpacity={0.7}
-          >
-            <Text
-              className={`text-center font-medium ${
-                i === index ? "text-white" : "text-gray-600"
-              }`}
-            >
-              {route.title}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    </View>
-  );
+  const renderScene = ({ route }: any) => {
+    return renderPlanCard(route.key);
+  };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-100">
-      <StatusBar barStyle="dark-content" backgroundColor="#F3F4F6" />
+    <SafeAreaView className="flex-1 bg-gray-50">
+      <StatusBar barStyle="dark-content" backgroundColor="#F9FAFB" />
 
-      {/* Barre de navigation supérieure */}
-      {/* <TopNavBarCustom
-        onAvatarPress={handleAvatarPress}
-        onNotificationPress={handleNotificationPress}
-        notificationCount={3}
-      /> */}
-
-      {/* Titre et description */}
-      <View className="px-6 py-4">
-        <Text className="mb-4 text-2xl font-bold text-gray-900">Nos plans</Text>
-        <Text className="leading-6 text-gray-600">
-          Protégez ce qui compte le plus.{"\n"}
-          Avec MyKover Assurance, accédez à des soins de santé abordables et
-          fiables pour toute la famille. Consultations illimitées,
-          hospitalisation et assistance d'urgence 24/7
-        </Text>
+      <View className="px-4 py-3 bg-white border-b border-gray-200">
+        <Text className="text-2xl font-bold text-gray-900">Plans d'assurance</Text>
+        <Text className="text-gray-500 mt-1">Choisissez le plan qui vous convient</Text>
       </View>
 
-      {/* Onglets personnalisés */}
-      {renderTabBar({})}
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: Dimensions.get("window").width }}
+        renderTabBar={(props) => (
+          <TabBar
+            {...props}
+            indicatorStyle={{ backgroundColor: "#8A4DFF", height: 3 }}
+            style={{ backgroundColor: "#fff", elevation: 0 }}
+            labelStyle={{ fontWeight: "600", textTransform: "none" }}
+            activeColor="#8A4DFF"
+            inactiveColor="#9CA3AF"
+          />
+        )}
+      />
 
-      {/* Contenu du plan sélectionné */}
-      <View className="flex-1">
-        {index === 0 && <PlanContent planKey="basique" />}
-        {index === 1 && <PlanContent planKey="libota" />}
-        {index === 2 && <PlanContent planKey="libotaPlus" />}
-      </View>
+      {selectedPlan && (
+        <MemberFormDrawer
+          visible={showMemberDrawer}
+          onClose={() => {
+            setShowMemberDrawer(false);
+            setSelectedPlan(null);
+            setMembers([]);
+          }}
+          onSubmit={handleMemberSubmit}
+          memberIndex={members.length}
+        />
+      )}
     </SafeAreaView>
   );
 }
+
+const FeatureItem = ({ text }: { text: string }) => (
+  <View className="flex-row items-center">
+    <Ionicons name="checkmark-circle" size={20} color="#22C55E" />
+    <Text className="text-gray-700 ml-2">{text}</Text>
+  </View>
+);

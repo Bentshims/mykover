@@ -69,5 +69,29 @@ export default await Env.create(new URL('../', import.meta.url), {
   | OTP configuration
   |----------------------------------------------------------
   */
-  OTP_EXPIRES_MINUTES: Env.schema.number.optional()
+  OTP_EXPIRES_MINUTES: Env.schema.number.optional(),
+
+  /*
+  |----------------------------------------------------------
+  | CinetPay configuration
+  |----------------------------------------------------------
+  */
+  CINETPAY_SITE_ID: Env.schema.string(),
+  CINETPAY_API_KEY: Env.schema.string(),
+  CINETPAY_SECRET_KEY: Env.schema.string(),
+
+  /*
+  |----------------------------------------------------------
+  | Cloudinary configuration
+  |----------------------------------------------------------
+  */
+  CLOUDINARY_CLOUD_NAME: Env.schema.string(),
+  CLOUDINARY_UPLOAD_PRESET: Env.schema.string(),
+
+  /*
+  |----------------------------------------------------------
+  | App URL
+  |----------------------------------------------------------
+  */
+  APP_URL: Env.schema.string.optional()
 })
