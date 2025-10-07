@@ -32,3 +32,27 @@ router.group(() => {
     .use(middleware.auth())
   
 }).prefix('/api/auth')
+
+/*
+|--------------------------------------------------------------------------
+| Families Routes
+|--------------------------------------------------------------------------
+*/
+router.group(() => {
+  router.post('/', '#controllers/families_controller.create')
+  router.get('/', '#controllers/families_controller.index')
+  router.get('/:code', '#controllers/families_controller.show')
+}).prefix('/api/families').use(middleware.auth())
+
+/*
+|--------------------------------------------------------------------------
+| Payments Routes
+|--------------------------------------------------------------------------
+*/
+router.group(() => {
+  router.post('/initiate', '#controllers/payments_controller.initiate')
+  router.post('/verify', '#controllers/payments_controller.verify')
+}).prefix('/api/payments').use(middleware.auth())
+
+// Callback CinetPay (webhook public)
+router.post('/api/payments/callback', '#controllers/payments_controller.callback')
