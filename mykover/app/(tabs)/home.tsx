@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Image, StatusBar, ActivityIndicator, RefreshControl, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome6 } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import TopNavBarCustom from '../../components/TopNavBarCustom';
 import api from '../../services/api';
@@ -155,19 +155,23 @@ export default function HomeScreen() {
 
         {/* Quick Actions */}
         <View className="flex-row flex-wrap justify-between">
-          {([
-            { icon: 'document-text' as const, label: 'Mon plan', action: handlePlans },
-            { icon: 'wallet' as const, label: 'Payer', action: handlePayment },
-            { icon: 'medkit' as const, label: 'Cliniques', action: handleClinics },
-            { icon: 'headset' as const, label: 'Assistance 24/7', action: handleAssistance },
-          ] as const).map((item, index) => (
+          {[
+            { icon: 'document-text' as const, label: 'Mon plan', action: handlePlans, type: 'ionicons' as const },
+            { icon: 'wallet' as const, label: 'Payer', action: handlePayment, type: 'ionicons' as const },
+            { icon: 'medkit' as const, label: 'Partenaires', action: handleClinics, type: 'ionicons' as const },
+            { icon: 'headset' as const, label: 'Assistance 24/7', action: handleAssistance, type: 'fontawesome' as const },
+          ].map((item, index) => (
             <TouchableOpacity
               key={index}
               onPress={item.action}
               className="bg-white w-[48%] rounded-2xl p-4 mb-4 shadow-sm items-center justify-center"
               activeOpacity={0.8}
             >
-              <Ionicons name={item.icon} size={30} color="#8A4DFF"/>
+              {item.type === 'fontawesome' ? (
+                <FontAwesome6 name={item.icon} size={30} color="#8A4DFF"/>
+              ) : (
+                <Ionicons name={item.icon} size={30} color="#8A4DFF"/>
+              )}
               <Text className="mt-2 font-semibold text-gray-800">{item.label}</Text>
             </TouchableOpacity>
           ))}
@@ -210,3 +214,8 @@ export default function HomeScreen() {
     </SafeAreaView>
   );
 }
+
+
+
+
+
