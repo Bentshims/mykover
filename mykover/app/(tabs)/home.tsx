@@ -155,12 +155,12 @@ export default function HomeScreen() {
 
         {/* Quick Actions */}
         <View className="flex-row flex-wrap justify-between">
-          {[
-            { icon: 'document-text', label: 'Mon plan', action: handlePlans },
-            { icon: 'wallet', label: 'Payer', action: handlePayment },
-            { icon: 'medkit', label: 'Cliniques', action: handleClinics },
-            { icon: 'headset', label: 'Assistance 24/7', action: handleAssistance },
-          ].map((item, index) => (
+          {([
+            { icon: 'document-text' as const, label: 'Mon plan', action: handlePlans },
+            { icon: 'wallet' as const, label: 'Payer', action: handlePayment },
+            { icon: 'medkit' as const, label: 'Cliniques', action: handleClinics },
+            { icon: 'headset' as const, label: 'Assistance 24/7', action: handleAssistance },
+          ] as const).map((item, index) => (
             <TouchableOpacity
               key={index}
               onPress={item.action}
