@@ -10,6 +10,7 @@ import {
   Image,
   Platform,
   Alert,
+  Pressable,
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker'
@@ -54,7 +55,7 @@ export default function MemberFormDrawer({
     }
 
     const result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ['images'] as any,
       allowsEditing: true,
       aspect: [1, 1],
       quality: 0.8,
@@ -74,7 +75,7 @@ export default function MemberFormDrawer({
     }
 
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ['images'] as any,
       allowsEditing: true,
       aspect: [1, 1],
       quality: 0.8,
@@ -133,8 +134,14 @@ export default function MemberFormDrawer({
 
   return (
     <Modal visible={visible} animationType="slide" transparent>
-      <View className="flex-1 justify-end bg-black/50">
-        <View className="bg-white rounded-t-3xl p-6 max-h-[90%]">
+      <Pressable 
+        className="flex-1 justify-end bg-black/50" 
+        onPress={onClose}
+      >
+        <Pressable 
+          className="bg-white rounded-t-3xl p-6 max-h-[90%]" 
+          onPress={(e) => e.stopPropagation()}
+        >
           <View className="flex-row justify-between items-center mb-6">
             <Text className="text-xl font-bold">Membre {memberIndex + 1}</Text>
             <TouchableOpacity onPress={onClose}>
@@ -155,7 +162,7 @@ export default function MemberFormDrawer({
                 <View className="flex-row gap-3">
                   <TouchableOpacity
                     onPress={pickImage}
-                    className="flex-1 bg-[#8A4DFF] py-3 rounded-xl flex-row justify-center items-center"
+                    className="flex-1 bg-[#8A4DFF] py-3 rounded-full flex-row justify-center items-center"
                     activeOpacity={0.8}
                   >
                     <Ionicons name="camera" size={20} color="#fff" />
@@ -163,7 +170,7 @@ export default function MemberFormDrawer({
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={pickFromGallery}
-                    className="flex-1 bg-gray-200 py-3 rounded-xl flex-row justify-center items-center"
+                    className="flex-1 bg-gray-200 py-3 rounded-full flex-row justify-center items-center"
                     activeOpacity={0.8}
                   >
                     <Ionicons name="images" size={20} color="#374151" />
@@ -218,34 +225,25 @@ export default function MemberFormDrawer({
               )}
             </View>
 
-            {/* Statut malade */}
+            {/* Statut malade - Case à cocher */}
             <View className="mb-6">
-              <Text className="text-sm font-semibold text-gray-700 mb-2">Problème de santé ?</Text>
-              <View className="flex-row gap-3">
-                <TouchableOpacity
-                  onPress={() => setIsSick(false)}
-                  className={`flex-1 py-3 rounded-xl ${!isSick ? 'bg-green-500' : 'bg-gray-200'}`}
-                >
-                  <Text className={`text-center font-semibold ${!isSick ? 'text-white' : 'text-gray-700'}`}>
-                    Non
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => setIsSick(true)}
-                  className={`flex-1 py-3 rounded-xl ${isSick ? 'bg-orange-500' : 'bg-gray-200'}`}
-                >
-                  <Text className={`text-center font-semibold ${isSick ? 'text-white' : 'text-gray-700'}`}>
-                    Oui
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity 
+                onPress={() => setIsSick(!isSick)}
+                className="flex-row items-center py-3"
+                activeOpacity={0.7}
+              >
+                <View className={`w-6 h-6 rounded border-2 mr-3 items-center justify-center ${isSick ? 'bg-[#8A4DFF] border-[#8A4DFF]' : 'border-gray-300'}`}>
+                  {isSick && <Ionicons name="checkmark" size={18} color="#fff" />}
+                </View>
+                <Text className="text-gray-700 font-medium">A un problème de santé</Text>
+              </TouchableOpacity>
             </View>
 
             {/* Bouton Valider */}
             <TouchableOpacity
               onPress={handleSubmit}
               disabled={uploading}
-              className="bg-[#8A4DFF] py-4 rounded-xl"
+              className="bg-[#8A4DFF] py-4 rounded-full"
               activeOpacity={0.8}
             >
               <Text className="text-white text-center font-bold text-lg">
@@ -253,8 +251,8 @@ export default function MemberFormDrawer({
               </Text>
             </TouchableOpacity>
           </ScrollView>
-        </View>
-      </View>
+        </Pressable>
+      </Pressable>
     </Modal>
   )
 }

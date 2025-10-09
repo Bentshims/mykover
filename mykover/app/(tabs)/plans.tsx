@@ -172,7 +172,7 @@ export default function SubscriptionPlansScreen() {
           <TouchableOpacity
             onPress={() => handleSubscribe(planKey)}
             disabled={isSubmitting}
-            className="py-4 rounded-xl mt-4"
+            className="py-4 rounded-full mt-4"
             style={{ backgroundColor: config.color }}
             activeOpacity={0.8}
           >
@@ -210,9 +210,6 @@ export default function SubscriptionPlansScreen() {
             {...props}
             indicatorStyle={{ backgroundColor: "#8A4DFF", height: 3 }}
             style={{ backgroundColor: "#fff", elevation: 0 }}
-            labelStyle={{ fontWeight: "600", textTransform: "none" }}
-            activeColor="#8A4DFF"
-            inactiveColor="#9CA3AF"
           />
         )}
       />
@@ -234,8 +231,8 @@ export default function SubscriptionPlansScreen() {
 }
 
 const FeatureItem = ({ text }: { text: string }) => (
-  <View className="flex-row items-center">
-    <Ionicons name="checkmark-circle" size={20} color="#22C55E" />
+  <View className="flex-row items-center my-2">
+    <Ionicons name="checkmark-circle" size={20} color="#8A4DFF" />
     <Text className="text-gray-700 ml-2">{text}</Text>
   </View>
 );

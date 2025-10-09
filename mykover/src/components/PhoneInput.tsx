@@ -48,7 +48,7 @@ const PhoneInput: React.FC<PhoneInputProps> = memo(
         ) : null}
 
         <View
-          className={`flex-row items-center rounded-full px-4 py-1 bg-white min-h-[48px] border ${
+          className={`flex-row items-center rounded-xl px-4 py-1 bg-white min-h-[48px] border ${
             error ? "border-red-500 bg-red-50" : "border-purple-400"
           }`}
         >
