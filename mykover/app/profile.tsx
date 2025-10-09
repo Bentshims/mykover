@@ -212,7 +212,7 @@ export default function ProfileScreen() {
 
           <TouchableOpacity 
             className="flex-row items-center justify-between p-4 bg-white border border-gray-100 rounded-xl"
-            onPress={() => Alert.alert('Info', 'Fonctionnalité en développement')}
+            onPress={() => router.push('/terms-conditions')}
           >
             <View className="flex-row items-center">
               <FontAwesome6 name="file-contract" size={20} color="#6B7280" />
@@ -223,7 +223,7 @@ export default function ProfileScreen() {
 
           <TouchableOpacity 
             className="flex-row items-center justify-between p-4 bg-white border border-gray-100 rounded-xl"
-            onPress={() => Alert.alert('Info', 'Fonctionnalité en développement')}
+            onPress={() => router.push('/help-support')}
           >
             <View className="flex-row items-center">
               <FontAwesome6 name="headset" size={20} color="#6B7280" />
