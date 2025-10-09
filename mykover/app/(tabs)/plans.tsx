@@ -19,7 +19,7 @@ import { familyService, MemberData } from "../../services/familyService";
 import * as Linking from 'expo-linking';
 
 const PLAN_CONFIG = {
-  basique: { name: "Basique", price: 15, min: 1, max: 1, color: "#22C55E" },
+  basique: { name: "Basique", price: 15, min: 1, max: 1, color: "#60A5FA" },
   libota: { name: "Libota", price: 30, min: 2, max: 3, color: "#8A4DFF" },
   libota_plus: { name: "Libota+", price: 50, min: 2, max: 5, color: "#F59E0B" },
 };

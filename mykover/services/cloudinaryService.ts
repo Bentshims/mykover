@@ -1,4 +1,4 @@
-const CLOUDINARY_CLOUD_NAME = 'mykover_cloud' // Cloud name depuis .env
+const CLOUDINARY_CLOUD_NAME = 'drsd8adkq' // Ton vrai cloud name
 const CLOUDINARY_UPLOAD_PRESET = 'mykover_unsigned'
 
 interface CloudinaryUploadResult {
@@ -20,26 +20,27 @@ export const uploadToCloudinary = async (
     // Extraire le nom du fichier depuis l'URI
     const filename = imageUri.split('/').pop() || 'photo.jpg'
     
-    // Ajouter le fichier au FormData
+    // Ajouter le fichier au FormData (IMPORTANT: fichier en premier)
     formData.append('file', {
       uri: imageUri,
       type: 'image/jpeg',
       name: filename,
     } as any)
     
+    // IMPORTANT: Pour unsigned upload, SEULEMENT upload_preset est requis
     formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
-    formData.append('folder', 'mykover_subscription_images')
 
-    console.log('[Cloudinary] Upload début...', { cloudName: CLOUDINARY_CLOUD_NAME, preset: CLOUDINARY_UPLOAD_PRESET })
+    console.log('[Cloudinary] Upload début...', { 
+      cloudName: CLOUDINARY_CLOUD_NAME, 
+      preset: CLOUDINARY_UPLOAD_PRESET,
+      uri: imageUri
+    })
 
     const uploadResponse = await fetch(
       `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
       {
         method: 'POST',
         body: formData,
-        headers: {
-          'Accept': 'application/json',
-        },
       }
     )
 
