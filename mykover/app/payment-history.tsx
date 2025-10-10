@@ -148,7 +148,7 @@ export default function PaymentHistoryScreen() {
   const handleTransactionDetails = async (transaction: Transaction) => {
     try {
       // Get detailed transaction info from CinetPay
-      const response = await paymentService.getTransactionDetails(transaction.transaction_id);
+      const response = await paymentService.getTransaction(transaction.transaction_id);
       
       if (response.success && response.data) {
         // Navigate to transaction details screen or show modal
