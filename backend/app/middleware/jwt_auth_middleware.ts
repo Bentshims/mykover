@@ -3,13 +3,6 @@ import type { NextFn } from '@adonisjs/core/types/http'
 import AuthService from '#services/auth_service'
 import User from '#models/user'
 
-// Extension du type HttpContext pour inclure l'authentification
-interface AuthenticatedHttpContext extends HttpContext {
-  auth: {
-    user: User
-  }
-}
-
 export default class JwtAuthMiddleware {
   async handle(ctx: HttpContext, next: NextFn) {
     const authHeader = ctx.request.header('authorization')
@@ -50,9 +43,8 @@ export default class JwtAuthMiddleware {
         })
       }
 
-      // Attacher l'utilisateur au contexte avec typage approprié
-      const authenticatedCtx = ctx as AuthenticatedHttpContext
-      authenticatedCtx.auth = { user }
+      // Attacher l'utilisateur au contexte
+      ctx.user = user
       
       await next()
     } catch (error) {
@@ -64,5 +56,3 @@ export default class JwtAuthMiddleware {
   }
 }
 
-// Exporter le type pour utilisation dans les controllers
-export type { AuthenticatedHttpContext }
