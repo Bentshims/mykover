@@ -409,7 +409,7 @@ const SignupScreen: React.FC = () => {
                         updateFormData("dateOfBirth", value)
                       }
                       placeholder="DD/MM/YYYY (ex: 15/08/1990)"
-                      keyboardType="numeric"
+                      //keyboardType=""
                       error={errors.dateOfBirth}
                     />
                   </View>

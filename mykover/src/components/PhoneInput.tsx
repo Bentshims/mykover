@@ -42,13 +42,13 @@ const PhoneInput: React.FC<PhoneInputProps> = memo(
     return (
       <View className="mb-5">
         {label ? (
-          <Text className="text-base font-medium text-zinc-300 mb-2">
+          <Text className="text-base font-medium text-gray-700 mb-2">
             {label}
           </Text>
         ) : null}
 
         <View
-          className={`flex-row items-center rounded-xl px-4 py-1 bg-white min-h-[48px] border ${
+          className={`flex-row items-center rounded-xl px-4 py-1 bg-white min-h-[56px] border ${
             error ? "border-red-500 bg-red-50" : "border-purple-400"
           }`}
         >
@@ -65,7 +65,11 @@ const PhoneInput: React.FC<PhoneInputProps> = memo(
 
           {/* Saisie des 9 chiffres */}
           <TextInput
-            className="flex-1 text-base text-gray-800"
+            className="flex-1 text-base"
+            style={{ 
+              color: '#1F2937',
+              fontSize: 16,
+            }}
             value={displayDigits}
             onChangeText={handleChange}
             placeholder={placeholder}

@@ -14,7 +14,10 @@
       "ios": {
         "buildConfiguration": "Debug"
       },
-      "channel": "development"
+      "channel": "development",
+      "env": {
+        "API_URL": "http://192.168.1.189:3333"
+      }
     },
     "preview": {
       "distribution": "internal",
@@ -24,7 +27,10 @@
       "ios": {
         "simulator": false
       },
-      "channel": "preview"
+      "channel": "preview",
+      "env": {
+        "API_URL": "RAILWAY_URL_HERE"
+      }
     },
     "production": {
       "android": {
@@ -34,7 +40,10 @@
         "buildConfiguration": "Release"
       },
       "autoIncrement": true,
-      "channel": "production"
+      "channel": "production",
+      "env": {
+        "API_URL": "RAILWAY_URL_HERE"
+      }
     }
   },
   "submit": {

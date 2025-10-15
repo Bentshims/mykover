@@ -1,97 +1,44 @@
-import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
-import { View, ActivityIndicator } from "react-native";
 import "../global.css";
-import { AuthProvider, useAuth } from "../src/contexts/AuthContext";
-import { JSX, useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useRouter } from "expo-router";
-
-// Navigation wrapper component
-function NavigationWrapper({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, isLoading } = useAuth();
-  const router = useRouter();
-  const [hasSeenOnboarding, setHasSeenOnboarding] = useState<boolean | null>(
-    null
-  );
-
-  useEffect(() => {
-    checkOnboardingStatus();
-  }, []);
-
-  useEffect(() => {
-    if (hasSeenOnboarding !== null && !isLoading) {
-      if (!hasSeenOnboarding) {
-        // First time user - show onboarding
-        router.replace("/onboarding");
-      } else if (isAuthenticated) {
-        // Authenticated user - go to home
-        router.replace("/(tabs)/home");
-      } else {
-        // User has seen onboarding but not authenticated - go to login
-        router.replace("/login");
-      }
-    }
-  }, [hasSeenOnboarding, isLoading, isAuthenticated, router]);
-
-  const checkOnboardingStatus = async () => {
-    try {
-      const hasSeen = await AsyncStorage.getItem("hasSeenOnboarding");
-      setHasSeenOnboarding(hasSeen === "true");
-    } catch (error) {
-      console.error("Error checking onboarding status:", error);
-      setHasSeenOnboarding(false);
-    }
-  };
-
-  if (hasSeenOnboarding === null || isLoading) {
-    return (
-      <View className="items-center justify-center flex-1 bg-white">
-        <ActivityIndicator size="large" color="#7c3aed" />
-      </View>
-    );
-  }
-
-  return <>{children}</>;
-}
+import { AuthProvider } from "../src/contexts/AuthContext";
+import { JSX } from "react";
 
 // This is the root layout component
 export default function RootLayout(): JSX.Element | null {
-  // const [fontsLoaded] = useFonts({
-  //   SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  // });
-
-  // Don't render anything until fonts are loaded
-  // if (!fontsLoaded) {
-  //   return null;
-  // }
-
   return (
     <AuthProvider>
-      <NavigationWrapper>
-        <Stack screenOptions={{ headerShown: false }}>
-          {/* Onboarding and Auth screens */}
-          <Stack.Screen name="onboarding" />
-          <Stack.Screen name="login" />
-          <Stack.Screen name="signup" />
-          <Stack.Screen name="forgot-password" />
+      <Stack screenOptions={{ headerShown: false }}>
+        {/* Index/Entry point */}
+        <Stack.Screen name="index" />
+        
+        {/* Onboarding and Auth screens */}
+        <Stack.Screen name="onboarding" />
+        <Stack.Screen name="login" />
+        <Stack.Screen name="signup" />
+        <Stack.Screen name="forgot-password" />
 
-          {/* Main app screens */}
-          <Stack.Screen name="(tabs)" />
+        {/* Main app screens */}
+        <Stack.Screen name="(tabs)" />
 
-          {/* Other screens */}
-          <Stack.Screen name="profile" />
-          <Stack.Screen name="settings" />
-          <Stack.Screen name="payment" />
-          <Stack.Screen name="payment-history" />
-          <Stack.Screen name="payment-result" />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
-      </NavigationWrapper>
+        {/* Other screens */}
+        <Stack.Screen name="profile" />
+        <Stack.Screen name="settings" />
+        <Stack.Screen name="payment" />
+        <Stack.Screen name="payment-history" />
+        <Stack.Screen name="payment-result" />
+        <Stack.Screen name="payment-verification" />
+        <Stack.Screen name="notifications" />
+        <Stack.Screen name="help-support" />
+        <Stack.Screen name="about-us" />
+        <Stack.Screen name="faq" />
+        <Stack.Screen name="rate-us" />
+        <Stack.Screen name="terms-conditions" />
+        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+        <Stack.Screen name="+not-found" />
+      </Stack>
+      <StatusBar style="auto" />
     </AuthProvider>
   );
 }
