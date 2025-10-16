@@ -12,7 +12,7 @@ import { FontAwesome6 } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth } from '../../src/contexts/AuthContext';
-import api from '../../services/api';
+import api, { authApi } from '../../services/api';
 
 interface UserProfile {
   id: number;
@@ -32,9 +32,9 @@ export default function MenuScreen() {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await api.get('/api/me');
-      if (response.data.success) {
-        setUserProfile(response.data.data.user);
+      const response = await authApi.me();
+      if (response.success) {
+        setUserProfile(response.data.user);
       }
     } catch (error) {
       console.error('Error fetching user profile:', error);
