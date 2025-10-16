@@ -1,3 +1,4 @@
+import env from '#start/env'
 import { defineConfig } from '@adonisjs/cors'
 
 /**
@@ -8,10 +9,24 @@ import { defineConfig } from '@adonisjs/cors'
  */
 const corsConfig = defineConfig({
   enabled: true,
-  origin: true,
-  methods: ['GET', 'HEAD', 'POST', 'PUT', 'DELETE'],
+  // En production, restreindre aux origines autorisées
+  origin: env.get('NODE_ENV') === 'production' 
+    ? (origin) => {
+        // Liste blanche des origines autorisées
+        const allowed = [
+          'https://mykover-production.up.railway.app',
+          'mykover://', // Deep linking
+        ]
+        // Permettre Expo en développement
+        if (origin?.startsWith('exp://') || origin?.startsWith('mykover://')) {
+          return true
+        }
+        return allowed.some(url => origin?.includes(url))
+      }
+    : true, // Développement: autoriser toutes les origines
+  methods: ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE'],
   headers: true,
-  exposeHeaders: [],
+  exposeHeaders: ['Authorization'],
   credentials: true,
   maxAge: 90,
 })

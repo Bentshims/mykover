@@ -61,7 +61,7 @@
       "reactCompiler": true
     },
     "extra": {
-      "apiUrl": "http://192.168.1.189:3333",
+      "apiUrl": "https://mykover-production.up.railway.app",
       "router": {},
       "eas": {
         "projectId": "3ad74675-cb66-4b94-bf98-0e1f79613997"

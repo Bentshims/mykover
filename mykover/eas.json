@@ -29,7 +29,7 @@
       },
       "channel": "preview",
       "env": {
-        "API_URL": "RAILWAY_URL_HERE"
+        "API_URL": "https://mykover-production.up.railway.app"
       }
     },
     "production": {
@@ -42,7 +42,7 @@
       "autoIncrement": true,
       "channel": "production",
       "env": {
-        "API_URL": "RAILWAY_URL_HERE"
+        "API_URL": "https://mykover-production.up.railway.app"
       }
     }
   },
