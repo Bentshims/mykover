@@ -1,235 +1,126 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ScrollView,
-  Linking,
-} from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Linking } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { FontAwesome6 } from '@expo/vector-icons';
+import { FontAwesome6, Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 
 export default function AboutUsScreen() {
   const features = [
     {
-      title: 'Couverture Santé',
-      description: 'Plans adaptés à vos besoins avec un large réseau de soins',
+      title: 'Couverture Santé Fiable',
+      description: 'Accédez à un réseau étendu de cliniques et hôpitaux partenaires pour des soins de qualité.',
       icon: 'shield-heart',
     },
     {
-      title: 'Paiement Mobile',
-      description: 'Payez facilement avec Mobile Money et cartes bancaires',
+      title: 'Paiement Mobile Sécurisé',
+      description: 'Payez facilement via Mobile Money ou cartes bancaires, sécurisé et rapide.',
       icon: 'mobile-screen',
     },
     {
       title: 'Réclamations Rapides',
-      description: 'Soumettez et suivez vos remboursements en ligne',
+      description: 'Soumettez vos demandes et suivez vos remboursements directement depuis l’application.',
       icon: 'file-invoice',
     },
     {
       title: 'Support 24/7',
-      description: 'Assistance continue pour vos questions santé',
+      description: 'Notre équipe est disponible à tout moment pour répondre à vos questions.',
       icon: 'headset',
     },
   ];
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
+    <SafeAreaView className="flex-1 bg-gray-50">
       {/* Header */}
-      <View style={{ 
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        padding: 16, 
-        borderBottomWidth: 1, 
-        borderBottomColor: '#e5e5e5' 
-      }}>
-        <TouchableOpacity onPress={() => router.back()} style={{ marginRight: 12 }}>
-          <FontAwesome6 name="arrow-left" size={20} color="#000" />
+      <View className="flex-row items-center px-4 py-4 bg-white border-b border-gray-100">
+        <TouchableOpacity onPress={() => router.back()} className="mr-3">
+          <FontAwesome6 name="arrow-left" size={20} color="#374151" />
         </TouchableOpacity>
-        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>À propos</Text>
+        <Text className="text-lg font-bold text-gray-900">À propos</Text>
       </View>
 
-      <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 16 }}>
+      <ScrollView className="flex-1 px-6 pt-4">
         {/* Hero Section */}
-        <View style={{ 
-          backgroundColor: '#f8f9fa', 
-          borderRadius: 12, 
-          padding: 20, 
-          marginBottom: 24,
-          alignItems: 'center'
-        }}>
-          <View style={{ 
-            width: 80, 
-            height: 80, 
-            backgroundColor: '#000', 
-            borderRadius: 40, 
-            alignItems: 'center', 
-            justifyContent: 'center',
-            marginBottom: 12
-          }}>
+        <View className="items-center p-6 mb-6 bg-white border border-gray-100 shadow-sm rounded-2xl">
+          <View className="w-20 h-20 bg-[#8A4DFF] rounded-full items-center justify-center mb-3">
             <FontAwesome6 name="shield-heart" size={32} color="#fff" />
           </View>
-          <Text style={{ 
-            fontSize: 24, 
-            fontWeight: 'bold', 
-            textAlign: 'center',
-            marginBottom: 8
-          }}>
-            MyKover
-          </Text>
-          <Text style={{ 
-            fontSize: 16, 
-            color: '#666', 
-            textAlign: 'center',
-            lineHeight: 22
-          }}>
+          <Text className="mb-1 text-2xl font-bold text-center text-gray-900">MyKover</Text>
+          <Text className="text-base leading-6 text-center text-gray-600">
             Votre partenaire santé numérique en RDC
           </Text>
         </View>
 
         {/* Mission */}
-        <View style={{ marginBottom: 24 }}>
-          <Text style={{ 
-            fontSize: 20, 
-            fontWeight: 'bold', 
-            marginBottom: 12 
-          }}>
-            Notre Mission
-          </Text>
-          <Text style={{ 
-            fontSize: 16, 
-            color: '#333', 
-            lineHeight: 24 
-          }}>
-            Simplifier l'accès aux soins de santé grâce à une assurance digitale 
-            accessible, transparente et adaptée aux besoins des Congolais.
+        <View className="mb-6">
+          <Text className="mb-2 text-xl font-bold text-gray-900">Notre Mission</Text>
+          <Text className="text-base leading-6 text-gray-700">
+            Offrir un accès simple, rapide et transparent aux soins de santé grâce à une assurance digitale fiable, adaptée aux besoins de tous les Congolais.
           </Text>
         </View>
 
         {/* Features */}
-        <View style={{ marginBottom: 24 }}>
-          <Text style={{ 
-            fontSize: 20, 
-            fontWeight: 'bold', 
-            marginBottom: 16 
-          }}>
-            Ce que nous offrons
-          </Text>
-          <View style={{ gap: 12 }}>
+        <View className="mb-6">
+          <Text className="mb-4 text-xl font-bold text-gray-900">Nos Services</Text>
+          <View className="space-y-3">
             {features.map((feature, index) => (
-              <View key={index} style={{ 
-                flexDirection: 'row', 
-                alignItems: 'flex-start',
-                backgroundColor: '#f8f9fa',
-                padding: 16,
-                borderRadius: 8
-              }}>
-                <View style={{ 
-                  width: 40, 
-                  height: 40, 
-                  backgroundColor: '#000', 
-                  borderRadius: 20, 
-                  alignItems: 'center', 
-                  justifyContent: 'center',
-                  marginRight: 12
-                }}>
+              <View
+                key={index}
+                className="flex-row items-start p-4 bg-white border border-gray-100 shadow-sm rounded-2xl"
+              >
+                <View className="w-10 h-10 bg-[#8A4DFF] rounded-full items-center justify-center mr-3">
                   <FontAwesome6 name={feature.icon} size={18} color="#fff" />
                 </View>
-                <View style={{ flex: 1 }}>
-                  <Text style={{ 
-                    fontSize: 16, 
-                    fontWeight: '600', 
-                    marginBottom: 4 
-                  }}>
-                    {feature.title}
-                  </Text>
-                  <Text style={{ 
-                    fontSize: 14, 
-                    color: '#666', 
-                    lineHeight: 20 
-                  }}>
-                    {feature.description}
-                  </Text>
+                <View className="flex-1">
+                  <Text className="mb-1 font-semibold text-gray-900">{feature.title}</Text>
+                  <Text className="text-sm leading-5 text-gray-600">{feature.description}</Text>
                 </View>
               </View>
             ))}
           </View>
         </View>
 
-        {/* Contact */}
-        <View style={{ marginBottom: 24 }}>
-          <Text style={{ 
-            fontSize: 20, 
-            fontWeight: 'bold', 
-            marginBottom: 16 
-          }}>
-            Contact
+        {/* Credibility / Why Choose Us */}
+        <View className="p-4 mb-6 bg-white border border-gray-100 shadow-sm rounded-2xl">
+          <Text className="mb-2 text-xl font-bold text-gray-900">Pourquoi nous choisir ?</Text>
+          <Text className="text-base leading-6 text-gray-700">
+            • Données personnelles sécurisées et cryptées{"\n"}
+            • Assurance transparente et conforme aux normes locales{"\n"}
+            • Support client disponible 24/7{"\n"}
+            • Équipe expérimentée en santé digitale et fintech
           </Text>
-          <View style={{ gap: 12 }}>
-            <TouchableOpacity 
-              style={{ 
-                flexDirection: 'row', 
-                alignItems: 'center',
-                padding: 16,
-                backgroundColor: '#f8f9fa',
-                borderRadius: 8
-              }}
+        </View>
+
+        {/* Contact */}
+        <View className="mb-6">
+          <Text className="mb-4 text-xl font-bold text-gray-900">Contact</Text>
+          <View className="space-y-3">
+            <TouchableOpacity
+              className="flex-row items-center p-4 bg-white border border-gray-100 shadow-sm rounded-2xl"
               onPress={() => Linking.openURL('mailto:support@mykover.cd')}
             >
-              <FontAwesome6 name="envelope" size={20} color="#000" style={{ marginRight: 12 }} />
-              <Text style={{ fontSize: 16, color: '#333' }}>support@mykover.cd</Text>
+              <FontAwesome6 name="envelope" size={20} color="#8A4DFF" className="mr-3" />
+              <Text className="text-base text-gray-800">support@mykover.cd</Text>
             </TouchableOpacity>
-            
-            <TouchableOpacity 
-              style={{ 
-                flexDirection: 'row', 
-                alignItems: 'center',
-                padding: 16,
-                backgroundColor: '#f8f9fa',
-                borderRadius: 8
-              }}
+
+            <TouchableOpacity
+              className="flex-row items-center p-4 bg-white border border-gray-100 shadow-sm rounded-2xl"
               onPress={() => Linking.openURL('tel:+243970000000')}
             >
-              <FontAwesome6 name="phone" size={20} color="#000" style={{ marginRight: 12 }} />
-              <Text style={{ fontSize: 16, color: '#333' }}>+243 970 000 000</Text>
+              <FontAwesome6 name="phone" size={20} color="#8A4DFF" className="mr-3" />
+              <Text className="text-base text-gray-800">+243 970 000 000</Text>
             </TouchableOpacity>
-            
-            <View style={{ 
-              flexDirection: 'row', 
-              alignItems: 'center',
-              padding: 16,
-              backgroundColor: '#f8f9fa',
-              borderRadius: 8
-            }}>
-              <FontAwesome6 name="location-dot" size={20} color="#000" style={{ marginRight: 12 }} />
-              <Text style={{ fontSize: 16, color: '#333' }}>Kinshasa, RDC</Text>
+
+            <View className="flex-row items-center p-4 bg-white border border-gray-100 shadow-sm rounded-2xl">
+              <FontAwesome6 name="location-dot" size={20} color="#8A4DFF" className="mr-3" />
+              <Text className="text-base text-gray-800">Kinshasa, RDC</Text>
             </View>
           </View>
         </View>
 
-        {/* Simple Footer */}
-        <View style={{ 
-          paddingTop: 20, 
-          borderTopWidth: 1, 
-          borderTopColor: '#e5e5e5',
-          alignItems: 'center'
-        }}>
-          <Text style={{ 
-            fontSize: 14, 
-            color: '#666', 
-            textAlign: 'center',
-            marginBottom: 8
-          }}>
-            MyKover © 2025
-          </Text>
-          <Text style={{ 
-            fontSize: 12, 
-            color: '#999', 
-            textAlign: 'center'
-          }}>
-            Assurance santé numérique pour tous
-          </Text>
+        {/* Footer */}
+        <View className="items-center pt-6 border-t border-gray-100">
+          <Text className="mb-1 text-sm text-gray-500">MyKover © 2025</Text>
+          <Text className="text-xs text-center text-gray-400">Assurance santé digitale fiable pour tous</Text>
         </View>
       </ScrollView>
     </SafeAreaView>

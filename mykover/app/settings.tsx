@@ -1,3 +1,324 @@
+// import React, { useState, useEffect } from 'react';
+// import { View, Text, TouchableOpacity, ScrollView, Alert, Switch } from 'react-native';
+// import { router } from 'expo-router';
+// import { FontAwesome6 } from '@expo/vector-icons';
+// import { SafeAreaView } from 'react-native-safe-area-context';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// interface SettingsState {
+//   notifications: boolean;
+//   biometric: boolean;
+//   autoRenewal: boolean;
+//   emailUpdates: boolean;
+//   smsAlerts: boolean;
+// }
+
+// export default function SettingsScreen() {
+//   const [settings, setSettings] = useState<SettingsState>({
+//     notifications: true,
+//     biometric: false,
+//     autoRenewal: true,
+//     emailUpdates: true,
+//     smsAlerts: false,
+//   });
+
+//   useEffect(() => {
+//     loadSettings();
+//   }, []);
+
+//   const loadSettings = async () => {
+//     try {
+//       const savedSettings = await AsyncStorage.getItem('app_settings');
+//       if (savedSettings) {
+//         setSettings(JSON.parse(savedSettings));
+//       }
+//     } catch (error) {
+//       console.error('Error loading settings:', error);
+//     }
+//   };
+
+//   const saveSettings = async (newSettings: SettingsState) => {
+//     try {
+//       await AsyncStorage.setItem('app_settings', JSON.stringify(newSettings));
+//       setSettings(newSettings);
+//     } catch (error) {
+//       console.error('Error saving settings:', error);
+//       Alert.alert('Erreur', 'Impossible de sauvegarder les paramètres');
+//     }
+//   };
+
+//   const toggleSetting = (key: keyof SettingsState) => {
+//     const newSettings = { ...settings, [key]: !settings[key] };
+//     saveSettings(newSettings);
+//   };
+
+//   const handleLogout = () => {
+//     Alert.alert(
+//       'Déconnexion',
+//       'Êtes-vous sûr de vouloir vous déconnecter ?',
+//       [
+//         { text: 'Annuler', style: 'cancel' },
+//         {
+//           text: 'Déconnexion',
+//           style: 'destructive',
+//           onPress: async () => {
+//             try {
+//               await AsyncStorage.removeItem('auth_token');
+//               router.replace('/login');
+//             } catch (error) {
+//               console.error('Error during logout:', error);
+//             }
+//           },
+//         },
+//       ]
+//     );
+//   };
+
+//   const handleDeleteAccount = () => {
+//     Alert.alert(
+//       'Supprimer le compte',
+//       'Cette action est irréversible. Toutes vos données seront supprimées définitivement.',
+//       [
+//         { text: 'Annuler', style: 'cancel' },
+//         {
+//           text: 'Supprimer',
+//           style: 'destructive',
+//           onPress: () => {
+//             Alert.alert('Info', 'Fonctionnalité en développement');
+//           },
+//         },
+//       ]
+//     );
+//   };
+
+//   const SettingItem = ({ 
+//     icon, 
+//     title, 
+//     subtitle, 
+//     value, 
+//     onToggle, 
+//     showSwitch = true 
+//   }: {
+//     icon: string;
+//     title: string;
+//     subtitle?: string;
+//     value?: boolean;
+//     onToggle?: () => void;
+//     showSwitch?: boolean;
+//   }) => (
+//     <View className="p-4 mb-3 bg-white border border-gray-100 rounded-xl">
+//       <View className="flex-row items-center justify-between">
+//         <View className="flex-row items-center flex-1">
+//           <FontAwesome6 name={icon} size={20} color="#6B7280" />
+//           <View className="flex-1 ml-3">
+//             <Text className="font-medium text-gray-900">{title}</Text>
+//             {subtitle && (
+//               <Text className="mt-1 text-sm text-gray-600">{subtitle}</Text>
+//             )}
+//           </View>
+//         </View>
+//         {showSwitch && (
+//           <Switch
+//             value={value}
+//             onValueChange={onToggle}
+//             trackColor={{ false: '#E5E7EB', true: '#3B82F6' }}
+//             thumbColor={value ? '#FFFFFF' : '#FFFFFF'}
+//           />
+//         )}
+//       </View>
+//     </View>
+//   );
+
+//   return (
+//     <SafeAreaView className="flex-1 bg-gray-50">
+//       {/* Header */}
+//       <View className="flex-row items-center px-4 py-4 bg-white border-b border-gray-100">
+//         <TouchableOpacity onPress={() => router.back()} className="mr-4">
+//           <FontAwesome6 name="arrow-left" size={20} color="#374151" />
+//         </TouchableOpacity>
+//         <Text className="text-xl font-bold text-gray-900">Paramètres</Text>
+//       </View>
+
+//       <ScrollView className="flex-1 px-4 pt-4" contentContainerStyle={{ paddingBottom: 30 }}>
+//         {/* Notifications Section */}
+//         <View className="mb-6">
+//           <Text className="mb-4 text-lg font-bold text-gray-900">Notifications</Text>
+          
+//           <SettingItem
+//             icon="bell"
+//             title="Notifications Push"
+//             subtitle="Recevoir des notifications sur votre appareil"
+//             value={settings.notifications}
+//             onToggle={() => toggleSetting('notifications')}
+//           />
+
+//           <SettingItem
+//             icon="envelope"
+//             title="Mises à jour par Email"
+//             subtitle="Recevoir des informations importantes par email"
+//             value={settings.emailUpdates}
+//             onToggle={() => toggleSetting('emailUpdates')}
+//           />
+
+//           <SettingItem
+//             icon="message"
+//             title="Alertes SMS"
+//             subtitle="Recevoir des alertes importantes par SMS"
+//             value={settings.smsAlerts}
+//             onToggle={() => toggleSetting('smsAlerts')}
+//           />
+//         </View>
+
+//         {/* Security Section */}
+//         <View className="mb-6">
+//           <Text className="mb-4 text-lg font-bold text-gray-900">Sécurité</Text>
+          
+//           <SettingItem
+//             icon="fingerprint"
+//             title="Authentification Biométrique"
+//             subtitle="Utiliser l'empreinte digitale ou Face ID"
+//             value={settings.biometric}
+//             onToggle={() => toggleSetting('biometric')}
+//           />
+
+//           {/* <TouchableOpacity className="p-4 mb-3 bg-white border border-gray-100 rounded-xl">
+//             <View className="flex-row items-center justify-between">
+//               <View className="flex-row items-center">
+//                 <FontAwesome6 name="key" size={20} color="#6B7280" />
+//                 <Text className="ml-3 font-medium text-gray-900">Changer le mot de passe</Text>
+//               </View>
+//               <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
+//             </View>
+//           </TouchableOpacity> */}
+//         </View>
+
+//         {/* Subscription Section */}
+//         <View className="mb-6">
+//           <Text className="mb-4 text-lg font-bold text-gray-900">Abonnement</Text>
+          
+//           {/* <SettingItem
+//             icon="rotate"
+//             title="Renouvellement Automatique"
+//             subtitle="Renouveler automatiquement votre assurance"
+//             value={settings.autoRenewal}
+//             onToggle={() => toggleSetting('autoRenewal')}
+//           /> */}
+
+//           <TouchableOpacity 
+//             className="p-4 mb-3 bg-white border border-gray-100 rounded-xl"
+//             onPress={() => router.push('/plans')}
+//           >
+//             <View className="flex-row items-center justify-between">
+//               <View className="flex-row items-center">
+//                 <FontAwesome6 name="credit-card" size={20} color="#6B7280" />
+//                 <Text className="ml-3 font-medium text-gray-900">Gérer l'abonnement</Text>
+//               </View>
+//               <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
+//             </View>
+//           </TouchableOpacity>
+//         </View>
+
+//         {/* Support Section */}
+//         <View className="mb-6">
+//           <Text className="mb-4 text-lg font-bold text-gray-900">Support</Text>
+          
+//           <TouchableOpacity 
+//             className="p-4 mb-3 bg-white border border-gray-100 rounded-xl"
+//             onPress={() => Alert.alert('Info', 'Fonctionnalité en développement')}
+//           >
+//             <View className="flex-row items-center justify-between">
+//               <View className="flex-row items-center">
+//                 <FontAwesome6 name="headset" size={20} color="#6B7280" />
+//                 <Text className="ml-3 font-medium text-gray-900">Centre d'aide</Text>
+//               </View>
+//               <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
+//             </View>
+//           </TouchableOpacity>
+
+//           <TouchableOpacity 
+//             className="p-4 mb-3 bg-white border border-gray-100 rounded-xl"
+//             onPress={() => Alert.alert('Info', 'Fonctionnalité en développement')}
+//           >
+//             <View className="flex-row items-center justify-between">
+//               <View className="flex-row items-center">
+//                 <FontAwesome6 name="bug" size={20} color="#6B7280" />
+//                 <Text className="ml-3 font-medium text-gray-900">Signaler un problème</Text>
+//               </View>
+//               <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
+//             </View>
+//           </TouchableOpacity>
+
+//           <TouchableOpacity 
+//             className="p-4 mb-3 bg-white border border-gray-100 rounded-xl"
+//             onPress={() => Alert.alert('Info', 'Fonctionnalité en développement')}
+//           >
+//             <View className="flex-row items-center justify-between">
+//               <View className="flex-row items-center">
+//                 <FontAwesome6 name="file-lines" size={20} color="#6B7280" />
+//                 <Text className="ml-3 font-medium text-gray-900">Conditions d'utilisation</Text>
+//               </View>
+//               <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
+//             </View>
+//           </TouchableOpacity>
+
+//           <TouchableOpacity 
+//             className="p-4 mb-3 bg-white border border-gray-100 rounded-xl"
+//             onPress={() => Alert.alert('Info', 'Fonctionnalité en développement')}
+//           >
+//             <View className="flex-row items-center justify-between">
+//               <View className="flex-row items-center">
+//                 <FontAwesome6 name="shield-halved" size={20} color="#6B7280" />
+//                 <Text className="ml-3 font-medium text-gray-900">Politique de confidentialité</Text>
+//               </View>
+//               <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
+//             </View>
+//           </TouchableOpacity>
+//         </View>
+
+//         {/* App Info Section */}
+//         <View className="mb-6">
+//           <Text className="mb-4 text-lg font-bold text-gray-900">Application</Text>
+          
+//           <View className="p-4 mb-3 bg-white border border-gray-100 rounded-xl">
+//             <View className="flex-row items-center justify-between">
+//               <View className="flex-row items-center">
+//                 <FontAwesome6 name="mobile-screen" size={20} color="#6B7280" />
+//                 <Text className="ml-3 font-medium text-gray-900">Version</Text>
+//               </View>
+//               <Text className="text-gray-600">1.0.0</Text>
+//             </View>
+//           </View>
+//         </View>
+
+//         {/* Danger Zone */}
+//         <View className="mb-6">
+//           <Text className="mb-4 text-lg font-bold text-red-600">Zone de danger</Text>
+          
+//           <TouchableOpacity 
+//             className="p-4 mb-3 bg-white border border-red-200 rounded-xl"
+//             onPress={handleLogout}
+//           >
+//             <View className="flex-row items-center">
+//               <FontAwesome6 name="right-from-bracket" size={20} color="#DC2626" />
+//               <Text className="ml-3 font-medium text-red-600">Se déconnecter</Text>
+//             </View>
+//           </TouchableOpacity>
+
+//           <TouchableOpacity 
+//             className="p-4 mb-3 bg-white border border-red-200 rounded-xl"
+//             onPress={handleDeleteAccount}
+//           >
+//             <View className="flex-row items-center">
+//               <FontAwesome6 name="trash" size={20} color="#DC2626" />
+//               <Text className="ml-3 font-medium text-red-600">Supprimer le compte</Text>
+//             </View>
+//           </TouchableOpacity>
+//         </View>
+//       </ScrollView>
+//     </SafeAreaView>
+//   );
+// }
+
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Alert, Switch } from 'react-native';
 import { router } from 'expo-router';
@@ -28,12 +349,10 @@ export default function SettingsScreen() {
 
   const loadSettings = async () => {
     try {
-      const savedSettings = await AsyncStorage.getItem('app_settings');
-      if (savedSettings) {
-        setSettings(JSON.parse(savedSettings));
-      }
-    } catch (error) {
-      console.error('Error loading settings:', error);
+      const saved = await AsyncStorage.getItem('app_settings');
+      if (saved) setSettings(JSON.parse(saved));
+    } catch (err) {
+      console.error('Error loading settings:', err);
     }
   };
 
@@ -41,33 +360,28 @@ export default function SettingsScreen() {
     try {
       await AsyncStorage.setItem('app_settings', JSON.stringify(newSettings));
       setSettings(newSettings);
-    } catch (error) {
-      console.error('Error saving settings:', error);
+    } catch (err) {
       Alert.alert('Erreur', 'Impossible de sauvegarder les paramètres');
     }
   };
 
   const toggleSetting = (key: keyof SettingsState) => {
-    const newSettings = { ...settings, [key]: !settings[key] };
-    saveSettings(newSettings);
+    const updated = { ...settings, [key]: !settings[key] };
+    saveSettings(updated);
   };
 
   const handleLogout = () => {
     Alert.alert(
       'Déconnexion',
-      'Êtes-vous sûr de vouloir vous déconnecter ?',
+      'Voulez-vous vraiment vous déconnecter ?',
       [
         { text: 'Annuler', style: 'cancel' },
         {
           text: 'Déconnexion',
           style: 'destructive',
           onPress: async () => {
-            try {
-              await AsyncStorage.removeItem('auth_token');
-              router.replace('/login');
-            } catch (error) {
-              console.error('Error during logout:', error);
-            }
+            await AsyncStorage.removeItem('auth_token');
+            router.replace('/login');
           },
         },
       ]
@@ -77,27 +391,25 @@ export default function SettingsScreen() {
   const handleDeleteAccount = () => {
     Alert.alert(
       'Supprimer le compte',
-      'Cette action est irréversible. Toutes vos données seront supprimées définitivement.',
+      'Cette action est irréversible. Vos données seront définitivement supprimées.',
       [
         { text: 'Annuler', style: 'cancel' },
         {
           text: 'Supprimer',
           style: 'destructive',
-          onPress: () => {
-            Alert.alert('Info', 'Fonctionnalité en développement');
-          },
+          onPress: () => Alert.alert('Info', 'Fonctionnalité en développement'),
         },
       ]
     );
   };
 
-  const SettingItem = ({ 
-    icon, 
-    title, 
-    subtitle, 
-    value, 
-    onToggle, 
-    showSwitch = true 
+  const SettingItem = ({
+    icon,
+    title,
+    subtitle,
+    value,
+    onToggle,
+    showSwitch = true,
   }: {
     icon: string;
     title: string;
@@ -106,23 +418,23 @@ export default function SettingsScreen() {
     onToggle?: () => void;
     showSwitch?: boolean;
   }) => (
-    <View className="p-4 mb-3 bg-white border border-gray-100 rounded-xl">
+    <View className="p-4 mb-3 bg-white shadow-sm rounded-2xl">
       <View className="flex-row items-center justify-between">
         <View className="flex-row items-center flex-1">
-          <FontAwesome6 name={icon} size={20} color="#6B7280" />
+          <View className="w-9 h-9 rounded-full bg-[#F3E8FF] items-center justify-center">
+            <FontAwesome6 name={icon} size={18} color="#8A4DFF" />
+          </View>
           <View className="flex-1 ml-3">
-            <Text className="font-medium text-gray-900">{title}</Text>
-            {subtitle && (
-              <Text className="mt-1 text-sm text-gray-600">{subtitle}</Text>
-            )}
+            <Text className="font-semibold text-gray-900">{title}</Text>
+            {subtitle && <Text className="mt-1 text-sm text-gray-500">{subtitle}</Text>}
           </View>
         </View>
         {showSwitch && (
           <Switch
             value={value}
             onValueChange={onToggle}
-            trackColor={{ false: '#E5E7EB', true: '#3B82F6' }}
-            thumbColor={value ? '#FFFFFF' : '#FFFFFF'}
+            trackColor={{ false: '#E5E7EB', true: '#8A4DFF' }}
+            thumbColor={'#FFFFFF'}
           />
         )}
       </View>
@@ -132,186 +444,115 @@ export default function SettingsScreen() {
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
       {/* Header */}
-      <View className="flex-row items-center px-4 py-4 bg-white border-b border-gray-100">
+      <View className="flex-row items-center px-5 py-4 bg-white border-b border-gray-100">
         <TouchableOpacity onPress={() => router.back()} className="mr-4">
           <FontAwesome6 name="arrow-left" size={20} color="#374151" />
         </TouchableOpacity>
-        <Text className="text-xl font-bold text-gray-900">Paramètres</Text>
+        <View>
+          <Text className="text-xl font-bold text-gray-900">Paramètres</Text>
+          <Text className="text-sm text-gray-500">Gérez vos préférences et votre compte</Text>
+        </View>
       </View>
 
-      <ScrollView className="flex-1 px-4 pt-4" contentContainerStyle={{ paddingBottom: 30 }}>
-        {/* Notifications Section */}
-        <View className="mb-6">
-          <Text className="mb-4 text-lg font-bold text-gray-900">Notifications</Text>
-          
-          <SettingItem
-            icon="bell"
-            title="Notifications Push"
-            subtitle="Recevoir des notifications sur votre appareil"
-            value={settings.notifications}
-            onToggle={() => toggleSetting('notifications')}
-          />
+      <ScrollView className="px-5 pt-4" contentContainerStyle={{ paddingBottom: 40 }}>
+        {/* Notifications */}
+        <Text className="mb-3 text-lg font-bold text-gray-900">Notifications</Text>
+        <SettingItem
+          icon="bell"
+          title="Notifications Push"
+          subtitle="Recevoir des alertes sur votre appareil"
+          value={settings.notifications}
+          onToggle={() => toggleSetting('notifications')}
+        />
+        <SettingItem
+          icon="envelope"
+          title="Emails"
+          subtitle="Recevoir des mises à jour importantes"
+          value={settings.emailUpdates}
+          onToggle={() => toggleSetting('emailUpdates')}
+        />
+        <SettingItem
+          icon="message"
+          title="Alertes SMS"
+          subtitle="Recevoir des alertes de paiement et santé"
+          value={settings.smsAlerts}
+          onToggle={() => toggleSetting('smsAlerts')}
+        />
 
-          <SettingItem
-            icon="envelope"
-            title="Mises à jour par Email"
-            subtitle="Recevoir des informations importantes par email"
-            value={settings.emailUpdates}
-            onToggle={() => toggleSetting('emailUpdates')}
-          />
+        {/* Security */}
+        <Text className="mt-6 mb-3 text-lg font-bold text-gray-900">Sécurité</Text>
+        <SettingItem
+          icon="fingerprint"
+          title="Authentification Biométrique"
+          subtitle="Utilisez votre empreinte digitale ou Face ID"
+          value={settings.biometric}
+          onToggle={() => toggleSetting('biometric')}
+        />
 
-          <SettingItem
-            icon="message"
-            title="Alertes SMS"
-            subtitle="Recevoir des alertes importantes par SMS"
-            value={settings.smsAlerts}
-            onToggle={() => toggleSetting('smsAlerts')}
-          />
-        </View>
-
-        {/* Security Section */}
-        <View className="mb-6">
-          <Text className="mb-4 text-lg font-bold text-gray-900">Sécurité</Text>
-          
-          <SettingItem
-            icon="fingerprint"
-            title="Authentification Biométrique"
-            subtitle="Utiliser l'empreinte digitale ou Face ID"
-            value={settings.biometric}
-            onToggle={() => toggleSetting('biometric')}
-          />
-
-          {/* <TouchableOpacity className="p-4 mb-3 bg-white border border-gray-100 rounded-xl">
-            <View className="flex-row items-center justify-between">
-              <View className="flex-row items-center">
-                <FontAwesome6 name="key" size={20} color="#6B7280" />
-                <Text className="ml-3 font-medium text-gray-900">Changer le mot de passe</Text>
-              </View>
-              <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
+        {/* Subscription */}
+        <Text className="mt-6 mb-3 text-lg font-bold text-gray-900">Abonnement</Text>
+        <TouchableOpacity
+          onPress={() => router.push('/plans')}
+          className="flex-row items-center justify-between p-4 bg-white shadow-sm rounded-2xl"
+          activeOpacity={0.8}
+        >
+          <View className="flex-row items-center">
+            <View className="w-9 h-9 rounded-full bg-[#EDE9FE] items-center justify-center">
+              <FontAwesome6 name="credit-card" size={18} color="#8A4DFF" />
             </View>
-          </TouchableOpacity> */}
-        </View>
-
-        {/* Subscription Section */}
-        <View className="mb-6">
-          <Text className="mb-4 text-lg font-bold text-gray-900">Abonnement</Text>
-          
-          {/* <SettingItem
-            icon="rotate"
-            title="Renouvellement Automatique"
-            subtitle="Renouveler automatiquement votre assurance"
-            value={settings.autoRenewal}
-            onToggle={() => toggleSetting('autoRenewal')}
-          /> */}
-
-          <TouchableOpacity 
-            className="p-4 mb-3 bg-white border border-gray-100 rounded-xl"
-            onPress={() => router.push('/plans')}
-          >
-            <View className="flex-row items-center justify-between">
-              <View className="flex-row items-center">
-                <FontAwesome6 name="credit-card" size={20} color="#6B7280" />
-                <Text className="ml-3 font-medium text-gray-900">Gérer l'abonnement</Text>
-              </View>
-              <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
-            </View>
-          </TouchableOpacity>
-        </View>
-
-        {/* Support Section */}
-        <View className="mb-6">
-          <Text className="mb-4 text-lg font-bold text-gray-900">Support</Text>
-          
-          <TouchableOpacity 
-            className="p-4 mb-3 bg-white border border-gray-100 rounded-xl"
-            onPress={() => Alert.alert('Info', 'Fonctionnalité en développement')}
-          >
-            <View className="flex-row items-center justify-between">
-              <View className="flex-row items-center">
-                <FontAwesome6 name="headset" size={20} color="#6B7280" />
-                <Text className="ml-3 font-medium text-gray-900">Centre d'aide</Text>
-              </View>
-              <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity 
-            className="p-4 mb-3 bg-white border border-gray-100 rounded-xl"
-            onPress={() => Alert.alert('Info', 'Fonctionnalité en développement')}
-          >
-            <View className="flex-row items-center justify-between">
-              <View className="flex-row items-center">
-                <FontAwesome6 name="bug" size={20} color="#6B7280" />
-                <Text className="ml-3 font-medium text-gray-900">Signaler un problème</Text>
-              </View>
-              <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity 
-            className="p-4 mb-3 bg-white border border-gray-100 rounded-xl"
-            onPress={() => Alert.alert('Info', 'Fonctionnalité en développement')}
-          >
-            <View className="flex-row items-center justify-between">
-              <View className="flex-row items-center">
-                <FontAwesome6 name="file-lines" size={20} color="#6B7280" />
-                <Text className="ml-3 font-medium text-gray-900">Conditions d'utilisation</Text>
-              </View>
-              <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity 
-            className="p-4 mb-3 bg-white border border-gray-100 rounded-xl"
-            onPress={() => Alert.alert('Info', 'Fonctionnalité en développement')}
-          >
-            <View className="flex-row items-center justify-between">
-              <View className="flex-row items-center">
-                <FontAwesome6 name="shield-halved" size={20} color="#6B7280" />
-                <Text className="ml-3 font-medium text-gray-900">Politique de confidentialité</Text>
-              </View>
-              <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
-            </View>
-          </TouchableOpacity>
-        </View>
-
-        {/* App Info Section */}
-        <View className="mb-6">
-          <Text className="mb-4 text-lg font-bold text-gray-900">Application</Text>
-          
-          <View className="p-4 mb-3 bg-white border border-gray-100 rounded-xl">
-            <View className="flex-row items-center justify-between">
-              <View className="flex-row items-center">
-                <FontAwesome6 name="mobile-screen" size={20} color="#6B7280" />
-                <Text className="ml-3 font-medium text-gray-900">Version</Text>
-              </View>
-              <Text className="text-gray-600">1.0.0</Text>
+            <View className="ml-3">
+              <Text className="font-semibold text-gray-900">Gérer mon abonnement</Text>
+              <Text className="mt-1 text-sm text-gray-500">Voir ou modifier votre plan actuel</Text>
             </View>
           </View>
+          <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
+        </TouchableOpacity>
+
+        {/* Support */}
+        <Text className="mt-6 mb-3 text-lg font-bold text-gray-900">Assistance & Support</Text>
+        {[
+          { icon: 'headset', title: "Centre d'aide" },
+          { icon: 'bug', title: 'Signaler un problème' },
+          { icon: 'file-lines', title: "Conditions d'utilisation" },
+          { icon: 'shield-halved', title: 'Politique de confidentialité' },
+        ].map((item, i) => (
+          <TouchableOpacity
+            key={i}
+            className="flex-row items-center justify-between p-4 mb-3 bg-white shadow-sm rounded-2xl"
+            onPress={() => Alert.alert('Info', 'Fonctionnalité en développement')}
+          >
+            <View className="flex-row items-center">
+              <View className="w-9 h-9 rounded-full bg-[#F3E8FF] items-center justify-center">
+                <FontAwesome6 name={item.icon} size={18} color="#8A4DFF" />
+              </View>
+              <Text className="ml-3 font-semibold text-gray-900">{item.title}</Text>
+            </View>
+            <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
+          </TouchableOpacity>
+        ))}
+
+        {/* App Info */}
+        <Text className="mt-6 mb-3 text-lg font-bold text-gray-900">Application</Text>
+        <View className="flex-row items-center justify-between p-4 bg-white shadow-sm rounded-2xl">
+          <View className="flex-row items-center">
+            <View className="w-9 h-9 rounded-full bg-[#F3E8FF] items-center justify-center">
+              <FontAwesome6 name="mobile-screen" size={18} color="#8A4DFF" />
+            </View>
+            <Text className="ml-3 font-semibold text-gray-900">Version</Text>
+          </View>
+          <Text className="text-gray-600">1.0.0</Text>
         </View>
 
         {/* Danger Zone */}
-        <View className="mb-6">
+        <View className="p-5 mt-10 bg-red-50 rounded-2xl">
           <Text className="mb-4 text-lg font-bold text-red-600">Zone de danger</Text>
-          
-          <TouchableOpacity 
-            className="p-4 mb-3 bg-white border border-red-200 rounded-xl"
-            onPress={handleLogout}
-          >
-            <View className="flex-row items-center">
-              <FontAwesome6 name="right-from-bracket" size={20} color="#DC2626" />
-              <Text className="ml-3 font-medium text-red-600">Se déconnecter</Text>
-            </View>
+          <TouchableOpacity onPress={handleLogout} className="flex-row items-center mb-4">
+            <FontAwesome6 name="right-from-bracket" size={18} color="#DC2626" />
+            <Text className="ml-3 font-semibold text-red-600">Se déconnecter</Text>
           </TouchableOpacity>
-
-          <TouchableOpacity 
-            className="p-4 mb-3 bg-white border border-red-200 rounded-xl"
-            onPress={handleDeleteAccount}
-          >
-            <View className="flex-row items-center">
-              <FontAwesome6 name="trash" size={20} color="#DC2626" />
-              <Text className="ml-3 font-medium text-red-600">Supprimer le compte</Text>
-            </View>
+          <TouchableOpacity onPress={handleDeleteAccount} className="flex-row items-center">
+            <FontAwesome6 name="trash" size={18} color="#DC2626" />
+            <Text className="ml-3 font-semibold text-red-600">Supprimer le compte</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
