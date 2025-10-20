@@ -2,6 +2,7 @@ import env from '#start/env'
 import User from '#models/user'
 import { v4 as uuidv4 } from 'uuid'
 import { DateTime } from 'luxon'
+import { google } from 'googleapis'
 
 interface GoogleUserInfo {
   id: string
@@ -12,29 +13,38 @@ interface GoogleUserInfo {
 }
 
 export default class GoogleService {
-  static getAuthUrl(): string {
-    const clientId = env.get('GOOGLE_CLIENT_ID')
-    const redirectUri = env.get('GOOGLE_REDIRECT_URI')
-    const scope = 'email profile'
-    
-    const params = new URLSearchParams({
-      client_id: clientId,
-      redirect_uri: redirectUri,
-      response_type: 'code',
-      scope,
-      access_type: 'offline'
-    })
+  private static getOAuth2Client() {
+    return new google.auth.OAuth2(
+      env.get('GOOGLE_CLIENT_ID'),
+      env.get('GOOGLE_CLIENT_SECRET'),
+      env.get('GOOGLE_REDIRECT_URI')
+    )
+  }
 
-    return `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`
+  static getAuthUrl(): string {
+    const oauth2Client = this.getOAuth2Client()
+    
+    return oauth2Client.generateAuthUrl({
+      access_type: 'offline',
+      scope: ['email', 'profile'],
+      include_granted_scopes: true
+    })
   }
 
   static async exchangeCodeForToken(code: string): Promise<string | null> {
     try {
-      // Mock implementation - remplacer par vraie intégration Google OAuth2
       console.log(`[GOOGLE] Exchange code: ${code}`)
       
-      // Simulation d'un token Google
-      return 'mock_google_access_token'
+      const oauth2Client = this.getOAuth2Client()
+      const { tokens } = await oauth2Client.getToken(code)
+      
+      if (!tokens.access_token) {
+        console.error('[GOOGLE] No access token received')
+        return null
+      }
+      
+      console.log('[GOOGLE] Access token obtained successfully')
+      return tokens.access_token
     } catch (error) {
       console.error('Erreur échange code Google:', error)
       return null
@@ -43,15 +53,26 @@ export default class GoogleService {
 
   static async getUserInfo(accessToken: string): Promise<GoogleUserInfo | null> {
     try {
-      // Mock implementation - remplacer par vraie API Google
-      console.log(`[GOOGLE] Get user info avec token: ${accessToken}`)
+      console.log(`[GOOGLE] Get user info avec token`)
       
-      // Simulation des données utilisateur Google
+      const oauth2Client = this.getOAuth2Client()
+      oauth2Client.setCredentials({ access_token: accessToken })
+      
+      const oauth2 = google.oauth2({ version: 'v2', auth: oauth2Client })
+      const { data } = await oauth2.userinfo.get()
+      
+      if (!data.id || !data.email) {
+        console.error('[GOOGLE] Missing required user data')
+        return null
+      }
+      
+      console.log('[GOOGLE] User info retrieved successfully')
       return {
-        id: 'google_user_123',
-        email: 'user@gmail.com',
-        given_name: 'John',
-        family_name: 'Doe'
+        id: data.id,
+        email: data.email,
+        given_name: data.given_name || '',
+        family_name: data.family_name || '',
+        picture: data.picture
       }
     } catch (error) {
       console.error('Erreur récupération info Google:', error)
