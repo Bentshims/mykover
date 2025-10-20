@@ -1,10 +1,38 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
+import Constants from 'expo-constants';
 
+/**
+ * Configuration intelligente de l'URL de l'API
+ * - En développement : utilise l'IP locale selon la plateforme
+ * - En production (APK/IPA) : utilise l'URL du backend déployé
+ */
 const getBaseURL = () => {
-    return 'http://10.150.9.111:3333'; 
+  // Récupérer l'URL depuis la config Expo (prioritaire)
+  const configUrl = Constants.expoConfig?.extra?.apiUrl;
+  
+  if (configUrl) {
+    return configUrl;
+  }
 
+  // Fallback développement : détection automatique selon plateforme
+  if (__DEV__) {
+    if (Platform.OS === 'android') {
+      // Émulateur Android utilise 10.0.2.2 pour localhost
+      // Appareil physique Android via WiFi
+      return Platform.select({
+        android: 'http://192.168.0.59:3333', // Ton IP WiFi
+        default: 'http://192.168.0.59:3333',
+      });
+    }
+    // iOS Simulator/Device
+    return 'http://192.168.0.59:3333';
+  }
+
+  // Fallback production si pas de config
+  console.warn('API URL non configurée, utilisation du fallback local');
+  return 'http://192.168.0.59:3333';
 };
 
 const api = axios.create({
@@ -15,6 +43,9 @@ const api = axios.create({
     'Accept': 'application/json',
   },
 });
+
+// Log de l'URL utilisée (utile pour debug)
+console.log('[API] Base URL:', api.defaults.baseURL);
 
 api.interceptors.request.use(
   async (config) => {
@@ -66,6 +97,15 @@ export const authApi = {
 
   forgotPassword: async (email: string) => { 
     const response = await api.post('/api/auth/forgot-password', { email }); 
+    return response.data;
+  },
+
+  resetPassword: async (phone: string, otp: string, newPassword: string) => {
+    const response = await api.post('/api/auth/reset-password', {
+      phone,
+      otp,
+      password: newPassword,
+    });
     return response.data;
   },
 

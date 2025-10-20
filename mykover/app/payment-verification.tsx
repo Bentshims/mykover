@@ -22,7 +22,7 @@ export default function PaymentVerificationScreen() {
 
   const [status, setStatus] = useState<"pending" | "success" | "failed">("pending");
   const [isPolling, setIsPolling] = useState(true);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const pollingCountRef = useRef(0);
 
   const MAX_POLLING_ATTEMPTS = 60; // 60 * 5s = 5 minutes max
