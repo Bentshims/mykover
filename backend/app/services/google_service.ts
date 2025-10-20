@@ -72,7 +72,7 @@ export default class GoogleService {
         email: data.email,
         given_name: data.given_name || '',
         family_name: data.family_name || '',
-        picture: data.picture
+        picture: data.picture || undefined
       }
     } catch (error) {
       console.error('Erreur récupération info Google:', error)
