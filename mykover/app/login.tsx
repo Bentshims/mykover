@@ -73,24 +73,17 @@ const LoginScreen: React.FC = () => {
       const success = await login(sanitizedData.phone, sanitizedData.password); // ✅ CORRIGÉ
 
       if (success) {
-        Alert.alert("Succès", "Connexion réussie !", [
-          {
-            text: "OK",
-            onPress: () => {
-              // Navigation will be handled by the AuthContext
-              // The app will automatically redirect to home
-            },
-          },
-        ]);
+        // Redirection automatique vers la page home
+        router.replace("/(tabs)/home");
       } else {
-        Alert.alert("Erreur", "Email/Téléphone ou mot de passe incorrect");
+        Alert.alert("Erreur", "Numéro de téléphone ou mot de passe incorrect");
       }
     } catch (error) {
       Alert.alert("Erreur", "Une erreur est survenue lors de la connexion");
     } finally {
       setIsLoading(false);
     }
-  }, [formData, login]);
+  }, [formData, login, router]);
 
   // Navigation vers l'inscription
   const handleSignup = useCallback(() => {

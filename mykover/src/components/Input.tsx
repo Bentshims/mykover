@@ -42,7 +42,7 @@ const Input: React.FC<InputProps> = memo(
             error
               ? "border-red-500 bg-red-50"
               : "border-purple-400 outline-none"
-          } rounded-full px-4 py-4 text-base bg-white min-h-[48px]`}
+          } rounded-xl px-4 py-4 text-base bg-white min-h-[48px]`}
           value={value}
           onChangeText={handleTextChange}
           placeholder={placeholder}

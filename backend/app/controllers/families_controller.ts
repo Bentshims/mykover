@@ -3,14 +3,26 @@ import Family from '#models/family'
 import FamilyMember from '#models/family_member'
 import { createFamilyValidator, getFamilyValidator } from '#validators/family'
 import db from '@adonisjs/lucid/services/db'
+import { DateTime } from 'luxon'
 
 export default class FamiliesController {
   /**
    * Créer une famille avec ses membres
    */
   async create({ request, response, auth }: HttpContext) {
-    const user = auth.user!
+    console.log('[FamiliesController] Create - Auth user:', auth.user)
+    
+    if (!auth.user) {
+      return response.unauthorized({
+        success: false,
+        message: 'Non authentifié',
+      })
+    }
+    
+    const user = auth.user
     const data = await request.validateUsing(createFamilyValidator)
+    
+    console.log('[FamiliesController] Create - Data:', data)
 
     // Validation du nombre de membres selon le plan
     const limits = Family.PLAN_LIMITS[data.planType]
@@ -52,7 +64,7 @@ export default class FamiliesController {
             familyId: family.id,
             firstName: member.firstName,
             lastName: member.lastName,
-            birthDate: member.birthDate,
+            birthDate: DateTime.fromJSDate(member.birthDate), // Conversion en DateTime
             isSick: member.isSick,
             photoUrl: member.photoUrl,
             photoPublicId: member.photoPublicId || null,

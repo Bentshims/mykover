@@ -8,6 +8,8 @@ import {
   ActivityIndicator,
   Alert,
   ScrollView,
+  Modal,
+  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,7 +21,7 @@ import { familyService, MemberData } from "../../services/familyService";
 import * as Linking from 'expo-linking';
 
 const PLAN_CONFIG = {
-  basique: { name: "Basique", price: 15, min: 1, max: 1, color: "#22C55E" },
+  basique: { name: "Basique", price: 15, min: 1, max: 1, color: "#60A5FA" },
   libota: { name: "Libota", price: 30, min: 2, max: 3, color: "#8A4DFF" },
   libota_plus: { name: "Libota+", price: 50, min: 2, max: 5, color: "#F59E0B" },
 };
@@ -38,6 +40,7 @@ export default function SubscriptionPlansScreen() {
   const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(null);
   const [members, setMembers] = useState<MemberData[]>([]);
   const [showMemberDrawer, setShowMemberDrawer] = useState(false);
+  const [showRecapDrawer, setShowRecapDrawer] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubscribe = (planKey: string) => {
@@ -48,7 +51,8 @@ export default function SubscriptionPlansScreen() {
   };
 
   const handleMemberSubmit = (member: MemberData) => {
-    setMembers((prev) => [...prev, member]);
+    const updatedMembers = [...members, member];
+    setMembers(updatedMembers);
     setShowMemberDrawer(false);
 
     if (!selectedPlan) return;
@@ -56,29 +60,29 @@ export default function SubscriptionPlansScreen() {
     const config = PLAN_CONFIG[selectedPlan];
 
     // Vérifier si on a atteint le max
-    if (members.length + 1 >= config.max) {
-      // Soumettre automatiquement
-      handleFinalSubmit([...members, member]);
+    if (updatedMembers.length >= config.max) {
+      // Afficher le récapitulatif
+      setShowRecapDrawer(true);
     } else {
       // Demander s'il veut ajouter un autre membre
       Alert.alert(
         "Membre ajouté",
-        `${members.length + 1}/${config.max} membre(s) ajouté(s). Voulez-vous ajouter un autre membre ?`,
+        `${updatedMembers.length}/${config.max} membre(s) ajouté(s). Voulez-vous ajouter un autre membre ?`,
         [
-          { text: "Terminer", onPress: () => handleFinalSubmit([...members, member]) },
+          { text: "Voir le récap", onPress: () => setShowRecapDrawer(true) },
           { text: "Ajouter", onPress: () => setShowMemberDrawer(true) },
         ]
       );
     }
   };
 
-  const handleFinalSubmit = async (finalMembers: MemberData[]) => {
+  const handleFinalSubmit = async () => {
     if (!selectedPlan) return;
 
     const config = PLAN_CONFIG[selectedPlan];
 
     // Validation
-    if (finalMembers.length < config.min || finalMembers.length > config.max) {
+    if (members.length < config.min || members.length > config.max) {
       Alert.alert(
         "Erreur",
         `Le plan ${config.name} nécessite entre ${config.min} et ${config.max} membre(s)`
@@ -86,13 +90,14 @@ export default function SubscriptionPlansScreen() {
       return;
     }
 
+    setShowRecapDrawer(false);
     setIsSubmitting(true);
 
     try {
       // 1. Créer la famille
       const familyResponse = await familyService.createFamily({
         planType: selectedPlan,
-        members: finalMembers,
+        members: members,
       });
 
       if (!familyResponse.success || !familyResponse.data) {
@@ -115,15 +120,15 @@ export default function SubscriptionPlansScreen() {
       await Linking.openURL(paymentUrl);
 
       // 4. Naviguer vers écran de vérification
-      router.push({
+                router.push({
         pathname: "/payment-verification" as any,
-        params: {
+                  params: {
           transactionId,
           familyCode,
           planName: config.name,
           amount: config.price.toString(),
-        },
-      });
+                  },
+                });
 
       // Reset
       setSelectedPlan(null);
@@ -166,22 +171,22 @@ export default function SubscriptionPlansScreen() {
               <FeatureItem text="Hospitalisation dans cliniques partenaires" />
               {plan !== "basique" && <FeatureItem text="Couverture complète césariennes" />}
               {plan === "libota_plus" && <FeatureItem text="Imageries médicales incluses" />}
-            </View>
           </View>
+        </View>
 
-          <TouchableOpacity
-            onPress={() => handleSubscribe(planKey)}
+        <TouchableOpacity
+          onPress={() => handleSubscribe(planKey)}
             disabled={isSubmitting}
-            className="py-4 rounded-xl mt-4"
+            className="py-4 rounded-full mt-4"
             style={{ backgroundColor: config.color }}
-            activeOpacity={0.8}
+          activeOpacity={0.8}
           >
             {isSubmitting && selectedPlan === plan ? (
               <ActivityIndicator color="#fff" />
             ) : (
               <Text className="text-white text-center font-bold text-lg">Souscrire</Text>
             )}
-          </TouchableOpacity>
+        </TouchableOpacity>
         </ScrollView>
       </View>
     );
@@ -210,9 +215,6 @@ export default function SubscriptionPlansScreen() {
             {...props}
             indicatorStyle={{ backgroundColor: "#8A4DFF", height: 3 }}
             style={{ backgroundColor: "#fff", elevation: 0 }}
-            labelStyle={{ fontWeight: "600", textTransform: "none" }}
-            activeColor="#8A4DFF"
-            inactiveColor="#9CA3AF"
           />
         )}
       />
@@ -229,13 +231,86 @@ export default function SubscriptionPlansScreen() {
           memberIndex={members.length}
         />
       )}
+
+      {/* Récapitulatif des membres */}
+      {selectedPlan && (
+        <Modal visible={showRecapDrawer} animationType="slide" transparent>
+          <View className="flex-1 justify-end bg-black/50">
+            <View className="bg-white rounded-t-3xl p-6 max-h-[80%]">
+              <View className="flex-row justify-between items-center mb-4">
+                <Text className="text-xl font-bold">Récapitulatif</Text>
+                <TouchableOpacity onPress={() => setShowRecapDrawer(false)}>
+                  <Ionicons name="close" size={28} color="#374151" />
+                </TouchableOpacity>
+              </View>
+
+              <Text className="text-gray-600 mb-4">
+                Plan: <Text className="font-bold text-[#8A4DFF]">{PLAN_CONFIG[selectedPlan].name}</Text> - {PLAN_CONFIG[selectedPlan].price}$
+              </Text>
+
+              <ScrollView className="mb-4">
+                {members.map((member, index) => (
+                  <View key={index} className="flex-row items-center bg-gray-50 p-4 rounded-xl mb-3">
+                    <Image
+                      source={{ uri: member.photoUrl }}
+                      className="w-16 h-16 rounded-full mr-4"
+                    />
+                    <View className="flex-1">
+                      <Text className="font-bold text-gray-900">
+                        {member.firstName} {member.lastName}
+                      </Text>
+                      <Text className="text-sm text-gray-500">{member.birthDate}</Text>
+                      {member.isSick && (
+                        <View className="flex-row items-center mt-1">
+                          <Ionicons name="medical" size={14} color="#F59E0B" />
+                          <Text className="text-xs text-orange-600 ml-1">Problème de santé</Text>
+                        </View>
+                      )}
+                    </View>
+                  </View>
+                ))}
+              </ScrollView>
+
+              <View className="flex-row gap-3">
+                <TouchableOpacity
+                  onPress={() => {
+                    setShowRecapDrawer(false);
+                    setShowMemberDrawer(true);
+                  }}
+                  className="flex-1 bg-gray-200 py-4 rounded-xl"
+                  activeOpacity={0.8}
+                  disabled={members.length >= PLAN_CONFIG[selectedPlan].max}
+                >
+                  <Text className="text-gray-700 text-center font-bold">
+                    Ajouter membre
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={handleFinalSubmit}
+                  disabled={isSubmitting}
+                  className="flex-1 bg-[#8A4DFF] py-4 rounded-xl"
+                  activeOpacity={0.8}
+                >
+                  {isSubmitting ? (
+                    <ActivityIndicator color="#fff" />
+                  ) : (
+                    <Text className="text-white text-center font-bold">
+                      Confirmer & Payer
+                    </Text>
+                  )}
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
+      )}
     </SafeAreaView>
   );
 }
 
 const FeatureItem = ({ text }: { text: string }) => (
-  <View className="flex-row items-center">
-    <Ionicons name="checkmark-circle" size={20} color="#22C55E" />
+  <View className="flex-row items-center my-2">
+    <Ionicons name="checkmark-circle" size={20} color="#8A4DFF" />
     <Text className="text-gray-700 ml-2">{text}</Text>
   </View>
 );

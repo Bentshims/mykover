@@ -2,7 +2,6 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 
-// Determine the correct base URL based on the platform
 const getBaseURL = () => {
 
   // Pour EXPO GO sur appareil physique - IP actuelle de votre machine
@@ -22,16 +21,15 @@ const getBaseURL = () => {
   return 'http://localhost:3333';
 };
 
-// Create axios instance
 const api = axios.create({
   baseURL: getBaseURL(),
-  timeout: 10000,
+  timeout: 30000, // Augmenté à 30 secondes
   headers: {
     'Content-Type': 'application/json',
+    'Accept': 'application/json',
   },
 });
 
-// Request interceptor to add auth token
 api.interceptors.request.use(
   async (config) => {
     try {
@@ -49,12 +47,10 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor to handle auth errors
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
     if (error.response?.status === 401) {
-      // Token expired or invalid, redirect to login
       await AsyncStorage.removeItem('auth_token');
       await AsyncStorage.removeItem('user_data');
     }
@@ -62,9 +58,7 @@ api.interceptors.response.use(
   }
 );
 
-// API endpoints for authentication
 export const authApi = {
-  // Register a new user
   register: async (data: {
     fullname: string;
     email: string;
@@ -72,38 +66,33 @@ export const authApi = {
     password: string;
     birth_date: string;
   }) => {
-    const response = await api.post('/api/auth/signup', data); // ✅ CORRIGÉ
+    const response = await api.post('/api/auth/signup', data); 
     return response.data;
   },
 
-  // Login with phone and password
-  login: async (phone: string, password: string) => { // ✅ CORRIGÉ
+  login: async (phone: string, password: string) => { 
     const response = await api.post('/api/auth/login', {
-      phone, // ✅ CORRIGÉ
+      phone, 
       password,
     });
     return response.data;
   },
 
-  // Forgot password - send email with reset token
-  forgotPassword: async (email: string) => { // ✅ CORRIGÉ
-    const response = await api.post('/api/auth/forgot-password', { email }); // ✅ CORRIGÉ
+  forgotPassword: async (email: string) => { 
+    const response = await api.post('/api/auth/forgot-password', { email }); 
     return response.data;
   },
 
-  // Logout
   logout: async () => {
     const response = await api.post('/api/auth/logout');
     return response.data;
   },
 
-  // Get current user info
   me: async () => {
     const response = await api.get('/api/auth/me');
     return response.data;
   },
 
-  // Google OAuth
   googleAuth: () => {
     return `${api.defaults.baseURL}/api/auth/google`;
   },

@@ -1,5 +1,5 @@
-const CLOUDINARY_CLOUD_NAME = 'your-cloud-name' // À configurer
-const CLOUDINARY_UPLOAD_PRESET = 'mykover_unsigned' // À configurer
+const CLOUDINARY_CLOUD_NAME = 'drsd8adkq' // Ton vrai cloud name
+const CLOUDINARY_UPLOAD_PRESET = 'mykover_unsigned'
 
 interface CloudinaryUploadResult {
   success: boolean
@@ -14,19 +14,27 @@ export const uploadToCloudinary = async (
   imageUri: string
 ): Promise<CloudinaryUploadResult> => {
   try {
+    // Créer FormData pour upload
     const formData = new FormData()
     
-    // Créer le blob depuis l'URI
-    const response = await fetch(imageUri)
-    const blob = await response.blob()
+    // Extraire le nom du fichier depuis l'URI
+    const filename = imageUri.split('/').pop() || 'photo.jpg'
     
+    // Ajouter le fichier au FormData (IMPORTANT: fichier en premier)
     formData.append('file', {
       uri: imageUri,
       type: 'image/jpeg',
-      name: 'photo.jpg',
+      name: filename,
     } as any)
+    
+    // IMPORTANT: Pour unsigned upload, SEULEMENT upload_preset est requis
     formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET)
-    formData.append('folder', 'mykover/members')
+
+    console.log('[Cloudinary] Upload début...', { 
+      cloudName: CLOUDINARY_CLOUD_NAME, 
+      preset: CLOUDINARY_UPLOAD_PRESET,
+      uri: imageUri
+    })
 
     const uploadResponse = await fetch(
       `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
@@ -36,11 +44,15 @@ export const uploadToCloudinary = async (
       }
     )
 
+    const responseText = await uploadResponse.text()
+    console.log('[Cloudinary] Réponse brute:', responseText)
+
     if (!uploadResponse.ok) {
-      throw new Error('Upload échoué')
+      throw new Error(`Upload échoué: ${uploadResponse.status} - ${responseText}`)
     }
 
-    const data = await uploadResponse.json()
+    const data = JSON.parse(responseText)
+    console.log('[Cloudinary] Upload réussi:', data.secure_url)
 
     return {
       success: true,
@@ -50,7 +62,7 @@ export const uploadToCloudinary = async (
       },
     }
   } catch (error: any) {
-    console.error('Cloudinary upload error:', error)
+    console.error('[Cloudinary] Erreur upload:', error)
     return {
       success: false,
       error: error.message || 'Erreur upload',

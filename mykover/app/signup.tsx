@@ -233,12 +233,8 @@ const SignupScreen: React.FC = () => {
       });
 
       if (success) {
-        Alert.alert("Succès", "Inscription réussie !", [
-          {
-            text: "OK",
-            onPress: () => router.replace("/(tabs)/home"),
-          },
-        ]);
+        // Redirection automatique vers la page home
+        router.replace("/(tabs)/home");
       } else {
         Alert.alert("Erreur", "Une erreur est survenue lors de l'inscription");
       }
