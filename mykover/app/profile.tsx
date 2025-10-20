@@ -245,7 +245,7 @@ export default function ProfileScreen() {
 
               <TouchableOpacity
                 onPress={() => router.push('/plans')}
-                className="mt-3 bg-[#8A4DFF] py-3 rounded-lg items-center"
+                className="mt-3 bg-[#8A4DFF] py-3 rounded-full items-center"
                 activeOpacity={0.85}
               >
                 <Text className="font-semibold text-white">Voir les détails du plan</Text>
