@@ -248,12 +248,27 @@ const SignupScreen: React.FC = () => {
   // Google Auth
   const handleGoogleAuth = async () => {
     try {
-      const googleAuthUrl = `http://localhost:3333/api/auth/google`;
+      const googleAuthUrl = `http://10.35.66.111:3333/api/auth/google`;
+      
+      // Pour React Native, nous devons ouvrir le navigateur système
+      // L'utilisateur sera redirigé vers notre app après l'authentification
+      const WebBrowser = await import('expo-web-browser');
+      
       Alert.alert(
         "Authentification Google",
-        "Pour configurer Google OAuth:\n\n1. Créez un projet sur Google Cloud Console\n2. Configurez les identifiants OAuth 2.0\n3. Ajoutez vos identifiants dans le fichier .env du backend\n\nURL d'authentification: " + googleAuthUrl,
+        "Vous allez être redirigé vers Google pour vous connecter. Après l'authentification, vous reviendrez automatiquement dans l'application.",
         [
-          { text: "OK" }
+          {
+            text: "Continuer",
+            onPress: async () => {
+              try {
+                await WebBrowser.openBrowserAsync(googleAuthUrl);
+              } catch (error) {
+                Alert.alert("Erreur", "Impossible d'ouvrir le navigateur");
+              }
+            }
+          },
+          { text: "Annuler", style: "cancel" }
         ]
       );
     } catch (error) {

@@ -38,6 +38,10 @@ router.group(() => {
   router.post('/login', '#controllers/auth_controller.login')
   router.post('/forgot-password', '#controllers/auth_controller.forgotPassword')
   
+  // Google OAuth routes
+  router.get('/google', '#controllers/auth_controller.googleAuth')
+  router.get('/google/callback', '#controllers/auth_controller.googleCallback')
+  
   // Routes protégées (nécessitent un access token)
   router
     .group(() => {
