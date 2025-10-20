@@ -3,7 +3,22 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 
 const getBaseURL = () => {
-    return 'http://10.161.175.111:3333'; 
+
+  // Pour EXPO GO sur appareil physique - IP actuelle de votre machine
+  if (Platform.OS === 'android' || Platform.OS === 'ios') {
+    return 'http://192.168.1.189:3333';
+  }
+  
+  // Pour émulateurs/simulateurs
+  if (Platform.OS === 'android') {
+    return 'http://10.0.2.2:3333'; // Android emulator
+  }
+  // POUR EXPO GO SUR APPAREIL PHYSIQUE: Utilisez l'IP de votre ordinateur
+  return 'http://10.35.66.111:3333';
+
+  
+  // Pour web ou iOS simulator
+  return 'http://localhost:3333';
 };
 
 const api = axios.create({
