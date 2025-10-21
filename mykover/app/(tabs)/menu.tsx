@@ -191,6 +191,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Alert,
+  Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome6 } from '@expo/vector-icons';
@@ -258,7 +259,7 @@ export default function MenuScreen() {
       id: 'notifications',
       title: 'Notifications',
       icon: 'bell',
-      badge: 5,
+      badge: 0,
       section: 'account',
       onPress: () => router.push('/notifications'),
     },

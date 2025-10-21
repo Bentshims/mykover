@@ -14,16 +14,16 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { TabView, TabBar } from "react-native-tab-view";
+import { TabView } from "react-native-tab-view";
 import { useAuth } from "../../src/contexts/AuthContext";
 import MemberFormDrawer from "../../components/MemberFormDrawer";
 import { familyService, MemberData } from "../../services/familyService";
 import * as Linking from 'expo-linking';
 
 const PLAN_CONFIG = {
-  basique: { name: "Basique", price: 15, min: 1, max: 1, color: "#60A5FA" },
+  basique: { name: "Basique", price: 15, min: 1, max: 1, color: "#8A4DFF" },
   libota: { name: "Libota", price: 30, min: 2, max: 3, color: "#8A4DFF" },
-  libota_plus: { name: "Libota+", price: 50, min: 2, max: 5, color: "#F59E0B" },
+  libota_plus: { name: "Libota+", price: 50, min: 2, max: 5, color: "#8A4DFF" },
 };
 
 type PlanType = keyof typeof PLAN_CONFIG;
@@ -205,18 +205,41 @@ export default function SubscriptionPlansScreen() {
         <Text className="text-gray-500 mt-1">Choisissez le plan qui vous convient</Text>
       </View>
 
+      <View className="px-4 py-4 bg-white pt-8">
+        <View className="flex-row p-1 bg-gray-100 rounded-full">
+          {routes.map((route, idx) => {
+            const isActive = index === idx;
+            return (
+              <View key={route.key} className="flex-1" style={{ paddingLeft: idx === 0 ? 0 : 2 }}>
+                <TouchableOpacity
+                  className={`px-4 py-3 rounded-full ${
+                    isActive
+                      ? 'bg-purple-600'
+                      : 'bg-transparent'
+                  }`}
+                  onPress={() => setIndex(idx)}
+                  activeOpacity={0.7}
+                >
+                  <Text className={`text-base font-semibold text-center ${
+                    isActive
+                      ? 'text-white'
+                      : 'text-gray-600'
+                  }`}>
+                    {route.title}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            );
+          })}
+        </View>
+      </View>
+
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{ width: Dimensions.get("window").width }}
-        renderTabBar={(props) => (
-          <TabBar
-            {...props}
-            indicatorStyle={{ backgroundColor: "#8A4DFF", height: 3 }}
-            style={{ backgroundColor: "#fff", elevation: 0 }}
-          />
-        )}
+        renderTabBar={() => null}
       />
 
       {selectedPlan && (

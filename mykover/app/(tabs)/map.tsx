@@ -162,7 +162,6 @@ export default function MapScreen() {
     })();
   }, []);
 
-  // Open directions in Google Maps
   const openDirections = async (facility: Facility) => {
     if (!userLocation) {
       Alert.alert('Erreur', 'Position actuelle non disponible.');
@@ -173,41 +172,44 @@ export default function MapScreen() {
       const { latitude: destLat, longitude: destLng } = facility;
       const { latitude: originLat, longitude: originLng } = userLocation.coords;
       
-      // Google Maps URLs for directions
-      const googleMapsUrl = `https://www.google.com/maps/dir/${originLat},${originLng}/${destLat},${destLng}`;
-      const googleMapsAppUrl = `comgooglemaps://?saddr=${originLat},${originLng}&daddr=${destLat},${destLng}&directionsmode=driving`;
-      
-      // Try to open Google Maps app first
-      const canOpenGoogleMaps = await Linking.canOpenURL(googleMapsAppUrl);
-      if (canOpenGoogleMaps) {
-        await Linking.openURL(googleMapsAppUrl);
-        return;
-      }
-      
-      // Fallback to web version of Google Maps
-      const canOpenWebMaps = await Linking.canOpenURL(googleMapsUrl);
-      if (canOpenWebMaps) {
-        await Linking.openURL(googleMapsUrl);
-        return;
-      }
-      
-      // Final fallback to device's default maps app
-      let fallbackUrl = '';
       if (Platform.OS === 'ios') {
-        fallbackUrl = `maps://?saddr=${originLat},${originLng}&daddr=${destLat},${destLng}`;
+        const appleMapsUrl = `maps://?saddr=${originLat},${originLng}&daddr=${destLat},${destLng}`;
+        const googleMapsAppUrl = `comgooglemaps://?saddr=${originLat},${originLng}&daddr=${destLat},${destLng}&directionsmode=driving`;
+        
+        const canOpenGoogleMaps = await Linking.canOpenURL(googleMapsAppUrl);
+        if (canOpenGoogleMaps) {
+          await Linking.openURL(googleMapsAppUrl);
+        } else {
+          await Linking.openURL(appleMapsUrl);
+        }
       } else {
-        fallbackUrl = `geo:${destLat},${destLng}?q=${encodeURIComponent(facility.name)}`;
-      }
-      
-      const canOpenFallback = await Linking.canOpenURL(fallbackUrl);
-      if (canOpenFallback) {
-        await Linking.openURL(fallbackUrl);
-      } else {
-        Alert.alert('Erreur', 'Aucune application de cartes disponible.');
+        const scheme = Platform.select({ 
+          ios: 'maps:0,0?q=', 
+          android: 'geo:0,0?q=' 
+        });
+        const latLng = `${destLat},${destLng}`;
+        const label = encodeURIComponent(facility.name);
+        const geoUrl = `${scheme}${latLng}(${label})`;
+        
+        const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${originLat},${originLng}&destination=${destLat},${destLng}&travelmode=driving`;
+        
+        try {
+          await Linking.openURL(geoUrl);
+        } catch (err) {
+          await Linking.openURL(googleMapsUrl);
+        }
       }
     } catch (error) {
       console.error('Error opening directions:', error);
-      Alert.alert('Erreur', 'Impossible d\'ouvrir les directions.');
+      const { latitude: destLat, longitude: destLng } = facility;
+      const { latitude: originLat, longitude: originLng } = userLocation.coords;
+      const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${originLat},${originLng}&destination=${destLat},${destLng}&travelmode=driving`;
+      
+      try {
+        await Linking.openURL(googleMapsUrl);
+      } catch (finalError) {
+        Alert.alert('Erreur', 'Impossible d\'ouvrir les directions.');
+      }
     }
   };
 
@@ -266,38 +268,32 @@ export default function MapScreen() {
 
           {/* Filter Options */}
           <View className="mb-6">
-            <ScrollView 
-              horizontal 
-              showsHorizontalScrollIndicator={false}
-              className="flex-row"
-            >
-              {filterOptions.map((option) => (
-                <TouchableOpacity
-                  key={option.key}
-                  className={`mr-3 px-4 py-2 rounded-full ${
-                    selectedFilter === option.key
-                      ? 'bg-purple-600'
-                      : 'bg-gray-100'
-                  }`}
-                  onPress={() => setSelectedFilter(option.key)}
-                >
-                  <View className="flex-row items-center">
-                    <Ionicons 
-                      name={option.icon as any} 
-                      size={16} 
-                      color={selectedFilter === option.key ? 'white' : '#6b7280'} 
-                    />
-                    <Text className={`ml-2 font-medium ${
-                      selectedFilter === option.key
-                        ? 'text-white'
-                        : 'text-gray-600'
-                    }`}>
-                      {option.label}
-                    </Text>
+            <View className="flex-row p-1 bg-gray-100 rounded-full">
+              {filterOptions.map((option, idx) => {
+                const isActive = selectedFilter === option.key;
+                return (
+                  <View key={option.key} className="flex-1" style={{ paddingLeft: idx === 0 ? 0 : 2 }}>
+                    <TouchableOpacity
+                      className={`px-4 py-3 rounded-full ${
+                        isActive
+                          ? 'bg-purple-600'
+                          : 'bg-transparent'
+                      }`}
+                      onPress={() => setSelectedFilter(option.key)}
+                      activeOpacity={0.7}
+                    >
+                      <Text className={`text-sm font-semibold text-center ${
+                        isActive
+                          ? 'text-white'
+                          : 'text-gray-600'
+                      }`}>
+                        {option.label}
+                      </Text>
+                    </TouchableOpacity>
                   </View>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
+                );
+              })}
+            </View>
           </View>
 
           {/* Quick Actions */}
