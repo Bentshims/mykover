@@ -109,10 +109,14 @@ export default function HomeScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
-      <StatusBar barStyle="dark-content" backgroundColor="#F3F4F6" />
+    <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
+      <StatusBar barStyle="light-content" backgroundColor="#8A4DFF" />
 
-      <TopNavBarCustom onAvatarPress={handleAvatarPress} notificationCount={0} />
+      <TopNavBarCustom 
+        onAvatarPress={handleAvatarPress} 
+        notificationCount={0} 
+        userProfile={profile}
+      />
 
       <ScrollView 
         className="px-6 pt-4"

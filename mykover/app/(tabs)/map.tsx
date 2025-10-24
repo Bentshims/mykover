@@ -243,8 +243,8 @@ export default function MapScreen() {
   ];
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <StatusBar barStyle="light-content" backgroundColor="#7c3aed" />
+    <SafeAreaView className="flex-1 bg-white" edges={['top']}>
+      <StatusBar barStyle="light-content" backgroundColor="#8A4DFF" />
       
       {/* Custom Top Navigation */}
       {/* <TopNavBarCustom 

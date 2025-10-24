@@ -48,7 +48,7 @@ const Input: React.FC<InputProps> = memo(
             className={`border ${
               error
                 ? "border-red-500 bg-red-50"
-                : "border-purple-400 outline-none"
+                : "border-purple-500 outline-none"
             } rounded-xl px-4 py-4 text-base bg-white min-h-[56px]`}
             style={{ 
               color: '#1F2937',
@@ -72,9 +72,10 @@ const Input: React.FC<InputProps> = memo(
           {secureTextEntry && (
             <TouchableOpacity
               onPress={togglePasswordVisibility}
-              className="absolute right-3 top-1/2 -translate-y-1/2"
+              className="absolute right-3"
               style={{ 
                 padding: 8,
+                top: '50%',
                 transform: [{ translateY: -20 }],
               }}
               activeOpacity={0.6}

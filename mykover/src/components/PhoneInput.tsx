@@ -49,7 +49,7 @@ const PhoneInput: React.FC<PhoneInputProps> = memo(
 
         <View
           className={`flex-row items-center rounded-xl px-4 py-1 bg-white min-h-[56px] border ${
-            error ? "border-red-500 bg-red-50" : "border-purple-400"
+            error ? "border-red-500 bg-red-50" : "border-purple-500"
           }`}
         >
           {/* Drapeau RDC */}

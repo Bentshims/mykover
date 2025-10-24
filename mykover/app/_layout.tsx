@@ -3,10 +3,63 @@ import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 import "../global.css";
 import { AuthProvider } from "../src/contexts/AuthContext";
-import { JSX } from "react";
+import { JSX, useEffect, useCallback } from "react";
+import { useFonts } from "expo-font";
+import * as SplashScreen from 'expo-splash-screen';
+import { Text, TextInput, StyleSheet } from "react-native";
+
+SplashScreen.preventAutoHideAsync();
+
+let fontsConfigured = false;
 
 // This is the root layout component
 export default function RootLayout(): JSX.Element | null {
+  const [fontsLoaded, fontError] = useFonts({
+    'Quicksand': require('../assets/fonts/Quicksand-Regular.ttf'),
+    'Quicksand-Bold': require('../assets/fonts/Quicksand-Bold.ttf'),
+    'Quicksand-SemiBold': require('../assets/fonts/Quicksand-SemiBold.ttf'),
+    'Quicksand-Medium': require('../assets/fonts/Quicksand-Medium.ttf'),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded || fontError) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
+
+  useEffect(() => {
+    if (fontsLoaded && !fontsConfigured) {
+      fontsConfigured = true;
+      
+      // @ts-ignore
+      const oldTextRender = Text.render;
+      // @ts-ignore
+      const oldTextInputRender = TextInput.render;
+      
+      // @ts-ignore
+      Text.render = function (props, ref) {
+        return oldTextRender.call(this, {
+          ...props,
+          style: StyleSheet.flatten([{ fontFamily: 'Quicksand' }, props.style]),
+        }, ref);
+      };
+      
+      // @ts-ignore
+      TextInput.render = function (props, ref) {
+        return oldTextInputRender.call(this, {
+          ...props,
+          style: StyleSheet.flatten([{ fontFamily: 'Quicksand' }, props.style]),
+        }, ref);
+      };
+      
+      onLayoutRootView();
+    }
+  }, [fontsLoaded, onLayoutRootView]);
+
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
+
   return (
     <AuthProvider>
       <Stack screenOptions={{ headerShown: false }}>

@@ -145,7 +145,7 @@ export default function SubscriptionPlansScreen() {
     const config = PLAN_CONFIG[plan];
 
     return (
-      <View className="flex-1 bg-white p-6">
+      <View className="flex-1 bg-white p-6 border border-gray-200 rounded-2xl mx-4 mt-4 mb-44">
         <ScrollView showsVerticalScrollIndicator={false}>
           <View className="items-center mb-6">
             <View
@@ -197,16 +197,16 @@ export default function SubscriptionPlansScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
-      <StatusBar barStyle="dark-content" backgroundColor="#F9FAFB" />
+    <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
+      <StatusBar barStyle="light-content" backgroundColor="#8A4DFF" />
 
-      <View className="px-4 py-3 bg-white border-b border-gray-200">
+      <View className="px-4 py-3 bg-white pt-8">
         <Text className="text-2xl font-bold text-gray-900">Plans d'assurance</Text>
         <Text className="text-gray-500 mt-1">Choisissez le plan qui vous convient</Text>
       </View>
 
       <View className="px-4 py-4 bg-white pt-8">
-        <View className="flex-row p-1 bg-gray-100 rounded-full">
+        <View className="flex-row p-2 bg-gray-100 rounded-full">
           {routes.map((route, idx) => {
             const isActive = index === idx;
             return (
@@ -214,7 +214,7 @@ export default function SubscriptionPlansScreen() {
                 <TouchableOpacity
                   className={`px-4 py-3 rounded-full ${
                     isActive
-                      ? 'bg-purple-600'
+                      ? 'bg-[#8A4DFF]'
                       : 'bg-transparent'
                   }`}
                   onPress={() => setIndex(idx)}

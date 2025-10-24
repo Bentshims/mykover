@@ -6,6 +6,7 @@ import {
   Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { getAvatarForUser } from '../src/utils/avatarUtils';
 
 interface TopNavBarCustomProps {
   avatarSource?: string;
@@ -13,6 +14,7 @@ interface TopNavBarCustomProps {
   onNotificationPress?: () => void;
   notificationCount?: number;
   title?: string;
+  userProfile?: { id?: number | string } | null;
 }
 
 export default function TopNavBarCustom({
@@ -21,7 +23,10 @@ export default function TopNavBarCustom({
   onNotificationPress,
   notificationCount = 0,
   title,
+  userProfile,
 }: TopNavBarCustomProps) {
+  
+  const avatarUrl = avatarSource || (userProfile?.id ? getAvatarForUser(userProfile.id) : null);
   
   return (
     <View className="flex-row items-center justify-between px-6 py-4">
@@ -32,15 +37,15 @@ export default function TopNavBarCustom({
         activeOpacity={0.7}
       >
         <View className="w-12 h-12 overflow-hidden rounded-full">
-          {avatarSource ? (
+          {avatarUrl ? (
             <Image 
-              source={{ uri: avatarSource }}
+              source={{ uri: avatarUrl }}
               className="w-full h-full"
               resizeMode="cover"
             />
           ) : (
-            <View className="w-full h-full bg-[#8A4DFF] items-center justify-center">
-              <Ionicons name="person" size={24} color="white" />
+            <View className="w-full h-full bg-white items-center justify-center ">
+              <Ionicons name="person" size={24} color="#8A4DFF" />
             </View>
           )}
         </View>
@@ -48,23 +53,23 @@ export default function TopNavBarCustom({
 
       {/* Title au centre */}
       {title && (
-        <Text className="text-lg font-semibold text-gray-800 flex-1 text-center">
+        <Text className="text-lg font-semibold text-white flex-1 text-center">
           {title}
         </Text>
       )}
 
       {/* Icône Notification avec badge */}
-      <View className="flex-row items-center">
+      <View className="flex-row items-center bg-[#8A4DFF] rounded-full">
         <TouchableOpacity 
           onPress={onNotificationPress}
-          className="relative items-center justify-center w-10 h-10 bg-white rounded-full shadow-sm"
+          className="relative items-center justify-center w-10 h-10"
           activeOpacity={0.7}
         >
-          <Ionicons name="notifications-outline" size={20} color="#374151" />
+          <Ionicons name="notifications-outline" size={24} color="white" />
           
           {/* Badge de notification avec compteur */}
           {notificationCount > 0 && (
-            <View className="absolute -top-1 -right-1 bg-[#8A4DFF] rounded-full min-w-[18px] h-[18px] items-center justify-center px-1">
+            <View className="absolute -top-1 -right-1 bg-red-500 rounded-full min-w-[18px] h-[18px] items-center justify-center px-1">
               <Text className="text-xs font-bold text-white">
                 {notificationCount > 99 ? '99+' : notificationCount.toString()}
               </Text>

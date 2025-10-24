@@ -192,12 +192,15 @@ import {
   ActivityIndicator,
   Alert,
   Linking,
+  Image,
+  StatusBar,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useAuth } from '../../src/contexts/AuthContext';
 import api, { authApi } from '../../services/api';
+import { getAvatarForUser } from '../../src/utils/avatarUtils';
 
 interface UserProfile {
   id: number;
@@ -318,29 +321,37 @@ export default function MenuScreen() {
     },
   ];
 
-  const MenuItem = ({ item }: { item: typeof menuItems[0] }) => (
-    <TouchableOpacity
-      className="flex-row items-center p-4 mb-3 bg-white border border-gray-100 shadow-sm rounded-xl"
-      onPress={item.onPress}
-      activeOpacity={0.8}
-    >
-      <View className="items-center justify-center w-12 h-12 mr-4 rounded-full bg-[#8A4DFF]">
-        <FontAwesome6 name={item.icon} size={20} color="white" />
-      </View>
+  const MenuItem = ({ item }: { item: typeof menuItems[0] }) => {
+    const handlePress = () => {
+      if (item.onPress) {
+        item.onPress();
+      }
+    };
 
-      <View className="flex-1">
-        <Text className="text-base font-semibold text-gray-900">{item.title}</Text>
-      </View>
-
-      {item.badge && (
-        <View className="items-center justify-center w-6 h-6 mr-2 bg-red-500 rounded-full">
-          <Text className="text-xs font-bold text-white">{item.badge}</Text>
+    return (
+      <TouchableOpacity
+        className="flex-row items-center p-4 mb-3 bg-white border border-gray-100 shadow-sm rounded-xl"
+        onPress={handlePress}
+        activeOpacity={0.8}
+      >
+        <View className="items-center justify-center w-12 h-12 mr-4 rounded-full bg-[#8A4DFF]">
+          <FontAwesome6 name={item.icon} size={20} color="white" />
         </View>
-      )}
 
-      <FontAwesome6 name="chevron-right" size={14} color="#9CA3AF" />
-    </TouchableOpacity>
-  );
+        <View className="flex-1">
+          <Text className="text-base font-semibold text-gray-900">{item.title}</Text>
+        </View>
+
+        {item.badge && item.badge > 0 && (
+          <View className="items-center justify-center w-6 h-6 mr-2 bg-red-500 rounded-full">
+            <Text className="text-xs font-bold text-white">{item.badge}</Text>
+          </View>
+        )}
+
+        <FontAwesome6 name="chevron-right" size={14} color="#9CA3AF" />
+      </TouchableOpacity>
+    );
+  };
 
   if (loading) {
     return (
@@ -354,10 +365,12 @@ export default function MenuScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
+      <StatusBar barStyle="light-content" backgroundColor="#8A4DFF" />
+      
       {/* Header */}
-      <View className="px-4 py-4 bg-white border-b border-gray-100">
-        <Text className="text-2xl font-bold text-gray-900">Menu</Text>
+      <View className="px-4 py-4 bg-[#8A4DFF]">
+        <Text className="text-2xl font-bold text-white">Menu</Text>
       </View>
 
       <ScrollView className="flex-1 px-4 py-4">
@@ -367,9 +380,10 @@ export default function MenuScreen() {
           onPress={() => router.push('/profile')}
           activeOpacity={0.8}
         >
-          <View className="items-center justify-center w-16 h-16 mr-4 bg-[#8A4DFF] rounded-full">
-            <FontAwesome6 name="user" size={28} color="white" />
-          </View>
+          <Image
+            source={{ uri: getAvatarForUser(user?.id || userProfile?.id) }}
+            className="w-16 h-16 mr-4 rounded-full"
+          />
           <View className="flex-1">
             <Text className="text-xl font-bold text-gray-900">
               {user?.fullName || userProfile?.fullName || 'Utilisateur'}
