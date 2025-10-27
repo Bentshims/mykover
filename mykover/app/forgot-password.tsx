@@ -233,9 +233,11 @@ export default function ForgotPasswordScreen() {
                   </Text>
                   <TextInput
                     ref={otpRef}
-                    className={`px-4 py-4 rounded-full border text-gray-800 ${
-                      errors.otp ? "border-red-500" : "border-[#8A4DFF]"
-                    }`}
+                    className="px-4 py-4 rounded-full text-gray-800"
+                    style={{
+                      borderWidth: 1,
+                      borderColor: errors.otp ? '#EF4444' : '#8A4DFF',
+                    }}
                     placeholder="123456"
                     placeholderTextColor="#9CA3AF"
                     value={formData.otp}
@@ -259,9 +261,11 @@ export default function ForgotPasswordScreen() {
                   </Text>
                   <TextInput
                     ref={passwordRef}
-                    className={`px-4 py-4 rounded-full border text-gray-800 ${
-                      errors.newPassword ? "border-red-500" : "border-[#8A4DFF]"
-                    }`}
+                    className="px-4 py-4 rounded-full text-gray-800"
+                    style={{
+                      borderWidth: 1,
+                      borderColor: errors.newPassword ? '#EF4444' : '#8A4DFF',
+                    }}
                     placeholder="Nouveau mot de passe"
                     placeholderTextColor="#9CA3AF"
                     value={formData.newPassword}

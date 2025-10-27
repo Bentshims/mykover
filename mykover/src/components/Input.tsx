@@ -38,22 +38,22 @@ const Input: React.FC<InputProps> = memo(
     return (
       <View className="mb-5">
         {/* Label avec style selon le design */}
-        <Text className="text-base font-medium text-gray-700 mb-2">
+        <Text className="text-base font-medium text-gray-700 mb-2" style={{ fontFamily: 'Quicksand-Medium' }}>
           {label}
         </Text>
 
         {/* Input avec style purple et arrondi selon le design exact */}
         <View className="relative">
           <TextInput
-            className={`border ${
-              error
-                ? "border-red-500 bg-red-50"
-                : "border-purple-500 outline-none"
-            } rounded-xl px-4 py-4 text-base bg-white min-h-[56px]`}
+            className="rounded-xl px-4 py-4 text-base bg-white min-h-[56px]"
             style={{ 
+              fontFamily: 'Quicksand',
               color: '#1F2937',
               fontSize: 16,
               paddingRight: secureTextEntry ? 48 : 16,
+              borderWidth: 1,
+              borderColor: error ? '#EF4444' : '#8A4DFF',
+              backgroundColor: error ? '#FEF2F2' : '#FFFFFF',
             }}
             value={value}
             onChangeText={handleTextChange}
@@ -76,6 +76,7 @@ const Input: React.FC<InputProps> = memo(
               style={{ 
                 padding: 8,
                 top: '50%',
+                right: 10,
                 transform: [{ translateY: -20 }],
               }}
               activeOpacity={0.6}
@@ -83,7 +84,7 @@ const Input: React.FC<InputProps> = memo(
               <Ionicons
                 name={isPasswordVisible ? "eye-off" : "eye"}
                 size={24}
-                color="#9333EA"
+                color="#8A4DFF"
               />
             </TouchableOpacity>
           )}
@@ -91,7 +92,9 @@ const Input: React.FC<InputProps> = memo(
 
         {/* Message d'erreur avec style rouge */}
         {error && (
-          <Text className="text-red-500 text-sm mt-1 ml-1">{error}</Text>
+          <Text className="text-red-500 text-sm mt-1 ml-1" style={{ fontFamily: 'Quicksand' }}>
+            {error}
+          </Text>
         )}
       </View>
     );

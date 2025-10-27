@@ -42,15 +42,18 @@ const PhoneInput: React.FC<PhoneInputProps> = memo(
     return (
       <View className="mb-5">
         {label ? (
-          <Text className="text-base font-medium text-gray-700 mb-2">
+          <Text className="text-base font-medium text-gray-700 mb-2" style={{ fontFamily: 'Quicksand-Medium' }}>
             {label}
           </Text>
         ) : null}
 
         <View
-          className={`flex-row items-center rounded-xl px-4 py-1 bg-white min-h-[56px] border ${
-            error ? "border-red-500 bg-red-50" : "border-purple-500"
-          }`}
+          className="flex-row items-center rounded-xl px-4 py-1 bg-white min-h-[56px]"
+          style={{
+            borderWidth: 1,
+            borderColor: error ? '#EF4444' : '#8A4DFF',
+            backgroundColor: error ? '#FEF2F2' : '#FFFFFF',
+          }}
         >
           {/* Drapeau RDC */}
           <View className="w-6 h-6 items-center justify-center mr-2">
@@ -58,7 +61,9 @@ const PhoneInput: React.FC<PhoneInputProps> = memo(
           </View>
 
           {/* Indicatif fixe */}
-          <Text className="text-gray-700 mr-2 font-medium">+243</Text>
+          <Text className="text-gray-700 mr-2 font-medium" style={{ fontFamily: 'Quicksand-Medium' }}>
+            +243
+          </Text>
 
           {/* Séparateur vertical */}
           <View className="w-px h-5 bg-gray-300 mr-2" />
@@ -67,6 +72,7 @@ const PhoneInput: React.FC<PhoneInputProps> = memo(
           <TextInput
             className="flex-1 text-base"
             style={{ 
+              fontFamily: 'Quicksand',
               color: '#1F2937',
               fontSize: 16,
             }}
@@ -84,7 +90,9 @@ const PhoneInput: React.FC<PhoneInputProps> = memo(
         </View>
 
         {error ? (
-          <Text className="text-red-500 text-sm mt-1 ml-1">{error}</Text>
+          <Text className="text-red-500 text-sm mt-1 ml-1" style={{ fontFamily: 'Quicksand' }}>
+            {error}
+          </Text>
         ) : null}
       </View>
     );

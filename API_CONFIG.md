@@ -205,4 +205,5 @@ Si vous rencontrez des problèmes :
 
 Bonne chance ! 🚀
 
+les caractere saisis dans le champ mot de passe sont invisible  sur l'apk  regle ca , je veux aussi que tu ajout le bouton pour toggle la mot de passe (eye et eye-slash), regarde aussi l'erreur lors de l'inscription ou la connexion . apres que tu ai tout arranger, build l'apk a nouveaux
 

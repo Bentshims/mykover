@@ -40,7 +40,7 @@ const PrimaryButton: React.FC<PrimaryButtonProps> = memo(({
       {loading ? (
         <ActivityIndicator color="white" size="small" />
       ) : (
-        <Text className="text-white text-lg font-semibold tracking-wide">
+        <Text className="text-white text-lg font-semibold tracking-wide" style={{ fontFamily: 'Quicksand-SemiBold' }}>
           {title}
         </Text>
       )}

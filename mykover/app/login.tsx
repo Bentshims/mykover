@@ -139,7 +139,7 @@ const LoginScreen: React.FC = () => {
               elevation: 5,
             }}
           >
-            <Text className="text-3xl font-bold tracking-wide text-center text-white">
+            <Text className="text-3xl font-bold tracking-wide text-center text-white" style={{ fontFamily: 'Quicksand-Bold' }}>
               Connexion
             </Text>
           </View>
@@ -181,7 +181,7 @@ const LoginScreen: React.FC = () => {
               <View className="mb-6">
                 <View className="flex-row items-center mb-4">
                   <View className="flex-1 h-px bg-gray-200" />
-                  <Text className="px-4 text-gray-500 text-sm">
+                  <Text className="px-4 text-gray-500 text-sm" style={{ fontFamily: 'Quicksand' }}>
                     ou continuer avec
                   </Text>
                   <View className="flex-1 h-px bg-gray-200" />
@@ -195,7 +195,7 @@ const LoginScreen: React.FC = () => {
                     source={require("../assets/images/google.png")}
                     className="w-6 h-6 rounded-full mr-3"
                   />
-                  <Text className="text-gray-700 font-medium">
+                  <Text className="text-gray-700 font-medium" style={{ fontFamily: 'Quicksand-Medium' }}>
                     Continuer avec Google
                   </Text>
                 </TouchableOpacity>
@@ -203,10 +203,11 @@ const LoginScreen: React.FC = () => {
 
               {/* Lien vers l'inscription */}
               <View className="items-start mx-auto">
-                <Text className="text-base text-gray-500">
+                <Text className="text-base text-gray-500" style={{ fontFamily: 'Quicksand' }}>
                   Pas encore de compte ?{" "}
                   <Text
                     className="font-semibold text-purple-600 py-2 border border-purple-600 rounded-full px-4"
+                    style={{ fontFamily: 'Quicksand-SemiBold' }}
                     onPress={handleSignup}
                   >
                     S'inscrire

@@ -168,47 +168,39 @@ export default function MapScreen() {
       return;
     }
 
+    const { latitude: destLat, longitude: destLng } = facility;
+    const { latitude: originLat, longitude: originLng } = userLocation.coords;
+
     try {
-      const { latitude: destLat, longitude: destLng } = facility;
-      const { latitude: originLat, longitude: originLng } = userLocation.coords;
-      
       if (Platform.OS === 'ios') {
-        const appleMapsUrl = `maps://?saddr=${originLat},${originLng}&daddr=${destLat},${destLng}`;
         const googleMapsAppUrl = `comgooglemaps://?saddr=${originLat},${originLng}&daddr=${destLat},${destLng}&directionsmode=driving`;
-        
         const canOpenGoogleMaps = await Linking.canOpenURL(googleMapsAppUrl);
+        
         if (canOpenGoogleMaps) {
           await Linking.openURL(googleMapsAppUrl);
         } else {
+          const appleMapsUrl = `http://maps.apple.com/?saddr=${originLat},${originLng}&daddr=${destLat},${destLng}&dirflg=d`;
           await Linking.openURL(appleMapsUrl);
         }
       } else {
-        const scheme = Platform.select({ 
-          ios: 'maps:0,0?q=', 
-          android: 'geo:0,0?q=' 
-        });
-        const latLng = `${destLat},${destLng}`;
-        const label = encodeURIComponent(facility.name);
-        const geoUrl = `${scheme}${latLng}(${label})`;
+        const googleMapsAppUrl = `google.navigation:q=${destLat},${destLng}&mode=d`;
+        const canOpenGoogleMaps = await Linking.canOpenURL(googleMapsAppUrl);
         
-        const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${originLat},${originLng}&destination=${destLat},${destLng}&travelmode=driving`;
-        
-        try {
-          await Linking.openURL(geoUrl);
-        } catch (err) {
-          await Linking.openURL(googleMapsUrl);
+        if (canOpenGoogleMaps) {
+          await Linking.openURL(googleMapsAppUrl);
+        } else {
+          const googleMapsWebUrl = `https://www.google.com/maps/dir/?api=1&origin=${originLat},${originLng}&destination=${destLat},${destLng}&travelmode=driving`;
+          await Linking.openURL(googleMapsWebUrl);
         }
       }
     } catch (error) {
-      console.error('Error opening directions:', error);
-      const { latitude: destLat, longitude: destLng } = facility;
-      const { latitude: originLat, longitude: originLng } = userLocation.coords;
-      const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${originLat},${originLng}&destination=${destLat},${destLng}&travelmode=driving`;
+      console.error('Erreur lors de l\'ouverture de l\'itinéraire:', error);
+      const fallbackUrl = `https://www.google.com/maps/dir/?api=1&origin=${originLat},${originLng}&destination=${destLat},${destLng}&travelmode=driving`;
       
       try {
-        await Linking.openURL(googleMapsUrl);
+        await Linking.openURL(fallbackUrl);
       } catch (finalError) {
-        Alert.alert('Erreur', 'Impossible d\'ouvrir les directions.');
+        Alert.alert('Erreur', 'Impossible d\'ouvrir l\'itinéraire. Veuillez vérifier que vous avez une application de navigation installée.');
       }
     }
   };

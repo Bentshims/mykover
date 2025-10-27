@@ -6,19 +6,17 @@ import { AuthProvider } from "../src/contexts/AuthContext";
 import { JSX, useEffect, useCallback } from "react";
 import { useFonts } from "expo-font";
 import * as SplashScreen from 'expo-splash-screen';
-import { Text, TextInput, StyleSheet } from "react-native";
+import "../src/config/fontConfig";
 
 SplashScreen.preventAutoHideAsync();
 
-let fontsConfigured = false;
-
-// This is the root layout component
 export default function RootLayout(): JSX.Element | null {
   const [fontsLoaded, fontError] = useFonts({
     'Quicksand': require('../assets/fonts/Quicksand-Regular.ttf'),
     'Quicksand-Bold': require('../assets/fonts/Quicksand-Bold.ttf'),
     'Quicksand-SemiBold': require('../assets/fonts/Quicksand-SemiBold.ttf'),
     'Quicksand-Medium': require('../assets/fonts/Quicksand-Medium.ttf'),
+    'Quicksand-Light': require('../assets/fonts/Quicksand-Regular.ttf'),
   });
 
   const onLayoutRootView = useCallback(async () => {
@@ -28,30 +26,7 @@ export default function RootLayout(): JSX.Element | null {
   }, [fontsLoaded, fontError]);
 
   useEffect(() => {
-    if (fontsLoaded && !fontsConfigured) {
-      fontsConfigured = true;
-      
-      // @ts-ignore
-      const oldTextRender = Text.render;
-      // @ts-ignore
-      const oldTextInputRender = TextInput.render;
-      
-      // @ts-ignore
-      Text.render = function (props, ref) {
-        return oldTextRender.call(this, {
-          ...props,
-          style: StyleSheet.flatten([{ fontFamily: 'Quicksand' }, props.style]),
-        }, ref);
-      };
-      
-      // @ts-ignore
-      TextInput.render = function (props, ref) {
-        return oldTextInputRender.call(this, {
-          ...props,
-          style: StyleSheet.flatten([{ fontFamily: 'Quicksand' }, props.style]),
-        }, ref);
-      };
-      
+    if (fontsLoaded) {
       onLayoutRootView();
     }
   }, [fontsLoaded, onLayoutRootView]);

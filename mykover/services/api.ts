@@ -3,24 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 import Constants from 'expo-constants';
 
-/**
- * Configuration intelligente de l'URL de l'API
- * 
- * DÉVELOPPEMENT LOCAL :
- * - Émulateur Android : utilise 10.0.2.2 pour accéder à localhost de la machine hôte
- * - Appareil physique Android/iOS : utilise l'IP WiFi de votre machine (192.168.1.189)
- * - iOS Simulator : utilise localhost ou l'IP WiFi
- * 
- * PRODUCTION :
- * - Utilise l'URL déployée sur Railway (à configurer dans app.json)
- * 
- * Configuration dans app.json :
- * - Development: mettre votre IP locale actuelle
- * - Production: mettre l'URL Railway
- */
-
-// URL de votre backend local (à jour avec votre IP actuelle)
-const LOCAL_BACKEND_IP = '192.168.1.189'; // Votre IP WiFi actuelle
+const LOCAL_BACKEND_IP = '192.168.1.189'; 
 const LOCAL_BACKEND_PORT = '3333';
 
 const getBaseURL = () => {
