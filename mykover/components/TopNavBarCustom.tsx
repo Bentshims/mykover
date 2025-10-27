@@ -53,7 +53,7 @@ export default function TopNavBarCustom({
 
       {/* Title au centre */}
       {title && (
-        <Text className="text-lg font-semibold text-white flex-1 text-center">
+        <Text className="text-lg font-semibold text-white flex-1 text-center" style={{ fontFamily: 'Quicksand' }}>
           {title}
         </Text>
       )}
@@ -70,7 +70,7 @@ export default function TopNavBarCustom({
           {/* Badge de notification avec compteur */}
           {notificationCount > 0 && (
             <View className="absolute -top-1 -right-1 bg-red-500 rounded-full min-w-[18px] h-[18px] items-center justify-center px-1">
-              <Text className="text-xs font-bold text-white">
+              <Text className="text-xs font-bold text-white" style={{ fontFamily: 'Quicksand' }}>
                 {notificationCount > 99 ? '99+' : notificationCount.toString()}
               </Text>
             </View>

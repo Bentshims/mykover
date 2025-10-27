@@ -339,12 +339,16 @@ export default function MenuScreen() {
         </View>
 
         <View className="flex-1">
-          <Text className="text-base font-semibold text-gray-900">{item.title}</Text>
+          <Text className="text-base font-semibold text-gray-900" style={{ fontFamily: 'Quicksand-SemiBold' }}>
+            {item.title}
+          </Text>
         </View>
 
         {item.badge && item.badge > 0 && (
           <View className="items-center justify-center w-6 h-6 mr-2 bg-red-500 rounded-full">
-            <Text className="text-xs font-bold text-white">{item.badge}</Text>
+            <Text className="text-xs font-bold text-white" style={{ fontFamily: 'Quicksand-Bold' }}>
+              {item.badge}
+            </Text>
           </View>
         )}
 
@@ -358,7 +362,9 @@ export default function MenuScreen() {
       <SafeAreaView className="flex-1 bg-gray-50">
         <View className="items-center justify-center flex-1">
           <ActivityIndicator size="large" color="#8A4DFF" />
-          <Text className="mt-4 text-gray-600">Chargement...</Text>
+          <Text className="mt-4 text-gray-600" style={{ fontFamily: 'Quicksand' }}>
+            Chargement...
+          </Text>
         </View>
       </SafeAreaView>
     );
@@ -385,10 +391,10 @@ export default function MenuScreen() {
             className="w-16 h-16 mr-4 rounded-full"
           />
           <View className="flex-1">
-            <Text className="text-xl font-bold text-gray-900">
+            <Text className="text-xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand-Bold' }}>
               {user?.fullName || userProfile?.fullName || 'Utilisateur'}
             </Text>
-            <Text className="mt-1 text-gray-600">
+            <Text className="mt-1 text-gray-600" style={{ fontFamily: 'Quicksand' }}>
               {user?.phoneNumber || userProfile?.phoneNumber || ''}
             </Text>
           </View>
@@ -396,15 +402,26 @@ export default function MenuScreen() {
         </TouchableOpacity>
 
         {/* Menu Items by Section */}
-        {['account', 'support', 'feedback'].map((section) => (
-          <View key={section} className="mb-6">
-            {menuItems
-              .filter((item) => item.section === section)
-              .map((item) => (
-                <MenuItem key={item.id} item={item} />
-              ))}
-          </View>
-        ))}
+        {['account', 'support', 'feedback'].map((section) => {
+          const sectionTitles = {
+            account: 'Mon compte',
+            support: 'Support & Aide',
+            feedback: 'Votre avis'
+          };
+          
+          return (
+            <View key={section} className="mb-6">
+              <Text className="px-2 mb-3 text-sm font-semibold text-gray-500 uppercase" style={{ fontFamily: 'Quicksand-SemiBold' }}>
+                {sectionTitles[section as keyof typeof sectionTitles]}
+              </Text>
+              {menuItems
+                .filter((item) => item.section === section)
+                .map((item) => (
+                  <MenuItem key={item.id} item={item} />
+                ))}
+            </View>
+          );
+        })}
 
         {/* Logout */}
         <TouchableOpacity
@@ -412,7 +429,9 @@ export default function MenuScreen() {
           onPress={handleLogout}
           activeOpacity={0.8}
         >
-          <Text className="font-semibold text-red-700">Se déconnecter</Text>
+          <Text className="font-semibold text-red-700" style={{ fontFamily: 'Quicksand-SemiBold' }}>
+            Se déconnecter
+          </Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>

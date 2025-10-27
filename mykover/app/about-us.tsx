@@ -35,7 +35,7 @@ export default function AboutUsScreen() {
         <TouchableOpacity onPress={() => router.back()} className="mr-3">
           <FontAwesome6 name="arrow-left" size={20} color="#374151" />
         </TouchableOpacity>
-        <Text className="text-lg font-bold text-gray-900">À propos</Text>
+        <Text className="text-lg font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>À propos</Text>
       </View>
 
       <ScrollView className="flex-1 px-6 pt-4">
@@ -44,23 +44,23 @@ export default function AboutUsScreen() {
           <View className="w-20 h-20 bg-[#8A4DFF] rounded-full items-center justify-center mb-3">
             <FontAwesome6 name="shield-heart" size={32} color="#fff" />
           </View>
-          <Text className="mb-1 text-2xl font-bold text-center text-gray-900">MyKover</Text>
-          <Text className="text-base leading-6 text-center text-gray-600">
+          <Text className="mb-1 text-2xl font-bold text-center text-gray-900" style={{ fontFamily: 'Quicksand' }}>MyKover</Text>
+          <Text className="text-base leading-6 text-center text-gray-600" style={{ fontFamily: 'Quicksand' }}>
             Votre partenaire santé numérique en RDC
           </Text>
         </View>
 
         {/* Mission */}
         <View className="mb-6">
-          <Text className="mb-2 text-xl font-bold text-gray-900">Notre Mission</Text>
-          <Text className="text-base leading-6 text-gray-700">
+          <Text className="mb-2 text-xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Notre Mission</Text>
+          <Text className="text-base leading-6 text-gray-700" style={{ fontFamily: 'Quicksand' }}>
             Offrir un accès simple, rapide et transparent aux soins de santé grâce à une assurance digitale fiable, adaptée aux besoins de tous les Congolais.
           </Text>
         </View>
 
         {/* Features */}
         <View className="mb-6">
-          <Text className="mb-4 text-xl font-bold text-gray-900">Nos Services</Text>
+          <Text className="mb-4 text-xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Nos Services</Text>
           <View className="space-y-3">
             {features.map((feature, index) => (
               <View
@@ -71,8 +71,8 @@ export default function AboutUsScreen() {
                   <FontAwesome6 name={feature.icon} size={18} color="#fff" />
                 </View>
                 <View className="flex-1">
-                  <Text className="mb-1 font-semibold text-gray-900">{feature.title}</Text>
-                  <Text className="text-sm leading-5 text-gray-600">{feature.description}</Text>
+                  <Text className="mb-1 font-semibold text-gray-900" style={{ fontFamily: 'Quicksand' }}>{feature.title}</Text>
+                  <Text className="text-sm leading-5 text-gray-600" style={{ fontFamily: 'Quicksand' }}>{feature.description}</Text>
                 </View>
               </View>
             ))}
@@ -81,8 +81,8 @@ export default function AboutUsScreen() {
 
         {/* Credibility / Why Choose Us */}
         <View className="p-4 mb-6 bg-white border border-gray-100 shadow-sm rounded-2xl">
-          <Text className="mb-2 text-xl font-bold text-gray-900">Pourquoi nous choisir ?</Text>
-          <Text className="text-base leading-6 text-gray-700">
+          <Text className="mb-2 text-xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Pourquoi nous choisir ?</Text>
+          <Text className="text-base leading-6 text-gray-700" style={{ fontFamily: 'Quicksand' }}>
             • Données personnelles sécurisées et cryptées{"\n"}
             • Assurance transparente et conforme aux normes locales{"\n"}
             • Support client disponible 24/7{"\n"}
@@ -92,14 +92,14 @@ export default function AboutUsScreen() {
 
         {/* Contact */}
         <View className="mb-6">
-          <Text className="mb-4 text-xl font-bold text-gray-900">Contact</Text>
+          <Text className="mb-4 text-xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Contact</Text>
           <View className="space-y-3">
             <TouchableOpacity
               className="flex-row items-center p-4 bg-white border border-gray-100 shadow-sm rounded-2xl"
               onPress={() => Linking.openURL('mailto:support@mykover.cd')}
             >
               <FontAwesome6 name="envelope" size={20} color="#8A4DFF" className="mr-3" />
-              <Text className="text-base text-gray-800">support@mykover.cd</Text>
+              <Text className="text-base text-gray-800" style={{ fontFamily: 'Quicksand' }}>support@mykover.cd</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -107,20 +107,20 @@ export default function AboutUsScreen() {
               onPress={() => Linking.openURL('tel:+243970000000')}
             >
               <FontAwesome6 name="phone" size={20} color="#8A4DFF" className="mr-3" />
-              <Text className="text-base text-gray-800">+243 970 000 000</Text>
+              <Text className="text-base text-gray-800" style={{ fontFamily: 'Quicksand' }}>+243 970 000 000</Text>
             </TouchableOpacity>
 
             <View className="flex-row items-center p-4 bg-white border border-gray-100 shadow-sm rounded-2xl">
               <FontAwesome6 name="location-dot" size={20} color="#8A4DFF" className="mr-3" />
-              <Text className="text-base text-gray-800">Kinshasa, RDC</Text>
+              <Text className="text-base text-gray-800" style={{ fontFamily: 'Quicksand' }}>Kinshasa, RDC</Text>
             </View>
           </View>
         </View>
 
         {/* Footer */}
         <View className="items-center pt-6 border-t border-gray-100">
-          <Text className="mb-1 text-sm text-gray-500">MyKover © 2025</Text>
-          <Text className="text-xs text-center text-gray-400">Assurance santé digitale fiable pour tous</Text>
+          <Text className="mb-1 text-sm text-gray-500" style={{ fontFamily: 'Quicksand' }}>MyKover © 2025</Text>
+          <Text className="text-xs text-center text-gray-400" style={{ fontFamily: 'Quicksand' }}>Assurance santé digitale fiable pour tous</Text>
         </View>
       </ScrollView>
     </SafeAreaView>

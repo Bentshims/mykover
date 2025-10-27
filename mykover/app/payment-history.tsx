@@ -246,16 +246,16 @@ export default function PaymentHistoryScreen() {
             />
           </View>
           <View className="flex-1">
-            <Text className="text-base font-semibold text-gray-900 mb-1">
+            <Text className="text-base font-semibold text-gray-900 mb-1" style={{ fontFamily: 'Quicksand' }}>
               {item.description}
             </Text>
-            <Text className="text-sm text-gray-500">
+            <Text className="text-sm text-gray-500" style={{ fontFamily: 'Quicksand' }}>
               {formatDate(item.created_at)}
             </Text>
           </View>
         </View>
         <View className="items-end">
-          <Text className="text-lg font-bold text-gray-900 mb-1">
+          <Text className="text-lg font-bold text-gray-900 mb-1" style={{ fontFamily: 'Quicksand' }}>
             {item.amount} {item.currency}
           </Text>
           <View 
@@ -274,7 +274,7 @@ export default function PaymentHistoryScreen() {
       
       {item.metadata && (
         <View className="mt-2 pt-2 border-t border-gray-100">
-          <Text className="text-xs text-gray-400">
+          <Text className="text-xs text-gray-400" style={{ fontFamily: 'Quicksand' }}>
             ID: {item.transaction_id}
           </Text>
         </View>
@@ -310,10 +310,10 @@ export default function PaymentHistoryScreen() {
       <View className="w-20 h-20 bg-gray-100 rounded-full items-center justify-center mb-4">
         <Ionicons name="receipt-outline" size={40} color="#6B7280" />
       </View>
-      <Text className="text-xl font-semibold text-gray-900 mb-2 text-center">
+      <Text className="text-xl font-semibold text-gray-900 mb-2 text-center" style={{ fontFamily: 'Quicksand' }}>
         Aucune transaction
       </Text>
-      <Text className="text-gray-500 text-center mb-6">
+      <Text className="text-gray-500 text-center mb-6" style={{ fontFamily: 'Quicksand' }}>
         {selectedFilter === 'ALL' 
           ? 'Vous n\'avez encore effectué aucun paiement.'
           : `Aucune transaction ${filters.find(f => f.key === selectedFilter)?.label.toLowerCase()}.`
@@ -324,7 +324,7 @@ export default function PaymentHistoryScreen() {
         onPress={() => router.push('/(tabs)/plans')}
         activeOpacity={0.8}
       >
-        <Text className="text-white font-semibold">
+        <Text className="text-white font-semibold" style={{ fontFamily: 'Quicksand' }}>
           Souscrire à un plan
         </Text>
       </TouchableOpacity>
@@ -345,7 +345,7 @@ export default function PaymentHistoryScreen() {
           <Ionicons name="arrow-back" size={24} color="#374151" />
         </TouchableOpacity>
         
-        <Text className="text-lg font-semibold text-gray-900">
+        <Text className="text-lg font-semibold text-gray-900" style={{ fontFamily: 'Quicksand' }}>
           Historique des paiements
         </Text>
         
@@ -374,7 +374,7 @@ export default function PaymentHistoryScreen() {
       {loading ? (
         <View className="flex-1 items-center justify-center">
           <ActivityIndicator size="large" color="#8A4DFF" />
-          <Text className="text-gray-500 mt-4">Chargement...</Text>
+          <Text className="text-gray-500 mt-4" style={{ fontFamily: 'Quicksand' }}>Chargement...</Text>
         </View>
       ) : (
         <FlatList

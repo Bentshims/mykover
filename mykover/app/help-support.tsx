@@ -49,7 +49,7 @@
 //         <TouchableOpacity onPress={() => router.back()} className="mr-4">
 //           <FontAwesome6 name="arrow-left" size={20} color="#374151" />
 //         </TouchableOpacity>
-//         <Text className="text-xl font-bold text-gray-900">Aide & Support</Text>
+//         <Text className="text-xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Aide & Support</Text>
 //       </View>
 
 //       <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 30 }}>
@@ -64,7 +64,7 @@
 //                 <FontAwesome6 name="circle-question" size={20} color="#8B5CF6" />
 //               </View>
 //               <View className="flex-1">
-//                 <Text className="font-semibold text-gray-900">FAQ</Text>
+//                 <Text className="font-semibold text-gray-900" style={{ fontFamily: 'Quicksand' }}>FAQ</Text>
 //               </View>
 //               <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
 //             </View>
@@ -73,7 +73,7 @@
 
 //         {/* Contact Methods */}
 //         <View className="px-4">
-//           <Text className="mb-4 text-lg font-bold text-gray-600">Contact Us</Text>
+//           <Text className="mb-4 text-lg font-bold text-gray-600" style={{ fontFamily: 'Quicksand' }}>Contact Us</Text>
 //           {contactMethods.map((method) => (
 //             <TouchableOpacity
 //               key={method.id}
@@ -85,8 +85,8 @@
 //                   <FontAwesome6 name={method.icon} size={20} color="#8B5CF6" />
 //                 </View>
 //                 <View className="flex-1">
-//                   <Text className="font-semibold text-gray-900">{method.title}</Text>
-//                   <Text className="text-sm text-gray-600">{method.subtitle}</Text>
+//                   <Text className="font-semibold text-gray-900" style={{ fontFamily: 'Quicksand' }}>{method.title}</Text>
+//                   <Text className="text-sm text-gray-600" style={{ fontFamily: 'Quicksand' }}>{method.subtitle}</Text>
 //                 </View>
 //                 <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
 //               </View>
@@ -149,7 +149,7 @@ export default function HelpSupportScreen() {
         <TouchableOpacity onPress={() => router.back()} className="mr-4">
           <FontAwesome6 name="arrow-left" size={20} color="#374151" />
         </TouchableOpacity>
-        <Text className="text-xl font-bold text-gray-900">Aide & Support</Text>
+        <Text className="text-xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Aide & Support</Text>
       </View>
 
       <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 30 }}>
@@ -164,7 +164,7 @@ export default function HelpSupportScreen() {
                 <FontAwesome6 name="circle-question" size={20} color="#8A4DFF" />
               </View>
               <View className="flex-1">
-                <Text className="font-semibold text-gray-900">FAQ</Text>
+                <Text className="font-semibold text-gray-900" style={{ fontFamily: 'Quicksand' }}>FAQ</Text>
               </View>
               <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
             </View>
@@ -173,7 +173,7 @@ export default function HelpSupportScreen() {
 
         {/* Contact Methods */}
         <View className="px-4">
-          <Text className="mb-4 text-lg font-bold text-gray-600">Contact & Support</Text>
+          <Text className="mb-4 text-lg font-bold text-gray-600" style={{ fontFamily: 'Quicksand' }}>Contact & Support</Text>
           {contactMethods.map((method) => (
             <TouchableOpacity
               key={method.id}
@@ -185,8 +185,8 @@ export default function HelpSupportScreen() {
                   <FontAwesome6 name={method.icon} size={20} color="#8A4DFF" />
                 </View>
                 <View className="flex-1">
-                  <Text className="font-semibold text-gray-900">{method.title}</Text>
-                  <Text className="text-sm text-gray-600">{method.subtitle}</Text>
+                  <Text className="font-semibold text-gray-900" style={{ fontFamily: 'Quicksand' }}>{method.title}</Text>
+                  <Text className="text-sm text-gray-600" style={{ fontFamily: 'Quicksand' }}>{method.subtitle}</Text>
                 </View>
                 <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
               </View>

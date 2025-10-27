@@ -291,7 +291,7 @@ const SignupScreen: React.FC = () => {
           {/* Header avec courbe purple */}
           <View className="pt-20 pb-8 px-6">
             <View className="flex flex-col gap-y-7">
-              <Text className="text-white text-3xl font-semibold text-center">
+              <Text className="text-white text-3xl font-semibold text-center" style={{ fontFamily: 'Quicksand-SemiBold' }}>
                 Créer un compte
               </Text>
               <View className="w-full" />
@@ -354,7 +354,7 @@ const SignupScreen: React.FC = () => {
                       placeholder="0000000000"
                       error={errors.phone}
                     />
-                    <Text className="text-gray-500 text-xs mt-1 ml-1">
+                    <Text className="text-gray-500 text-xs mt-1 ml-1" style={{ fontFamily: 'Quicksand' }}>
                       Format: +243 suivi de 8 ou 9, puis 8 chiffres
                     </Text>
                   </View>
@@ -365,11 +365,11 @@ const SignupScreen: React.FC = () => {
                   />
                   <View className="px-6 py-4 border-t border-gray-100">
                     <View className="flex-row items-center justify-center">
-                      <Text className="text-gray-600">
+                      <Text className="text-gray-600" style={{ fontFamily: 'Quicksand' }}>
                         Vous avez déjà un compte ?{" "}
                       </Text>
                       <TouchableOpacity onPress={handleLogin}>
-                        <Text className="text-purple-600 font-semibold py-2">
+                        <Text className="text-purple-600 font-semibold py-2" style={{ fontFamily: 'Quicksand-SemiBold' }}>
                           Se connecter
                         </Text>
                       </TouchableOpacity>
@@ -380,7 +380,7 @@ const SignupScreen: React.FC = () => {
                   <View className="my-8">
                     <View className="flex-row items-center mb-4">
                       <View className="flex-1 h-px bg-gray-200" />
-                      <Text className="px-4 text-gray-500 text-sm">
+                      <Text className="px-4 text-gray-500 text-sm" style={{ fontFamily: 'Quicksand' }}>
                         ou continuer avec
                       </Text>
                       <View className="flex-1 h-px bg-gray-200" />
@@ -394,7 +394,7 @@ const SignupScreen: React.FC = () => {
                         source={require("../assets/images/google.png")}
                         className="w-6 h-6 rounded-full mr-3"
                       />
-                      <Text className="text-gray-700 font-medium">
+                      <Text className="text-gray-700 font-medium" style={{ fontFamily: 'Quicksand-Medium' }}>
                         Continuer avec Google
                       </Text>
                     </TouchableOpacity>
@@ -434,7 +434,7 @@ const SignupScreen: React.FC = () => {
                       onPress={handlePreviousToStep1}
                       className="flex-1 bg-gray-100 rounded-2xl py-4 items-center justify-center"
                     >
-                      <Text className="text-gray-700 font-semibold">
+                      <Text className="text-gray-700 font-semibold" style={{ fontFamily: 'Quicksand-SemiBold' }}>
                         Retour
                       </Text>
                     </TouchableOpacity>
@@ -485,7 +485,7 @@ const SignupScreen: React.FC = () => {
                       onPress={handlePreviousToStep2}
                       className="flex-1 bg-gray-100 rounded-2xl py-4 items-center justify-center"
                     >
-                      <Text className="text-gray-700 font-semibold">
+                      <Text className="text-gray-700 font-semibold" style={{ fontFamily: 'Quicksand-SemiBold' }}>
                         Retour
                       </Text>
                     </TouchableOpacity>

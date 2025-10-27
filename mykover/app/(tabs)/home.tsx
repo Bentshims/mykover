@@ -102,7 +102,7 @@ export default function HomeScreen() {
       <SafeAreaView className="flex-1 bg-gray-50">
         <View className="items-center justify-center flex-1">
           <ActivityIndicator size="large" color="#8A4DFF" />
-          <Text className="mt-4 text-gray-600">Chargement...</Text>
+          <Text className="mt-4 text-gray-600" style={{ fontFamily: 'Quicksand' }}>Chargement...</Text>
         </View>
       </SafeAreaView>
     );
@@ -126,10 +126,10 @@ export default function HomeScreen() {
       >
         {/* Greeting */}
         <View className="mb-6">
-          <Text className="text-2xl font-bold text-gray-900">
+          <Text className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>
             Bonjour, {profile ? getFirstName(profile.fullName) : 'Utilisateur'} 👋
           </Text>
-          <Text className="mt-1 text-base text-gray-600">
+          <Text className="mt-1 text-base text-gray-600" style={{ fontFamily: 'Quicksand' }}>
             Voici un aperçu de votre couverture santé.
           </Text>
         </View>
@@ -137,18 +137,18 @@ export default function HomeScreen() {
         {/* Current Plan Card */}
         <View className="p-5 mb-6 bg-white shadow-sm rounded-2xl">
           <View className="flex-row items-center justify-between mb-2">
-            <Text className="text-lg font-semibold text-gray-900">Plan actuel</Text>
+            <Text className="text-lg font-semibold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Plan actuel</Text>
             <Ionicons 
               name={profile?.isActive ? "shield-checkmark" : "shield-outline"} 
               size={26} 
               color={profile?.isActive ? "#8A4DFF" : "#9CA3AF"} 
             />
           </View>
-          <Text className="text-base text-gray-700">
+          <Text className="text-base text-gray-700" style={{ fontFamily: 'Quicksand' }}>
             {profile?.planName || 'Aucun plan actif'}
           </Text>
           {profile?.activeUntil && (
-            <Text className="mt-1 text-sm text-gray-500">
+            <Text className="mt-1 text-sm text-gray-500" style={{ fontFamily: 'Quicksand' }}>
               Expire le : {formatDate(profile.activeUntil)}
             </Text>
           )}
@@ -176,22 +176,22 @@ export default function HomeScreen() {
               ) : (
                 <Ionicons name={item.icon} size={30} color="#8A4DFF"/>
               )}
-              <Text className="mt-2 font-semibold text-gray-800">{item.label}</Text>
+              <Text className="mt-2 font-semibold text-gray-800" style={{ fontFamily: 'Quicksand' }}>{item.label}</Text>
             </TouchableOpacity>
           ))}
         </View>
 
         {/* Recent Activity */}
         <View className="p-5 mt-6 bg-white shadow-sm rounded-2xl">
-          <Text className="mb-3 text-lg font-semibold text-gray-900">Activité récente</Text>
+          <Text className="mb-3 text-lg font-semibold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Activité récente</Text>
           {recentActivities.length > 0 ? (
             recentActivities.map((activity, index) => (
               <View 
                 key={activity.id} 
                 className={`flex-row items-center justify-between ${index < recentActivities.length - 1 ? 'mb-2' : ''}`}
               >
-                <Text className="text-gray-700">{activity.description}</Text>
-                <Text className="text-sm text-gray-500">
+                <Text className="text-gray-700" style={{ fontFamily: 'Quicksand' }}>{activity.description}</Text>
+                <Text className="text-sm text-gray-500" style={{ fontFamily: 'Quicksand' }}>
                   {activity.amount || formatDate(activity.date)}
                 </Text>
               </View>
@@ -199,7 +199,7 @@ export default function HomeScreen() {
           ) : (
             <View className="items-center py-4">
               <Ionicons name="time-outline" size={32} color="#9CA3AF" />
-              <Text className="mt-2 text-sm text-gray-500">Aucune activité récente</Text>
+              <Text className="mt-2 text-sm text-gray-500" style={{ fontFamily: 'Quicksand' }}>Aucune activité récente</Text>
             </View>
           )}
         </View>
@@ -210,7 +210,7 @@ export default function HomeScreen() {
           onPress={handlePlans}
           activeOpacity={0.85}
         >
-          <Text className="text-lg font-semibold text-center text-white">
+          <Text className="text-lg font-semibold text-center text-white" style={{ fontFamily: 'Quicksand' }}>
             Voir mes formules
           </Text>
         </TouchableOpacity>

@@ -1,17 +1,27 @@
-import { Text, TextInput } from 'react-native';
+import { Text as DefaultText, TextInput as DefaultTextInput } from 'react-native';
 
-const defaultTextProps = Text.defaultProps || {};
-const defaultTextInputProps = TextInput.defaultProps || {};
+const originalTextRender = DefaultText.render;
+const originalTextInputRender = DefaultTextInput.render;
 
-Text.defaultProps = {
-  ...defaultTextProps,
-  style: [{ fontFamily: 'Quicksand' }, defaultTextProps.style],
-};
+if (originalTextRender) {
+  DefaultText.render = function render(props: any, ref: any) {
+    const style = Array.isArray(props.style)
+      ? [{ fontFamily: 'Quicksand' }, ...props.style]
+      : [{ fontFamily: 'Quicksand' }, props.style];
+    
+    return originalTextRender.call(this, { ...props, style }, ref);
+  };
+}
 
-TextInput.defaultProps = {
-  ...defaultTextInputProps,
-  style: [{ fontFamily: 'Quicksand' }, defaultTextInputProps.style],
-};
+if (originalTextInputRender) {
+  DefaultTextInput.render = function render(props: any, ref: any) {
+    const style = Array.isArray(props.style)
+      ? [{ fontFamily: 'Quicksand' }, ...props.style]
+      : [{ fontFamily: 'Quicksand' }, props.style];
+    
+    return originalTextInputRender.call(this, { ...props, style }, ref);
+  };
+}
 
 export {};
 

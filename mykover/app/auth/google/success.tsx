@@ -44,10 +44,10 @@ const GoogleSuccessScreen: React.FC = () => {
     <View className="flex-1 bg-purple-600 justify-center items-center">
       <View className="bg-white rounded-3xl p-8 mx-6 items-center">
         <ActivityIndicator size="large" color="#9333ea" />
-        <Text className="text-gray-800 text-lg font-semibold mt-4 text-center">
+        <Text className="text-gray-800 text-lg font-semibold mt-4 text-center" style={{ fontFamily: 'Quicksand' }}>
           Connexion avec Google...
         </Text>
-        <Text className="text-gray-600 text-center mt-2">
+        <Text className="text-gray-600 text-center mt-2" style={{ fontFamily: 'Quicksand' }}>
           Veuillez patienter pendant que nous finalisons votre connexion.
         </Text>
       </View>

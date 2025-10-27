@@ -277,11 +277,11 @@ export default function NotificationScreen() {
             </View>
           </View>
           
-          <Text className="mb-2 text-sm leading-5 text-gray-600">
+          <Text className="mb-2 text-sm leading-5 text-gray-600" style={{ fontFamily: 'Quicksand' }}>
             {item.description}
           </Text>
           
-          <Text className="text-xs text-gray-500">
+          <Text className="text-xs text-gray-500" style={{ fontFamily: 'Quicksand' }}>
             {item.timestamp}
           </Text>
         </View>
@@ -292,10 +292,10 @@ export default function NotificationScreen() {
   const renderEmptyState = () => (
     <View className="items-center justify-center flex-1 px-6">
       <Ionicons name="notifications-outline" size={64} color="#d1d5db" />
-      <Text className="mt-4 text-xl font-semibold text-gray-900">
+      <Text className="mt-4 text-xl font-semibold text-gray-900" style={{ fontFamily: 'Quicksand' }}>
         Aucune notification
       </Text>
-      <Text className="mt-2 text-center text-gray-600">
+      <Text className="mt-2 text-center text-gray-600" style={{ fontFamily: 'Quicksand' }}>
         Aucune notification pour le moment.
       </Text>
     </View>
@@ -303,7 +303,7 @@ export default function NotificationScreen() {
 
   const renderLoadingState = () => (
     <View className="items-center justify-center flex-1">
-      <Text className="text-gray-600">Chargement des notifications...</Text>
+      <Text className="text-gray-600" style={{ fontFamily: 'Quicksand' }}>Chargement des notifications...</Text>
     </View>
   );
 
@@ -327,11 +327,11 @@ export default function NotificationScreen() {
               <FontAwesome6 name="arrow-left" size={20} color="#374151" />
             </TouchableOpacity>
             <View className="flex-1">
-              <Text className="text-2xl font-bold text-gray-900">
+              <Text className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>
                 Notifications
               </Text>
               {notifications.length > 0 && (
-                <Text className="mt-1 text-sm text-gray-600">
+                <Text className="mt-1 text-sm text-gray-600" style={{ fontFamily: 'Quicksand' }}>
                   {notifications.filter(n => !n.isRead).length} non lues sur {notifications.length}
                 </Text>
               )}
@@ -342,7 +342,7 @@ export default function NotificationScreen() {
               onPress={clearAllNotifications}
               className="px-3 py-2 border border-red-200 rounded-lg bg-red-50"
             >
-              <Text className="text-sm font-medium text-red-600">
+              <Text className="text-sm font-medium text-red-600" style={{ fontFamily: 'Quicksand' }}>
                 Tout effacer
               </Text>
             </TouchableOpacity>

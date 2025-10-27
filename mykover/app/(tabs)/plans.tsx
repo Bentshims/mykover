@@ -157,7 +157,7 @@ export default function SubscriptionPlansScreen() {
             <Text className="text-3xl font-bold" style={{ color: config.color }}>
               {config.price}$/mois
             </Text>
-            <Text className="text-gray-500 mt-1">
+            <Text className="text-gray-500 mt-1" style={{ fontFamily: 'Quicksand' }}>
               {config.min === config.max
                 ? `${config.max} membre`
                 : `${config.min}-${config.max} membres`}
@@ -165,7 +165,7 @@ export default function SubscriptionPlansScreen() {
           </View>
 
           <View className="mb-6">
-            <Text className="text-lg font-bold text-gray-900 mb-3">Avantages</Text>
+            <Text className="text-lg font-bold text-gray-900 mb-3" style={{ fontFamily: 'Quicksand' }}>Avantages</Text>
             <View className="space-y-2">
               <FeatureItem text="Consultations illimitées" />
               <FeatureItem text="Hospitalisation dans cliniques partenaires" />
@@ -184,7 +184,7 @@ export default function SubscriptionPlansScreen() {
             {isSubmitting && selectedPlan === plan ? (
               <ActivityIndicator color="#fff" />
             ) : (
-              <Text className="text-white text-center font-bold text-lg">Souscrire</Text>
+              <Text className="text-white text-center font-bold text-lg" style={{ fontFamily: 'Quicksand' }}>Souscrire</Text>
             )}
         </TouchableOpacity>
         </ScrollView>
@@ -201,8 +201,8 @@ export default function SubscriptionPlansScreen() {
       <StatusBar barStyle="light-content" backgroundColor="#8A4DFF" />
 
       <View className="px-4 py-3 bg-white pt-8">
-        <Text className="text-2xl font-bold text-gray-900">Plans d'assurance</Text>
-        <Text className="text-gray-500 mt-1">Choisissez le plan qui vous convient</Text>
+        <Text className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Plans d'assurance</Text>
+        <Text className="text-gray-500 mt-1" style={{ fontFamily: 'Quicksand' }}>Choisissez le plan qui vous convient</Text>
       </View>
 
       <View className="px-4 py-4 bg-white pt-8">
@@ -261,14 +261,14 @@ export default function SubscriptionPlansScreen() {
           <View className="flex-1 justify-end bg-black/50">
             <View className="bg-white rounded-t-3xl p-6 max-h-[80%]">
               <View className="flex-row justify-between items-center mb-4">
-                <Text className="text-xl font-bold">Récapitulatif</Text>
+                <Text className="text-xl font-bold" style={{ fontFamily: 'Quicksand' }}>Récapitulatif</Text>
                 <TouchableOpacity onPress={() => setShowRecapDrawer(false)}>
                   <Ionicons name="close" size={28} color="#374151" />
                 </TouchableOpacity>
               </View>
 
-              <Text className="text-gray-600 mb-4">
-                Plan: <Text className="font-bold text-[#8A4DFF]">{PLAN_CONFIG[selectedPlan].name}</Text> - {PLAN_CONFIG[selectedPlan].price}$
+              <Text className="text-gray-600 mb-4" style={{ fontFamily: 'Quicksand' }}>
+                Plan: <Text className="font-bold text-[#8A4DFF]" style={{ fontFamily: 'Quicksand' }}>{PLAN_CONFIG[selectedPlan].name}</Text> - {PLAN_CONFIG[selectedPlan].price}$
               </Text>
 
               <ScrollView className="mb-4">
@@ -279,14 +279,14 @@ export default function SubscriptionPlansScreen() {
                       className="w-16 h-16 rounded-full mr-4"
                     />
                     <View className="flex-1">
-                      <Text className="font-bold text-gray-900">
+                      <Text className="font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>
                         {member.firstName} {member.lastName}
                       </Text>
-                      <Text className="text-sm text-gray-500">{member.birthDate}</Text>
+                      <Text className="text-sm text-gray-500" style={{ fontFamily: 'Quicksand' }}>{member.birthDate}</Text>
                       {member.isSick && (
                         <View className="flex-row items-center mt-1">
                           <Ionicons name="medical" size={14} color="#F59E0B" />
-                          <Text className="text-xs text-orange-600 ml-1">Problème de santé</Text>
+                          <Text className="text-xs text-orange-600 ml-1" style={{ fontFamily: 'Quicksand' }}>Problème de santé</Text>
                         </View>
                       )}
                     </View>
@@ -304,7 +304,7 @@ export default function SubscriptionPlansScreen() {
                   activeOpacity={0.8}
                   disabled={members.length >= PLAN_CONFIG[selectedPlan].max}
                 >
-                  <Text className="text-gray-700 text-center font-bold">
+                  <Text className="text-gray-700 text-center font-bold" style={{ fontFamily: 'Quicksand' }}>
                     Ajouter membre
                   </Text>
                 </TouchableOpacity>
@@ -317,7 +317,7 @@ export default function SubscriptionPlansScreen() {
                   {isSubmitting ? (
                     <ActivityIndicator color="#fff" />
                   ) : (
-                    <Text className="text-white text-center font-bold">
+                    <Text className="text-white text-center font-bold" style={{ fontFamily: 'Quicksand' }}>
                       Confirmer & Payer
                     </Text>
                   )}
@@ -334,6 +334,6 @@ export default function SubscriptionPlansScreen() {
 const FeatureItem = ({ text }: { text: string }) => (
   <View className="flex-row items-center my-2">
     <Ionicons name="checkmark-circle" size={20} color="#8A4DFF" />
-    <Text className="text-gray-700 ml-2">{text}</Text>
+    <Text className="text-gray-700 ml-2" style={{ fontFamily: 'Quicksand' }}>{text}</Text>
   </View>
 );

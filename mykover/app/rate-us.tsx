@@ -46,17 +46,17 @@ export default function RateUsScreen() {
           <View className="w-20 h-20 bg-green-100 rounded-full items-center justify-center mb-6">
             <FontAwesome6 name="check" size={32} color="#10B981" />
           </View>
-          <Text className="text-2xl font-bold text-gray-900 text-center mb-4">
+          <Text className="text-2xl font-bold text-gray-900 text-center mb-4" style={{ fontFamily: 'Quicksand' }}>
             Merci pour votre évaluation !
           </Text>
-          <Text className="text-gray-600 text-center mb-8">
+          <Text className="text-gray-600 text-center mb-8" style={{ fontFamily: 'Quicksand' }}>
             Vos commentaires nous aident à améliorer MyKover pour tous nos utilisateurs.
           </Text>
           <TouchableOpacity
             className="bg-purple-600 px-8 py-3 rounded-full"
             onPress={() => router.back()}
           >
-            <Text className="text-white font-semibold">Retour</Text>
+            <Text className="text-white font-semibold" style={{ fontFamily: 'Quicksand' }}>Retour</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -70,7 +70,7 @@ export default function RateUsScreen() {
         <TouchableOpacity onPress={() => router.back()} className="mr-4">
           <FontAwesome6 name="arrow-left" size={20} color="#374151" />
         </TouchableOpacity>
-        <Text className="text-xl font-bold text-gray-900">Évaluez MyKover</Text>
+        <Text className="text-xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Évaluez MyKover</Text>
       </View>
 
       <View className="flex-1 px-4 pt-6">
@@ -80,10 +80,10 @@ export default function RateUsScreen() {
             <View className="w-16 h-16 bg-purple-100 rounded-full items-center justify-center mb-3">
               <FontAwesome6 name="star" size={24} color="#8B5CF6" />
             </View>
-            <Text className="text-xl font-bold text-gray-900 mb-2 text-center">
+            <Text className="text-xl font-bold text-gray-900 mb-2 text-center" style={{ fontFamily: 'Quicksand' }}>
               Que pensez-vous de MyKover ?
             </Text>
-            <Text className="text-gray-600 text-center">
+            <Text className="text-gray-600 text-center" style={{ fontFamily: 'Quicksand' }}>
               Votre avis nous aide à améliorer notre service et à mieux vous servir.
             </Text>
           </View>
@@ -91,7 +91,7 @@ export default function RateUsScreen() {
 
         {/* Rating Section */}
         <View className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm mb-6">
-          <Text className="text-lg font-bold text-gray-900 mb-4 text-center">Votre évaluation</Text>
+          <Text className="text-lg font-bold text-gray-900 mb-4 text-center" style={{ fontFamily: 'Quicksand' }}>Votre évaluation</Text>
           <View className="flex-row justify-center mb-4">
             {[1, 2, 3, 4, 5].map((star) => (
               <TouchableOpacity
@@ -110,10 +110,10 @@ export default function RateUsScreen() {
           </View>
           {rating > 0 && (
             <View className="items-center">
-              <Text className="text-2xl mb-2">
+              <Text className="text-2xl mb-2" style={{ fontFamily: 'Quicksand' }}>
                 {ratingLabels.find(r => r.value === rating)?.emoji}
               </Text>
-              <Text className="text-lg font-semibold text-gray-900">
+              <Text className="text-lg font-semibold text-gray-900" style={{ fontFamily: 'Quicksand' }}>
                 {ratingLabels.find(r => r.value === rating)?.label}
               </Text>
             </View>
@@ -126,7 +126,7 @@ export default function RateUsScreen() {
             className="bg-purple-600 rounded-xl py-4"
             onPress={handleSubmitFeedback}
           >
-            <Text className="text-white font-semibold text-center text-lg">
+            <Text className="text-white font-semibold text-center text-lg" style={{ fontFamily: 'Quicksand' }}>
               Envoyer l'évaluation
             </Text>
           </TouchableOpacity>

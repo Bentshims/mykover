@@ -43,7 +43,7 @@ export default function Onboarding() {
         onPress={handleSkip}
         className="absolute z-10 top-16 right-6"
       >
-        <Text className="text-base font-medium text-purple-600">Skip</Text>
+        <Text className="text-base font-medium text-purple-600" style={{ fontFamily: 'Quicksand' }}>Skip</Text>
       </TouchableOpacity>
 
       {/* Onboarding Slides */}
@@ -93,12 +93,12 @@ export default function Onboarding() {
               className="items-center justify-center flex-1"
             >
               {/* Title */}
-              <Text className="mb-6 text-3xl font-bold text-center text-purple-600">
+              <Text className="mb-6 text-3xl font-bold text-center text-purple-600" style={{ fontFamily: 'Quicksand' }}>
                 {item.title}
               </Text>
 
               {/* Description */}
-              <Text className="px-4 mb-12 text-base leading-relaxed text-center text-gray-600">
+              <Text className="px-4 mb-12 text-base leading-relaxed text-center text-gray-600" style={{ fontFamily: 'Quicksand' }}>
                 {item.description}
               </Text>
 
@@ -185,7 +185,7 @@ export default function Onboarding() {
           activeOpacity={0.9}
           className="py-4 bg-purple-600 rounded-full shadow-md"
         >
-          <Text className="text-lg font-bold text-center text-white">
+          <Text className="text-lg font-bold text-center text-white" style={{ fontFamily: 'Quicksand' }}>
             {currentIndex === onboardingScreens.length - 1
               ? "Commencer"
               : "Suivant"}

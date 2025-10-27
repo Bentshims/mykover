@@ -143,7 +143,7 @@ export default function MemberFormDrawer({
           onPress={(e) => e.stopPropagation()}
         >
           <View className="flex-row justify-between items-center mb-6">
-            <Text className="text-xl font-bold">Membre {memberIndex + 1}</Text>
+            <Text className="text-xl font-bold" style={{ fontFamily: 'Quicksand' }}>Membre {memberIndex + 1}</Text>
             <TouchableOpacity onPress={onClose}>
               <Ionicons name="close" size={28} color="#374151" />
             </TouchableOpacity>
@@ -152,7 +152,7 @@ export default function MemberFormDrawer({
           <ScrollView showsVerticalScrollIndicator={false}>
             {/* Photo */}
             <View className="mb-6">
-              <Text className="text-sm font-semibold text-gray-700 mb-3">Photo *</Text>
+              <Text className="text-sm font-semibold text-gray-700 mb-3" style={{ fontFamily: 'Quicksand' }}>Photo *</Text>
               {photoUri ? (
                 <View className="items-center">
                   <Image source={{ uri: photoUri }} className="w-32 h-32 rounded-full mb-3" />
@@ -166,7 +166,7 @@ export default function MemberFormDrawer({
                     activeOpacity={0.8}
                   >
                     <Ionicons name="camera" size={20} color="#fff" />
-                    <Text className="text-white font-semibold ml-2">Caméra</Text>
+                    <Text className="text-white font-semibold ml-2" style={{ fontFamily: 'Quicksand' }}>Caméra</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={pickFromGallery}
@@ -174,7 +174,7 @@ export default function MemberFormDrawer({
                     activeOpacity={0.8}
                   >
                     <Ionicons name="images" size={20} color="#374151" />
-                    <Text className="text-gray-700 font-semibold ml-2">Galerie</Text>
+                    <Text className="text-gray-700 font-semibold ml-2" style={{ fontFamily: 'Quicksand' }}>Galerie</Text>
                   </TouchableOpacity>
                 </View>
               )}
@@ -182,7 +182,7 @@ export default function MemberFormDrawer({
 
             {/* Prénom */}
             <View className="mb-4">
-              <Text className="text-sm font-semibold text-gray-700 mb-2">Prénom *</Text>
+              <Text className="text-sm font-semibold text-gray-700 mb-2" style={{ fontFamily: 'Quicksand' }}>Prénom *</Text>
               <TextInput
                 value={firstName}
                 onChangeText={setFirstName}
@@ -193,7 +193,7 @@ export default function MemberFormDrawer({
 
             {/* Nom */}
             <View className="mb-4">
-              <Text className="text-sm font-semibold text-gray-700 mb-2">Nom *</Text>
+              <Text className="text-sm font-semibold text-gray-700 mb-2" style={{ fontFamily: 'Quicksand' }}>Nom *</Text>
               <TextInput
                 value={lastName}
                 onChangeText={setLastName}
@@ -204,7 +204,7 @@ export default function MemberFormDrawer({
 
             {/* Date de naissance */}
             <View className="mb-4">
-              <Text className="text-sm font-semibold text-gray-700 mb-2">Date de naissance *</Text>
+              <Text className="text-sm font-semibold text-gray-700 mb-2" style={{ fontFamily: 'Quicksand' }}>Date de naissance *</Text>
               <TouchableOpacity
                 onPress={() => setShowDatePicker(true)}
                 className="border border-gray-300 rounded-xl px-4 py-3"
@@ -235,7 +235,7 @@ export default function MemberFormDrawer({
                 <View className={`w-6 h-6 rounded border-2 mr-3 items-center justify-center ${isSick ? 'bg-[#8A4DFF] border-[#8A4DFF]' : 'border-gray-300'}`}>
                   {isSick && <Ionicons name="checkmark" size={18} color="#fff" />}
                 </View>
-                <Text className="text-gray-700 font-medium">A un problème de santé</Text>
+                <Text className="text-gray-700 font-medium" style={{ fontFamily: 'Quicksand' }}>A un problème de santé</Text>
               </TouchableOpacity>
             </View>
 
@@ -246,7 +246,7 @@ export default function MemberFormDrawer({
               className="bg-[#8A4DFF] py-4 rounded-full"
               activeOpacity={0.8}
             >
-              <Text className="text-white text-center font-bold text-lg">
+              <Text className="text-white text-center font-bold text-lg" style={{ fontFamily: 'Quicksand' }}>
                 {uploading ? 'Upload en cours...' : 'Valider'}
               </Text>
             </TouchableOpacity>

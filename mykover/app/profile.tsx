@@ -124,7 +124,7 @@ export default function ProfileScreen() {
       <SafeAreaView className="flex-1 bg-gray-50">
         <View className="items-center justify-center flex-1">
           <ActivityIndicator size="large" color="#8A4DFF" />
-          <Text className="mt-4 text-gray-600">Chargement du profil...</Text>
+          <Text className="mt-4 text-gray-600" style={{ fontFamily: 'Quicksand' }}>Chargement du profil...</Text>
         </View>
       </SafeAreaView>
     );
@@ -137,7 +137,7 @@ export default function ProfileScreen() {
         <TouchableOpacity onPress={() => router.back()} className="mr-4">
           <FontAwesome6 name="arrow-left" size={20} color="#374151" />
         </TouchableOpacity>
-        <Text className="text-xl font-bold text-gray-900">Mon profil</Text>
+        <Text className="text-xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Mon profil</Text>
         <View className="flex-1" />
         <TouchableOpacity onPress={() => router.push('/settings')}>
           <MaterialIcons name="settings" size={22} color="#6B7280" />
@@ -160,14 +160,14 @@ export default function ProfileScreen() {
                 />
               ) : (
                 <View className="w-20 h-20 mb-3 rounded-full bg-[#EDE9FE] items-center justify-center">
-                  <Text className="text-xl font-bold text-[#4C1D95]">
+                  <Text className="text-xl font-bold text-[#4C1D95]" style={{ fontFamily: 'Quicksand' }}>
                     {initialsFromName(profile?.fullName)}
                   </Text>
                 </View>
               )}
 
-              <Text className="text-2xl font-bold text-gray-900">{profile?.fullName || 'Utilisateur'}</Text>
-              <Text className="text-gray-600">{profile?.email}</Text>
+              <Text className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>{profile?.fullName || 'Utilisateur'}</Text>
+              <Text className="text-gray-600" style={{ fontFamily: 'Quicksand' }}>{profile?.email}</Text>
 
               {/* small edit profile row */}
               <View className="flex-row mt-3">
@@ -176,7 +176,7 @@ export default function ProfileScreen() {
                   className="flex-row items-center px-3 py-2 bg-white border border-gray-200 rounded-full shadow-sm"
                 >
                   <FontAwesome6 name="pen" size={14} color="#6B7280" />
-                  <Text className="ml-2 text-sm text-gray-700">Modifier</Text>
+                  <Text className="ml-2 text-sm text-gray-700" style={{ fontFamily: 'Quicksand' }}>Modifier</Text>
                 </TouchableOpacity>
                 <View style={{ width: 12 }} />
                 <TouchableOpacity
@@ -184,7 +184,7 @@ export default function ProfileScreen() {
                   className="flex-row items-center px-3 py-2 bg-white border border-gray-200 rounded-full shadow-sm"
                 >
                   <FontAwesome6 name="receipt" size={14} color="#6B7280" />
-                  <Text className="ml-2 text-sm text-gray-700">Paiements</Text>
+                  <Text className="ml-2 text-sm text-gray-700" style={{ fontFamily: 'Quicksand' }}>Paiements</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -206,39 +206,39 @@ export default function ProfileScreen() {
         <Animated.View style={{ opacity: fadeCard }}>
           <View className="p-4 mx-4 mt-4 bg-white border border-gray-100 shadow-sm rounded-xl">
             <View className="flex-row items-center justify-between mb-2">
-              <Text className="text-lg font-bold text-gray-900">Résumé de l'assurance</Text>
+              <Text className="text-lg font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Résumé de l'assurance</Text>
               <FontAwesome6 name="shield-halved" size={18} color="#6B7280" />
             </View>
 
             <View className="space-y-3">
               <View className="flex-row items-center justify-between">
-                <Text className="text-gray-600">Plan</Text>
-                <Text className="font-medium text-gray-900">
+                <Text className="text-gray-600" style={{ fontFamily: 'Quicksand' }}>Plan</Text>
+                <Text className="font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>
                   {profile?.insurancePlan ?? '—'}
                 </Text>
               </View>
 
               <View className="flex-row items-center justify-between">
-                <Text className="text-gray-600">Statut</Text>
+                <Text className="text-gray-600" style={{ fontFamily: 'Quicksand' }}>Statut</Text>
                 <View
                   className={`px-3 py-1 rounded-full ${profile?.isActive ? 'bg-green-500' : 'bg-red-500'}`}
                 >
-                  <Text className="text-xs font-bold text-white">
+                  <Text className="text-xs font-bold text-white" style={{ fontFamily: 'Quicksand' }}>
                     {profile?.insuranceStatus ?? (profile?.isActive ? 'ACTIVE' : 'INACTIVE')}
                   </Text>
                 </View>
               </View>
 
               <View className="flex-row items-center justify-between">
-                <Text className="text-gray-600">Prochaine échéance</Text>
-                <Text className="font-medium text-gray-900">
+                <Text className="text-gray-600" style={{ fontFamily: 'Quicksand' }}>Prochaine échéance</Text>
+                <Text className="font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>
                   {profile?.nextPaymentDate ? formatDate(profile.nextPaymentDate) : 'Aucun'}
                 </Text>
               </View>
 
               <View className="flex-row items-center justify-between">
-                <Text className="text-gray-600">Cotisation</Text>
-                <Text className="font-medium text-gray-900">
+                <Text className="text-gray-600" style={{ fontFamily: 'Quicksand' }}>Cotisation</Text>
+                <Text className="font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>
                   {profile?.premium ?? '—'}
                 </Text>
               </View>
@@ -248,7 +248,7 @@ export default function ProfileScreen() {
                 className="mt-3 bg-[#8A4DFF] py-3 rounded-full items-center"
                 activeOpacity={0.85}
               >
-                <Text className="font-semibold text-white">Voir les détails du plan</Text>
+                <Text className="font-semibold text-white" style={{ fontFamily: 'Quicksand' }}>Voir les détails du plan</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -257,28 +257,28 @@ export default function ProfileScreen() {
         {/* Personal Info */}
         <View className="p-4 mx-4 mt-4 bg-white border border-gray-100 shadow-sm rounded-xl">
           <View className="p-1 mb-3 border-b border-gray-100">
-            <Text className="text-lg font-bold text-gray-900">Informations personnelles</Text>
+            <Text className="text-lg font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Informations personnelles</Text>
           </View>
 
           <View className="space-y-3">
             <View className="flex-row items-center justify-between">
-              <Text className="text-gray-600">Nom complet</Text>
-              <Text className="font-medium text-gray-900">{profile?.fullName}</Text>
+              <Text className="text-gray-600" style={{ fontFamily: 'Quicksand' }}>Nom complet</Text>
+              <Text className="font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>{profile?.fullName}</Text>
             </View>
 
             <View className="flex-row items-center justify-between">
-              <Text className="text-gray-600">Email</Text>
-              <Text className="font-medium text-gray-900">{profile?.email}</Text>
+              <Text className="text-gray-600" style={{ fontFamily: 'Quicksand' }}>Email</Text>
+              <Text className="font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>{profile?.email}</Text>
             </View>
 
             <View className="flex-row items-center justify-between">
-              <Text className="text-gray-600">Téléphone</Text>
-              <Text className="font-medium text-gray-900">{profile?.phoneNumber ?? '—'}</Text>
+              <Text className="text-gray-600" style={{ fontFamily: 'Quicksand' }}>Téléphone</Text>
+              <Text className="font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>{profile?.phoneNumber ?? '—'}</Text>
             </View>
 
             <View className="flex-row items-center justify-between">
-              <Text className="text-gray-600">Membre depuis</Text>
-              <Text className="font-medium text-gray-900">{formatDate(profile?.createdAt)}</Text>
+              <Text className="text-gray-600" style={{ fontFamily: 'Quicksand' }}>Membre depuis</Text>
+              <Text className="font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>{formatDate(profile?.createdAt)}</Text>
             </View>
           </View>
         </View>
@@ -291,7 +291,7 @@ export default function ProfileScreen() {
           >
             <View className="flex-row items-center">
               <FontAwesome6 name="gear" size={20} color="#6B7280" />
-              <Text className="ml-3 font-medium text-gray-900">Paramètres</Text>
+              <Text className="ml-3 font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>Paramètres</Text>
             </View>
             <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
           </TouchableOpacity>
@@ -302,7 +302,7 @@ export default function ProfileScreen() {
           >
             <View className="flex-row items-center">
               <FontAwesome6 name="receipt" size={20} color="#6B7280" />
-              <Text className="ml-3 font-medium text-gray-900">Historique des paiements</Text>
+              <Text className="ml-3 font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>Historique des paiements</Text>
             </View>
             <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
           </TouchableOpacity>
@@ -313,7 +313,7 @@ export default function ProfileScreen() {
           >
             <View className="flex-row items-center">
               <FontAwesome6 name="file-contract" size={20} color="#6B7280" />
-              <Text className="ml-3 font-medium text-gray-900">Documents d'assurance</Text>
+              <Text className="ml-3 font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>Documents d'assurance</Text>
             </View>
             <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
           </TouchableOpacity>
@@ -324,7 +324,7 @@ export default function ProfileScreen() {
           >
             <View className="flex-row items-center">
               <FontAwesome6 name="headset" size={20} color="#6B7280" />
-              <Text className="ml-3 font-medium text-gray-900">Support client</Text>
+              <Text className="ml-3 font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>Support client</Text>
             </View>
             <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
           </TouchableOpacity>

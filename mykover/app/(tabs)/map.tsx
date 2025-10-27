@@ -250,10 +250,10 @@ export default function MapScreen() {
         <View className="px-6 pt-6">
           {/* Header */}
           <View className="mb-6">
-            <Text className="mb-2 text-3xl font-bold text-gray-900">
+            <Text className="mb-2 text-3xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>
               Établissements de santé
             </Text>
-            <Text className="text-base text-gray-600">
+            <Text className="text-base text-gray-600" style={{ fontFamily: 'Quicksand' }}>
               Trouvez les hôpitaux, cliniques et pharmacies près de chez vous
             </Text>
           </View>
@@ -290,14 +290,14 @@ export default function MapScreen() {
 
           {/* Quick Actions */}
           {/* <View className="mb-6">
-            <Text className="mb-4 text-lg font-semibold text-gray-900">
+            <Text className="mb-4 text-lg font-semibold text-gray-900" style={{ fontFamily: 'Quicksand' }}>
               Actions rapides
             </Text>
             <View className="flex-row flex-wrap justify-between">
               <TouchableOpacity className="w-[48%] p-4 mb-3 bg-purple-50 border border-purple-200 rounded-xl">
                 <View className="items-center">
                   <Ionicons name="location" size={24} color="#7c3aed" />
-                  <Text className="mt-2 text-sm font-semibold text-purple-900">
+                  <Text className="mt-2 text-sm font-semibold text-purple-900" style={{ fontFamily: 'Quicksand' }}>
                     Ma position
                   </Text>
                 </View>
@@ -306,7 +306,7 @@ export default function MapScreen() {
               <TouchableOpacity className="w-[48%] p-4 mb-3 bg-blue-50 border border-blue-200 rounded-xl">
                 <View className="items-center">
                   <Ionicons name="search" size={24} color="#3b82f6" />
-                  <Text className="mt-2 text-sm font-semibold text-blue-900">
+                  <Text className="mt-2 text-sm font-semibold text-blue-900" style={{ fontFamily: 'Quicksand' }}>
                     Rechercher
                   </Text>
                 </View>
@@ -316,7 +316,7 @@ export default function MapScreen() {
 
           {/* Facilities List */}
           <View className="mb-8">
-            <Text className="mb-4 text-lg font-semibold text-gray-900">
+            <Text className="mb-4 text-lg font-semibold text-gray-900" style={{ fontFamily: 'Quicksand' }}>
               Établissements ({filteredFacilities.length})
             </Text>
             
@@ -338,32 +338,32 @@ export default function MapScreen() {
                     
                     <View className="flex-1">
                       <View className="flex-row items-center justify-between mb-1">
-                        <Text className="text-lg font-semibold text-gray-900">
+                        <Text className="text-lg font-semibold text-gray-900" style={{ fontFamily: 'Quicksand' }}>
                           {facility.name}
                         </Text>
                         <View className={`px-2 py-1 rounded-full ${getFacilityColor(facility.type)}`}>
-                          <Text className="text-xs font-medium">
+                          <Text className="text-xs font-medium" style={{ fontFamily: 'Quicksand' }}>
                             {facility.type === 'hospital' ? 'Hôpital' :
                              facility.type === 'clinic' ? 'Clinique' : 'Pharmacie'}
                           </Text>
                         </View>
                       </View>
                       
-                      <Text className="mb-2 text-sm text-gray-600">
+                      <Text className="mb-2 text-sm text-gray-600" style={{ fontFamily: 'Quicksand' }}>
                         {facility.address}
                       </Text>
                       
                       <View className="flex-row items-center justify-between">
                         <View className="flex-row items-center">
                           <Ionicons name="location" size={14} color="#6b7280" />
-                          <Text className="ml-1 text-sm text-gray-600">
+                          <Text className="ml-1 text-sm text-gray-600" style={{ fontFamily: 'Quicksand' }}>
                             {isLoadingLocation ? 'Calcul...' : (facility.distance || 'N/A')}
                           </Text>
                         </View>
                         
                         <View className="flex-row items-center">
                           <Ionicons name="star" size={14} color="#fbbf24" />
-                          <Text className="ml-1 text-sm font-medium text-gray-900">
+                          <Text className="ml-1 text-sm font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>
                             {facility.rating}
                           </Text>
                         </View>
@@ -372,7 +372,7 @@ export default function MapScreen() {
                           <View className={`w-2 h-2 rounded-full mr-1 ${
                             facility.isOpen ? 'bg-green-500' : 'bg-red-500'
                           }`} />
-                          <Text className="text-sm text-gray-600">
+                          <Text className="text-sm text-gray-600" style={{ fontFamily: 'Quicksand' }}>
                             {facility.isOpen ? 'Ouvert' : 'Fermé'}
                           </Text>
                         </View>
@@ -381,12 +381,12 @@ export default function MapScreen() {
                       <View className="flex-row flex-wrap mt-2">
                         {facility.services.slice(0, 3).map((service, index) => (
                           <View key={index} className="px-2 py-1 mb-1 mr-2 bg-gray-100 rounded-full">
-                            <Text className="text-xs text-gray-600">{service}</Text>
+                            <Text className="text-xs text-gray-600" style={{ fontFamily: 'Quicksand' }}>{service}</Text>
                           </View>
                         ))}
                         {facility.services.length > 3 && (
                           <View className="px-2 py-1 bg-gray-100 rounded-full">
-                            <Text className="text-xs text-gray-600">
+                            <Text className="text-xs text-gray-600" style={{ fontFamily: 'Quicksand' }}>
                               +{facility.services.length - 3} autres
                             </Text>
                           </View>
@@ -401,7 +401,7 @@ export default function MapScreen() {
                         >
                           <View className="flex-row items-center justify-center">
                             <Ionicons name="navigate" size={16} color="white" />
-                            <Text className="ml-2 text-sm font-medium text-white">
+                            <Text className="ml-2 text-sm font-medium text-white" style={{ fontFamily: 'Quicksand' }}>
                               Itinéraire
                             </Text>
                           </View>

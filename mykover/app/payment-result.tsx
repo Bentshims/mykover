@@ -97,40 +97,40 @@ export default function PaymentResultScreen() {
         </Animated.View>
 
         {/* Status Message */}
-        <Text className="mb-4 text-2xl font-bold text-center text-gray-900">
+        <Text className="mb-4 text-2xl font-bold text-center text-gray-900" style={{ fontFamily: 'Quicksand' }}>
           {config.title}
         </Text>
         
-        <Text className="mb-8 text-base leading-6 text-center text-gray-600">
+        <Text className="mb-8 text-base leading-6 text-center text-gray-600" style={{ fontFamily: 'Quicksand' }}>
           {message || config.description}
         </Text>
 
         {/* Payment Details */}
         <View className="w-full p-6 mb-8 bg-gray-50 rounded-2xl">
-          <Text className="mb-4 text-lg font-semibold text-center text-gray-900">
+          <Text className="mb-4 text-lg font-semibold text-center text-gray-900" style={{ fontFamily: 'Quicksand' }}>
             Détails de la transaction
           </Text>
           
           <View className="space-y-3">
             <View className="flex-row items-center justify-between">
-              <Text className="text-gray-600">Plan</Text>
-              <Text className="font-medium text-gray-900">{planName}</Text>
+              <Text className="text-gray-600" style={{ fontFamily: 'Quicksand' }}>Plan</Text>
+              <Text className="font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>{planName}</Text>
             </View>
             
             <View className="flex-row items-center justify-between">
-              <Text className="text-gray-600">Montant</Text>
-              <Text className="font-medium text-gray-900">{amount}$ USD</Text>
+              <Text className="text-gray-600" style={{ fontFamily: 'Quicksand' }}>Montant</Text>
+              <Text className="font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>{amount}$ USD</Text>
             </View>
             
             <View className="flex-row items-center justify-between">
-              <Text className="text-gray-600">Transaction ID</Text>
-              <Text className="text-xs font-medium text-gray-900">
+              <Text className="text-gray-600" style={{ fontFamily: 'Quicksand' }}>Transaction ID</Text>
+              <Text className="text-xs font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>
                 {transactionId}
               </Text>
             </View>
             
             <View className="flex-row items-center justify-between">
-              <Text className="text-gray-600">Statut</Text>
+              <Text className="text-gray-600" style={{ fontFamily: 'Quicksand' }}>Statut</Text>
               <View className="flex-row items-center">
                 <View className={`w-2 h-2 rounded-full mr-2 ${
                   status === 'failed' ? 'bg-red-500' :
@@ -158,7 +158,7 @@ export default function PaymentResultScreen() {
             className="w-full bg-[#8A4DFF] rounded-full py-4"
             activeOpacity={0.8}
           >
-            <Text className="text-lg font-semibold text-center text-white">
+            <Text className="text-lg font-semibold text-center text-white" style={{ fontFamily: 'Quicksand' }}>
               {config.buttonText}
             </Text>
           </TouchableOpacity>
@@ -168,7 +168,7 @@ export default function PaymentResultScreen() {
             className="w-full py-4 border border-gray-300 rounded-full"
             activeOpacity={0.7}
           >
-            <Text className="text-lg font-medium text-center text-gray-700">
+            <Text className="text-lg font-medium text-center text-gray-700" style={{ fontFamily: 'Quicksand' }}>
               Voir l'historique
             </Text>
           </TouchableOpacity>
@@ -178,7 +178,7 @@ export default function PaymentResultScreen() {
             className="w-full"
             activeOpacity={0.7}
           >
-            <Text className="text-base font-medium text-center text-gray-500">
+            <Text className="text-base font-medium text-center text-gray-500" style={{ fontFamily: 'Quicksand' }}>
               Retour aux plans
             </Text>
           </TouchableOpacity>
@@ -189,7 +189,7 @@ export default function PaymentResultScreen() {
           <View className="p-4 mt-8 bg-blue-50 rounded-xl">
             <View className="flex-row items-start">
               <Ionicons name="information-circle" size={20} color="#3B82F6" className="mr-2 mt-0.5" />
-              <Text className="flex-1 text-sm leading-5 text-blue-800">
+              <Text className="flex-1 text-sm leading-5 text-blue-800" style={{ fontFamily: 'Quicksand' }}>
                 Les paiements peuvent prendre quelques minutes à être traités. 
                 Vous recevrez une notification une fois le paiement confirmé.
               </Text>

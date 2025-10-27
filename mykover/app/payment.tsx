@@ -173,10 +173,10 @@ export default function PaymentScreen() {
         
         <View className="items-center justify-center flex-1 px-6">
           <ActivityIndicator size="large" color="#8A4DFF" />
-          <Text className="mt-4 text-lg font-medium text-center text-gray-700">
+          <Text className="mt-4 text-lg font-medium text-center text-gray-700" style={{ fontFamily: 'Quicksand' }}>
             Vérification du paiement en cours...
           </Text>
-          <Text className="mt-2 text-sm text-center text-gray-500">
+          <Text className="mt-2 text-sm text-center text-gray-500" style={{ fontFamily: 'Quicksand' }}>
             Veuillez patienter pendant que nous confirmons votre paiement.
           </Text>
         </View>
@@ -199,10 +199,10 @@ export default function PaymentScreen() {
         </TouchableOpacity>
         
         <View className="flex-1 mx-4">
-          <Text className="text-lg font-semibold text-center text-gray-900">
+          <Text className="text-lg font-semibold text-center text-gray-900" style={{ fontFamily: 'Quicksand' }}>
             Paiement CinetPay
           </Text>
-          <Text className="text-sm text-center text-gray-500">
+          <Text className="text-sm text-center text-gray-500" style={{ fontFamily: 'Quicksand' }}>
             {planName} - {amount}$
           </Text>
         </View>
@@ -221,7 +221,7 @@ export default function PaymentScreen() {
         <View className="absolute left-0 right-0 z-10 items-center top-20">
           <View className="flex-row items-center px-4 py-2 bg-white rounded-full shadow-md">
             {loading && <ActivityIndicator size="small" color="#8A4DFF" />}
-            <Text className="ml-2 text-sm text-gray-600">
+            <Text className="ml-2 text-sm text-gray-600" style={{ fontFamily: 'Quicksand' }}>
               {loadTimeout ? 'Chargement lent...' : 'Chargement...'}
             </Text>
           </View>
@@ -263,10 +263,10 @@ export default function PaymentScreen() {
         renderError={(errorName) => (
           <View className="items-center justify-center flex-1 px-6">
             <Ionicons name="warning-outline" size={64} color="#EF4444" />
-            <Text className="mt-4 text-lg font-medium text-center text-gray-700">
+            <Text className="mt-4 text-lg font-medium text-center text-gray-700" style={{ fontFamily: 'Quicksand' }}>
               Erreur de chargement
             </Text>
-            <Text className="mt-2 text-sm text-center text-gray-500">
+            <Text className="mt-2 text-sm text-center text-gray-500" style={{ fontFamily: 'Quicksand' }}>
               {errorName || 'Une erreur est survenue lors du chargement de la page de paiement.'}
             </Text>
             <TouchableOpacity
@@ -274,7 +274,7 @@ export default function PaymentScreen() {
               className="mt-6 bg-[#8A4DFF] px-6 py-3 rounded-full"
               activeOpacity={0.8}
             >
-              <Text className="font-medium text-white">
+              <Text className="font-medium text-white" style={{ fontFamily: 'Quicksand' }}>
                 Réessayer
               </Text>
             </TouchableOpacity>

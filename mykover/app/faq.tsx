@@ -51,7 +51,7 @@ export default function FAQScreen() {
         <TouchableOpacity onPress={() => router.back()} className="mr-4">
           <FontAwesome6 name="arrow-left" size={20} color="#374151" />
         </TouchableOpacity>
-        <Text className="text-xl font-bold text-gray-900">Questions fréquentes</Text>
+        <Text className="text-xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Questions fréquentes</Text>
       </View>
 
       <ScrollView className="flex-1" contentContainerStyle={{ paddingBottom: 30 }}>
@@ -60,7 +60,7 @@ export default function FAQScreen() {
             <View key={item.id} className="mb-3 bg-white border border-gray-100 shadow-sm rounded-xl">
               <TouchableOpacity className="p-4" onPress={() => toggleFAQ(item.id)}>
                 <View className="flex-row items-center justify-between">
-                  <Text className="flex-1 pr-4 font-medium text-gray-900">
+                  <Text className="flex-1 pr-4 font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>
                     {item.question}
                   </Text>
                   <FontAwesome6
@@ -72,7 +72,7 @@ export default function FAQScreen() {
               </TouchableOpacity>
               {expandedFAQ === item.id && (
                 <View className="px-4 pb-4 border-t border-gray-100">
-                  <Text className="mt-3 leading-6 text-gray-600">
+                  <Text className="mt-3 leading-6 text-gray-600" style={{ fontFamily: 'Quicksand' }}>
                     {item.answer}
                   </Text>
                 </View>

@@ -111,9 +111,9 @@
 //         <View className="flex-row items-center flex-1">
 //           <FontAwesome6 name={icon} size={20} color="#6B7280" />
 //           <View className="flex-1 ml-3">
-//             <Text className="font-medium text-gray-900">{title}</Text>
+//             <Text className="font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>{title}</Text>
 //             {subtitle && (
-//               <Text className="mt-1 text-sm text-gray-600">{subtitle}</Text>
+//               <Text className="mt-1 text-sm text-gray-600" style={{ fontFamily: 'Quicksand' }}>{subtitle}</Text>
 //             )}
 //           </View>
 //         </View>
@@ -136,13 +136,13 @@
 //         <TouchableOpacity onPress={() => router.back()} className="mr-4">
 //           <FontAwesome6 name="arrow-left" size={20} color="#374151" />
 //         </TouchableOpacity>
-//         <Text className="text-xl font-bold text-gray-900">Paramètres</Text>
+//         <Text className="text-xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Paramètres</Text>
 //       </View>
 
 //       <ScrollView className="flex-1 px-4 pt-4" contentContainerStyle={{ paddingBottom: 30 }}>
 //         {/* Notifications Section */}
 //         <View className="mb-6">
-//           <Text className="mb-4 text-lg font-bold text-gray-900">Notifications</Text>
+//           <Text className="mb-4 text-lg font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Notifications</Text>
           
 //           <SettingItem
 //             icon="bell"
@@ -171,7 +171,7 @@
 
 //         {/* Security Section */}
 //         <View className="mb-6">
-//           <Text className="mb-4 text-lg font-bold text-gray-900">Sécurité</Text>
+//           <Text className="mb-4 text-lg font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Sécurité</Text>
           
 //           <SettingItem
 //             icon="fingerprint"
@@ -185,7 +185,7 @@
 //             <View className="flex-row items-center justify-between">
 //               <View className="flex-row items-center">
 //                 <FontAwesome6 name="key" size={20} color="#6B7280" />
-//                 <Text className="ml-3 font-medium text-gray-900">Changer le mot de passe</Text>
+//                 <Text className="ml-3 font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>Changer le mot de passe</Text>
 //               </View>
 //               <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
 //             </View>
@@ -194,7 +194,7 @@
 
 //         {/* Subscription Section */}
 //         <View className="mb-6">
-//           <Text className="mb-4 text-lg font-bold text-gray-900">Abonnement</Text>
+//           <Text className="mb-4 text-lg font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Abonnement</Text>
           
 //           {/* <SettingItem
 //             icon="rotate"
@@ -211,7 +211,7 @@
 //             <View className="flex-row items-center justify-between">
 //               <View className="flex-row items-center">
 //                 <FontAwesome6 name="credit-card" size={20} color="#6B7280" />
-//                 <Text className="ml-3 font-medium text-gray-900">Gérer l'abonnement</Text>
+//                 <Text className="ml-3 font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>Gérer l'abonnement</Text>
 //               </View>
 //               <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
 //             </View>
@@ -220,7 +220,7 @@
 
 //         {/* Support Section */}
 //         <View className="mb-6">
-//           <Text className="mb-4 text-lg font-bold text-gray-900">Support</Text>
+//           <Text className="mb-4 text-lg font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Support</Text>
           
 //           <TouchableOpacity 
 //             className="p-4 mb-3 bg-white border border-gray-100 rounded-xl"
@@ -229,7 +229,7 @@
 //             <View className="flex-row items-center justify-between">
 //               <View className="flex-row items-center">
 //                 <FontAwesome6 name="headset" size={20} color="#6B7280" />
-//                 <Text className="ml-3 font-medium text-gray-900">Centre d'aide</Text>
+//                 <Text className="ml-3 font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>Centre d'aide</Text>
 //               </View>
 //               <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
 //             </View>
@@ -242,7 +242,7 @@
 //             <View className="flex-row items-center justify-between">
 //               <View className="flex-row items-center">
 //                 <FontAwesome6 name="bug" size={20} color="#6B7280" />
-//                 <Text className="ml-3 font-medium text-gray-900">Signaler un problème</Text>
+//                 <Text className="ml-3 font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>Signaler un problème</Text>
 //               </View>
 //               <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
 //             </View>
@@ -255,7 +255,7 @@
 //             <View className="flex-row items-center justify-between">
 //               <View className="flex-row items-center">
 //                 <FontAwesome6 name="file-lines" size={20} color="#6B7280" />
-//                 <Text className="ml-3 font-medium text-gray-900">Conditions d'utilisation</Text>
+//                 <Text className="ml-3 font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>Conditions d'utilisation</Text>
 //               </View>
 //               <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
 //             </View>
@@ -268,7 +268,7 @@
 //             <View className="flex-row items-center justify-between">
 //               <View className="flex-row items-center">
 //                 <FontAwesome6 name="shield-halved" size={20} color="#6B7280" />
-//                 <Text className="ml-3 font-medium text-gray-900">Politique de confidentialité</Text>
+//                 <Text className="ml-3 font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>Politique de confidentialité</Text>
 //               </View>
 //               <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
 //             </View>
@@ -277,22 +277,22 @@
 
 //         {/* App Info Section */}
 //         <View className="mb-6">
-//           <Text className="mb-4 text-lg font-bold text-gray-900">Application</Text>
+//           <Text className="mb-4 text-lg font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Application</Text>
           
 //           <View className="p-4 mb-3 bg-white border border-gray-100 rounded-xl">
 //             <View className="flex-row items-center justify-between">
 //               <View className="flex-row items-center">
 //                 <FontAwesome6 name="mobile-screen" size={20} color="#6B7280" />
-//                 <Text className="ml-3 font-medium text-gray-900">Version</Text>
+//                 <Text className="ml-3 font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>Version</Text>
 //               </View>
-//               <Text className="text-gray-600">1.0.0</Text>
+//               <Text className="text-gray-600" style={{ fontFamily: 'Quicksand' }}>1.0.0</Text>
 //             </View>
 //           </View>
 //         </View>
 
 //         {/* Danger Zone */}
 //         <View className="mb-6">
-//           <Text className="mb-4 text-lg font-bold text-red-600">Zone de danger</Text>
+//           <Text className="mb-4 text-lg font-bold text-red-600" style={{ fontFamily: 'Quicksand' }}>Zone de danger</Text>
           
 //           <TouchableOpacity 
 //             className="p-4 mb-3 bg-white border border-red-200 rounded-xl"
@@ -300,7 +300,7 @@
 //           >
 //             <View className="flex-row items-center">
 //               <FontAwesome6 name="right-from-bracket" size={20} color="#DC2626" />
-//               <Text className="ml-3 font-medium text-red-600">Se déconnecter</Text>
+//               <Text className="ml-3 font-medium text-red-600" style={{ fontFamily: 'Quicksand' }}>Se déconnecter</Text>
 //             </View>
 //           </TouchableOpacity>
 
@@ -310,7 +310,7 @@
 //           >
 //             <View className="flex-row items-center">
 //               <FontAwesome6 name="trash" size={20} color="#DC2626" />
-//               <Text className="ml-3 font-medium text-red-600">Supprimer le compte</Text>
+//               <Text className="ml-3 font-medium text-red-600" style={{ fontFamily: 'Quicksand' }}>Supprimer le compte</Text>
 //             </View>
 //           </TouchableOpacity>
 //         </View>
@@ -425,8 +425,8 @@ export default function SettingsScreen() {
             <FontAwesome6 name={icon} size={18} color="#8A4DFF" />
           </View>
           <View className="flex-1 ml-3">
-            <Text className="font-semibold text-gray-900">{title}</Text>
-            {subtitle && <Text className="mt-1 text-sm text-gray-500">{subtitle}</Text>}
+            <Text className="font-semibold text-gray-900" style={{ fontFamily: 'Quicksand' }}>{title}</Text>
+            {subtitle && <Text className="mt-1 text-sm text-gray-500" style={{ fontFamily: 'Quicksand' }}>{subtitle}</Text>}
           </View>
         </View>
         {showSwitch && (
@@ -449,14 +449,14 @@ export default function SettingsScreen() {
           <FontAwesome6 name="arrow-left" size={20} color="#374151" />
         </TouchableOpacity>
         <View>
-          <Text className="text-xl font-bold text-gray-900">Paramètres</Text>
-          <Text className="text-sm text-gray-500">Gérez vos préférences et votre compte</Text>
+          <Text className="text-xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Paramètres</Text>
+          <Text className="text-sm text-gray-500" style={{ fontFamily: 'Quicksand' }}>Gérez vos préférences et votre compte</Text>
         </View>
       </View>
 
       <ScrollView className="px-5 pt-4" contentContainerStyle={{ paddingBottom: 40 }}>
         {/* Notifications */}
-        <Text className="mb-3 text-lg font-bold text-gray-900">Notifications</Text>
+        <Text className="mb-3 text-lg font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Notifications</Text>
         <SettingItem
           icon="bell"
           title="Notifications Push"
@@ -480,7 +480,7 @@ export default function SettingsScreen() {
         />
 
         {/* Security */}
-        <Text className="mt-6 mb-3 text-lg font-bold text-gray-900">Sécurité</Text>
+        <Text className="mt-6 mb-3 text-lg font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Sécurité</Text>
         <SettingItem
           icon="fingerprint"
           title="Authentification Biométrique"
@@ -490,7 +490,7 @@ export default function SettingsScreen() {
         />
 
         {/* Subscription */}
-        <Text className="mt-6 mb-3 text-lg font-bold text-gray-900">Abonnement</Text>
+        <Text className="mt-6 mb-3 text-lg font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Abonnement</Text>
         <TouchableOpacity
           onPress={() => router.push('/plans')}
           className="flex-row items-center justify-between p-4 bg-white shadow-sm rounded-2xl"
@@ -501,15 +501,15 @@ export default function SettingsScreen() {
               <FontAwesome6 name="credit-card" size={18} color="#8A4DFF" />
             </View>
             <View className="ml-3">
-              <Text className="font-semibold text-gray-900">Gérer mon abonnement</Text>
-              <Text className="mt-1 text-sm text-gray-500">Voir ou modifier votre plan actuel</Text>
+              <Text className="font-semibold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Gérer mon abonnement</Text>
+              <Text className="mt-1 text-sm text-gray-500" style={{ fontFamily: 'Quicksand' }}>Voir ou modifier votre plan actuel</Text>
             </View>
           </View>
           <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
         </TouchableOpacity>
 
         {/* Support */}
-        <Text className="mt-6 mb-3 text-lg font-bold text-gray-900">Assistance & Support</Text>
+        <Text className="mt-6 mb-3 text-lg font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Assistance & Support</Text>
         {[
           { icon: 'headset', title: "Centre d'aide" },
           { icon: 'bug', title: 'Signaler un problème' },
@@ -525,34 +525,34 @@ export default function SettingsScreen() {
               <View className="w-9 h-9 rounded-full bg-[#F3E8FF] items-center justify-center">
                 <FontAwesome6 name={item.icon} size={18} color="#8A4DFF" />
               </View>
-              <Text className="ml-3 font-semibold text-gray-900">{item.title}</Text>
+              <Text className="ml-3 font-semibold text-gray-900" style={{ fontFamily: 'Quicksand' }}>{item.title}</Text>
             </View>
             <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
           </TouchableOpacity>
         ))}
 
         {/* App Info */}
-        <Text className="mt-6 mb-3 text-lg font-bold text-gray-900">Application</Text>
+        <Text className="mt-6 mb-3 text-lg font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Application</Text>
         <View className="flex-row items-center justify-between p-4 bg-white shadow-sm rounded-2xl">
           <View className="flex-row items-center">
             <View className="w-9 h-9 rounded-full bg-[#F3E8FF] items-center justify-center">
               <FontAwesome6 name="mobile-screen" size={18} color="#8A4DFF" />
             </View>
-            <Text className="ml-3 font-semibold text-gray-900">Version</Text>
+            <Text className="ml-3 font-semibold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Version</Text>
           </View>
-          <Text className="text-gray-600">1.0.0</Text>
+          <Text className="text-gray-600" style={{ fontFamily: 'Quicksand' }}>1.0.0</Text>
         </View>
 
         {/* Danger Zone */}
         <View className="p-5 mt-10 bg-red-50 rounded-2xl">
-          <Text className="mb-4 text-lg font-bold text-red-600">Zone de danger</Text>
+          <Text className="mb-4 text-lg font-bold text-red-600" style={{ fontFamily: 'Quicksand' }}>Zone de danger</Text>
           <TouchableOpacity onPress={handleLogout} className="flex-row items-center mb-4">
             <FontAwesome6 name="right-from-bracket" size={18} color="#DC2626" />
-            <Text className="ml-3 font-semibold text-red-600">Se déconnecter</Text>
+            <Text className="ml-3 font-semibold text-red-600" style={{ fontFamily: 'Quicksand' }}>Se déconnecter</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleDeleteAccount} className="flex-row items-center">
             <FontAwesome6 name="trash" size={18} color="#DC2626" />
-            <Text className="ml-3 font-semibold text-red-600">Supprimer le compte</Text>
+            <Text className="ml-3 font-semibold text-red-600" style={{ fontFamily: 'Quicksand' }}>Supprimer le compte</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

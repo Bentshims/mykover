@@ -144,13 +144,13 @@ export default function PaymentVerificationScreen() {
           <View className="w-24 h-24 bg-green-100 rounded-full items-center justify-center mb-6">
             <Ionicons name="checkmark-circle" size={64} color="#22C55E" />
           </View>
-          <Text className="text-2xl font-bold text-gray-900 mb-2">Paiement réussi !</Text>
-          <Text className="text-gray-500 text-center mb-2">
+          <Text className="text-2xl font-bold text-gray-900 mb-2" style={{ fontFamily: 'Quicksand' }}>Paiement réussi !</Text>
+          <Text className="text-gray-500 text-center mb-2" style={{ fontFamily: 'Quicksand' }}>
             Votre souscription au plan {params.planName} a été validée.
           </Text>
           <View className="bg-purple-50 p-4 rounded-xl mb-6 w-full">
-            <Text className="text-sm text-gray-600 text-center mb-1">Votre code famille :</Text>
-            <Text className="text-2xl font-bold text-[#8A4DFF] text-center">
+            <Text className="text-sm text-gray-600 text-center mb-1" style={{ fontFamily: 'Quicksand' }}>Votre code famille :</Text>
+            <Text className="text-2xl font-bold text-[#8A4DFF] text-center" style={{ fontFamily: 'Quicksand' }}>
               {params.familyCode}
             </Text>
           </View>
@@ -159,7 +159,7 @@ export default function PaymentVerificationScreen() {
             className="bg-[#8A4DFF] py-4 px-8 rounded-xl w-full"
             activeOpacity={0.8}
           >
-            <Text className="text-white text-center font-bold text-lg">Retour à l'accueil</Text>
+            <Text className="text-white text-center font-bold text-lg" style={{ fontFamily: 'Quicksand' }}>Retour à l'accueil</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -173,8 +173,8 @@ export default function PaymentVerificationScreen() {
           <View className="w-24 h-24 bg-red-100 rounded-full items-center justify-center mb-6">
             <Ionicons name="close-circle" size={64} color="#EF4444" />
           </View>
-          <Text className="text-2xl font-bold text-gray-900 mb-2">Paiement échoué</Text>
-          <Text className="text-gray-500 text-center mb-6">
+          <Text className="text-2xl font-bold text-gray-900 mb-2" style={{ fontFamily: 'Quicksand' }}>Paiement échoué</Text>
+          <Text className="text-gray-500 text-center mb-6" style={{ fontFamily: 'Quicksand' }}>
             Le paiement n'a pas pu être complété. Veuillez réessayer.
           </Text>
           <View className="space-y-3 w-full">
@@ -183,14 +183,14 @@ export default function PaymentVerificationScreen() {
               className="bg-[#8A4DFF] py-4 px-8 rounded-xl"
               activeOpacity={0.8}
             >
-              <Text className="text-white text-center font-bold text-lg">Réessayer</Text>
+              <Text className="text-white text-center font-bold text-lg" style={{ fontFamily: 'Quicksand' }}>Réessayer</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => router.replace("/(tabs)/home")}
               className="bg-gray-200 py-4 px-8 rounded-xl"
               activeOpacity={0.8}
             >
-              <Text className="text-gray-700 text-center font-bold text-lg">Annuler</Text>
+              <Text className="text-gray-700 text-center font-bold text-lg" style={{ fontFamily: 'Quicksand' }}>Annuler</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -202,18 +202,18 @@ export default function PaymentVerificationScreen() {
     <SafeAreaView className="flex-1 bg-white">
       <View className="flex-1 items-center justify-center px-6">
         <ActivityIndicator size="large" color="#8A4DFF" />
-        <Text className="text-xl font-bold text-gray-900 mt-6 mb-2">
+        <Text className="text-xl font-bold text-gray-900 mt-6 mb-2" style={{ fontFamily: 'Quicksand' }}>
           Vérification du paiement...
         </Text>
-        <Text className="text-gray-500 text-center mb-4">
+        <Text className="text-gray-500 text-center mb-4" style={{ fontFamily: 'Quicksand' }}>
           Veuillez patienter pendant que nous vérifions votre paiement.
         </Text>
         <View className="bg-gray-50 p-4 rounded-xl">
-          <Text className="text-sm text-gray-600">
-            Plan : <Text className="font-semibold">{params.planName}</Text>
+          <Text className="text-sm text-gray-600" style={{ fontFamily: 'Quicksand' }}>
+            Plan : <Text className="font-semibold" style={{ fontFamily: 'Quicksand' }}>{params.planName}</Text>
           </Text>
-          <Text className="text-sm text-gray-600 mt-1">
-            Montant : <Text className="font-semibold">{params.amount}$</Text>
+          <Text className="text-sm text-gray-600 mt-1" style={{ fontFamily: 'Quicksand' }}>
+            Montant : <Text className="font-semibold" style={{ fontFamily: 'Quicksand' }}>{params.amount}$</Text>
           </Text>
         </View>
 
@@ -222,7 +222,7 @@ export default function PaymentVerificationScreen() {
           className="mt-8"
           activeOpacity={0.7}
         >
-          <Text className="text-[#8A4DFF] font-semibold">Revenir plus tard</Text>
+          <Text className="text-[#8A4DFF] font-semibold" style={{ fontFamily: 'Quicksand' }}>Revenir plus tard</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
