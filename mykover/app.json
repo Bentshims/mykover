@@ -4,7 +4,7 @@
     "slug": "mykover",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images copy/myKover+Logo.png",
+    "icon": "./assets/images/myKover+Logo.png",
     "scheme": "mykover+",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -35,7 +35,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images copy/myKover+Logo.png",
+          "image": "./assets/images/myKover+Logo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff",

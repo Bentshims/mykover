@@ -284,20 +284,11 @@ export default function ProfileScreen() {
         </View>
 
         {/* Actions */}
-        <View className="mx-4 mt-6 space-y-3">
-          <TouchableOpacity
-            className="flex-row items-center justify-between p-4 bg-white border border-gray-100 rounded-xl"
-            onPress={() => router.push('/settings')}
-          >
-            <View className="flex-row items-center">
-              <FontAwesome6 name="gear" size={20} color="#6B7280" />
-              <Text className="ml-3 font-medium text-gray-900" style={{ fontFamily: 'Quicksand' }}>Paramètres</Text>
-            </View>
-            <FontAwesome6 name="chevron-right" size={16} color="#9CA3AF" />
-          </TouchableOpacity>
+        <View className="mx-4 mt-6 space-y-3 flex flex-col gap-2">
+         
 
           <TouchableOpacity
-            className="flex-row items-center justify-between p-4 bg-white border border-gray-100 rounded-xl"
+            className="flex-row items-center justify-between px-4 py-6 bg-white border border-gray-100 rounded-xl"
             onPress={() => router.push('/payment-history')}
           >
             <View className="flex-row items-center">
@@ -308,7 +299,7 @@ export default function ProfileScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity
-            className="flex-row items-center justify-between p-4 bg-white border border-gray-100 rounded-xl"
+            className="flex-row items-center justify-between px-4 py-6 bg-white border border-gray-100 rounded-xl"
             onPress={() => router.push('/terms-conditions')}
           >
             <View className="flex-row items-center">
@@ -319,7 +310,7 @@ export default function ProfileScreen() {
           </TouchableOpacity>
 
           <TouchableOpacity
-            className="flex-row items-center justify-between p-4 bg-white border border-gray-100 rounded-xl"
+            className="flex-row items-center justify-between px-4 py-6 bg-white border border-gray-100 rounded-xl"
             onPress={() => router.push('/help-support')}
           >
             <View className="flex-row items-center">

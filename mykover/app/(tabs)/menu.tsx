@@ -266,13 +266,13 @@ export default function MenuScreen() {
       section: 'account',
       onPress: () => router.push('/notifications'),
     },
-    {
-      id: 'settings',
-      title: 'Paramètres',
-      icon: 'gear',
-      section: 'account',
-      onPress: () => router.push('/settings'),
-    },
+   // {
+   //   id: 'settings',
+   //   title: 'Paramètres',
+   //   icon: 'gear',
+   //   section: 'account',
+   //   onPress: () => router.push('/settings'),
+   // },
 
     // SUPPORT & INFO
     {
@@ -299,7 +299,7 @@ export default function MenuScreen() {
     {
       id: 'about',
       title: 'À propos',
-      icon: 'info-circle',
+      icon: 'info',
       section: 'support',
       onPress: () => router.push('/about-us'),
     },
