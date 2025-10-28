@@ -66,7 +66,7 @@ export default function RootLayout(): JSX.Element | null {
         <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         <Stack.Screen name="+not-found" />
       </Stack>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
     </AuthProvider>
   );
 }

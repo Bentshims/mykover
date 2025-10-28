@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StatusBar,
   Dimensions,
   ActivityIndicator,
   Alert,
@@ -16,6 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { TabView } from "react-native-tab-view";
 import { useAuth } from "../../src/contexts/AuthContext";
+import AppStatusBar from "../../src/components/AppStatusBar";
 import MemberFormDrawer from "../../components/MemberFormDrawer";
 import { familyService, MemberData } from "../../services/familyService";
 import * as Linking from 'expo-linking';
@@ -198,7 +198,7 @@ export default function SubscriptionPlansScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
-      <StatusBar barStyle="light-content" backgroundColor="#8A4DFF" />
+      <AppStatusBar />
 
       <View className="px-4 py-3 bg-white pt-8">
         <Text className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'Quicksand' }}>Plans d'assurance</Text>

@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StatusBar,
   ScrollView,
   Alert,
   Linking,
@@ -14,6 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import * as Location from 'expo-location';
 import { useAuth } from '../../src/contexts/AuthContext';
+import AppStatusBar from '../../src/components/AppStatusBar';
 // import TopNavBarCustom from '../../components/TopNavBarCustom';
 
 // Mock data for healthcare facilities with coordinates
@@ -236,7 +236,7 @@ export default function MapScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-white" edges={['top']}>
-      <StatusBar barStyle="light-content" backgroundColor="#8A4DFF" />
+      <AppStatusBar />
       
       {/* Custom Top Navigation */}
       {/* <TopNavBarCustom 

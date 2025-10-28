@@ -107,6 +107,21 @@ class PaymentService {
     } catch (error: any) {
       console.error('Payment history error:', error);
       
+      // Si l'endpoint n'existe pas encore (404), retourner un tableau vide
+      if (error.response?.status === 404) {
+        console.log('Endpoint /api/payments/history not yet implemented on backend');
+        return {
+          success: true,
+          message: 'No payment history available yet',
+          data: {
+            transactions: [],
+            total: 0,
+            page: 1,
+            limit: 10
+          }
+        };
+      }
+      
       if (error.response?.data) {
         return error.response.data;
       }

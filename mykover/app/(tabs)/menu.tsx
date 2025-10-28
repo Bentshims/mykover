@@ -193,12 +193,12 @@ import {
   Alert,
   Linking,
   Image,
-  StatusBar,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { useAuth } from '../../src/contexts/AuthContext';
+import AppStatusBar from '../../src/components/AppStatusBar';
 import api, { authApi } from '../../services/api';
 import { getAvatarForUser } from '../../src/utils/avatarUtils';
 
@@ -372,7 +372,7 @@ export default function MenuScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
-      <StatusBar barStyle="light-content" backgroundColor="#8A4DFF" />
+      <AppStatusBar />
       
       {/* Header */}
       <View className="px-4 py-4 bg-[#8A4DFF]">

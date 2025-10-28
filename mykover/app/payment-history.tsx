@@ -121,7 +121,11 @@ export default function PaymentHistoryScreen() {
       const response = await paymentService.getPaymentHistory();
       
       if (response.success && response.data) {
-        setTransactions(response.data);
+        // Gérer les deux formats de réponse possibles
+        const transactionsList = Array.isArray(response.data) 
+          ? response.data 
+          : response.data.transactions || [];
+        setTransactions(transactionsList);
       } else {
         throw new Error(response.message || 'Impossible de charger l\'historique');
       }

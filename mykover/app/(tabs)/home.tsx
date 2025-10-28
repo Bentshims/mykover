@@ -1,10 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, Image, StatusBar, ActivityIndicator, RefreshControl, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, Image, ActivityIndicator, RefreshControl, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons, FontAwesome6 } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import TopNavBarCustom from '../../components/TopNavBarCustom';
+import AppStatusBar from '../../src/components/AppStatusBar';
 import api from '../../services/api';
 
 interface UserProfile {
@@ -110,7 +111,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView className="flex-1 bg-gray-50" edges={['top']}>
-      <StatusBar barStyle="light-content" backgroundColor="#8A4DFF" />
+      <AppStatusBar />
 
       <TopNavBarCustom 
         onAvatarPress={handleAvatarPress} 
